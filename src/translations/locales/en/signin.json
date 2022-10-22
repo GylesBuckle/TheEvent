@@ -1,6 +1,6 @@
 {
   "title": "Login to your account",
-  "userName": "Username",
+  "email": "Email",
   "password": "Password",
   "rememberMe": "Remember me",
   "forgetPassword": "Forgot password?",

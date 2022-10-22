@@ -10,7 +10,11 @@ import {
   Checkbox,
   CircularProgress,
   Button,
+  InputAdornment,
+  IconButton,
 } from '@material-ui/core';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import { Alert } from '@material-ui/lab';
 import axios from '../../utils/axios';
 import { GlobalContext } from '../../context/GlobalContext';
@@ -19,7 +23,6 @@ import { useTranslation } from 'react-i18next';
 
 import GoogleAuth from '../../reusable/googleAuth';
 
-import Footer from '../../reusable/footer';
 import Loading from '../../reusable/loading';
 
 const useStyles = makeStyles((theme) => ({
@@ -83,6 +86,8 @@ export default function Login() {
     router.push('/');
     //return <Loading />;
   }
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({
@@ -204,12 +209,12 @@ export default function Login() {
           </Grid> */}
           {/* for email */}
           <Grid item style={{ marginTop: '1em', width: '100%' }}>
-            <label htmlFor="userName" className={classes.label}>
-              {t('signin.userName')}
+            <label htmlFor="email" className={classes.label}>
+              {t('signin.email')}
             </label>
             <TextField
-              placeholder={t('signin.userName')}
-              id="userName"
+              placeholder={t('signin.email')}
+              id="email"
               variant="outlined"
               fullWidth
               //size="small"
@@ -241,7 +246,7 @@ export default function Login() {
               {t('signin.password')}
             </label>
             <TextField
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               placeholder={t('signin.password')}
               id="password"
               variant="outlined"
@@ -252,6 +257,16 @@ export default function Login() {
                   root: classes.input,
                   notchedOutline: classes.inputOutline,
                 },
+                endAdornment: (
+                  <InputAdornment>
+                    <IconButton
+                      onClick={() => setShowPassword((p) => !p)}
+                      style={{ background: 'transparent' }}
+                    >
+                      {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
               }}
               required
               error={user.password.error}

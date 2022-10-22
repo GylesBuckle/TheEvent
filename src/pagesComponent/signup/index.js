@@ -6,48 +6,48 @@ import {
   useMediaQuery,
   Typography,
   TextField,
-  FormControlLabel,
-  Checkbox,
   CircularProgress,
   Button,
-  Paper,
+  InputAdornment,
+  IconButton,
 } from '@material-ui/core';
-import { useTranslation, Trans } from 'react-i18next';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { useTranslation } from 'react-i18next';
+import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 
 import axios from '../../utils/axios';
 import { GlobalContext } from '../../context/GlobalContext';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-
-import Welcome from '../../reusable/welcomeCurve';
-import Footer from '../../reusable/footer';
 
 const useStyles = makeStyles((theme) => ({
   pageHeight: {
-    minHeight: '100vh',
+    ...theme.typography.authBackground,
   },
-  flexContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '90%',
-  },
-  formContainer: {
-    width: '60%',
+  card: {
+    background: '#fff',
+    border: '3px solid #fff',
+    borderRadius: '29px',
+    boxShadow: '0px 4px 44px rgba(0, 0, 0, 0.05)',
+    padding: '50px 28px',
     [theme.breakpoints.down('sm')]: {
-      width: '90%',
+      padding: '30px 20px',
     },
   },
-
+  label: {
+    ...theme.typography.label,
+    color: '#000',
+  },
   input: {
     ...theme.typography.input,
-    background: '#fff',
+    background: '#F1F1F1',
     borderRadius: '5px',
     boxShadow: 'none',
     marginTop: '5px',
+  },
+  inputOutline: {
+    border: 'none',
   },
   checkboxLabel: {
     ...theme.typography.label,
@@ -56,36 +56,7 @@ const useStyles = makeStyles((theme) => ({
     color: '#848199',
   },
   button: {
-    ...theme.typography.label,
-    color: theme.palette.common.mainFront,
-    backgroundColor: theme.palette.common.mainBack,
-    borderRadius: '12px',
-    fontWeight: 600,
-    textTransform: 'none',
-    '&:hover': {
-      color: theme.palette.common.mainFront,
-      backgroundColor: theme.palette.common.mainBack,
-    },
-  },
-  paper: {
-    boxShadow: '0px 2px 14px 1px rgba(0, 0, 0, 0.06)',
-    borderRadius: '6px',
-    padding: '1.75em',
-    cursor: 'pointer',
-    '&:hover': {
-      border: `1px solid ${theme.palette.common.blue}`,
-      backgroundColor: '#00ffd0',
-      '& $arrow': {
-        display: 'inline-block',
-      },
-    },
-  },
-  arrow: {
-    display: 'none',
-  },
-  label: {
-    ...theme.typography.label,
-    color: '#000',
+    ...theme.typography.button,
   },
 
   description: {
@@ -108,19 +79,24 @@ export default function Login() {
   const { user: globaluser } = useContext(GlobalContext);
 
   if (globaluser !== null && globaluser.token !== undefined) {
-    router.push('/edit-profile');
+    router.push('/');
   }
 
+  const [showPassword, setShowPassword] = useState(false);
   const [signupSuccess, setSignupSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({
     status: false,
     message: '',
   });
-  const [accountType, setAccountType] = useState(''); //Individual //Business
 
   const [user, setUser] = useState({
-    userName: {
+    firstName: {
+      value: '',
+      error: false,
+      errorMessage: '',
+    },
+    lastName: {
       value: '',
       error: false,
       errorMessage: '',
@@ -135,8 +111,10 @@ export default function Login() {
       error: false,
       errorMessage: '',
     },
-    terms: {
-      value: false,
+    confirmPassword: {
+      value: '',
+      error: false,
+      errorMessage: '',
     },
   });
 
@@ -244,492 +222,322 @@ export default function Login() {
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const accountTypeForm = (
-    <Grid container direction="column">
-      {/* Heading */}
-      <Grid item>
-        <Typography variant="h4">{t('signup.accountTypeTitle')}</Typography>
-      </Grid>
-      {/* description */}
-      <Grid item style={{ marginTop: '0.3em' }}>
-        <Typography variant="subtitle2" style={{ width: '80%' }}>
-          {' '}
-          {t('signup.accountTypeDescription')}
-        </Typography>
-      </Grid>
-      {/* Individual card */}
-      <Grid item style={{ marginTop: '1em' }}>
-        <Paper className={classes.paper} onClick={() => setAccountType('Individual')}>
-          <Grid container alignItems="center" justifyContent="space-between">
-            <Grid item xs={10}>
-              <Grid container alignItems="center" wrap="nowrap">
-                <Grid item>
-                  <img
-                    src="/dev/individual.png"
-                    alt="polygon1"
-                    style={{ width: '42px', height: '42px' }}
-                  />
-                </Grid>
-                <Grid item style={{ marginLeft: '1.75em' }}>
-                  <Typography className={classes.label}>{t('signup.individual')}</Typography>
-                  {/* <Typography className={classes.description}>
-                            Generate key for your individual account
-                          </Typography> */}
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item className={classes.arrow}>
-              <ArrowForwardIcon style={{ color: theme.palette.common.blue }} />
-            </Grid>
+  return (
+    <Grid container className={classes.pageHeight} justifyContent="center" alignItems="center">
+      <Grid item md={5} xs={12} className={classes.card}>
+        <Grid container direction="column" alignItems={'center'}>
+          <Grid item>
+            <img style={{ width: '100%', height: '100%' }} alt="logo" src="/dev/logo.png" />
           </Grid>
-        </Paper>
-      </Grid>
-      {/* Business card */}
-      <Grid item style={{ marginTop: '1em' }}>
-        <Paper className={classes.paper} onClick={() => setAccountType('Business')}>
-          <Grid container alignItems="center" justifyContent="space-between">
-            <Grid item xs={10}>
-              <Grid container alignItems="center" wrap="nowrap">
-                <Grid item>
-                  <img
-                    src="/dev/business.png"
-                    alt="polygon1"
-                    style={{ width: '42px', height: '42px' }}
-                  />
-                </Grid>
-                <Grid item style={{ marginLeft: '1.75em' }}>
-                  <Typography className={classes.label}>{t('signup.business')}</Typography>
-                  {/* <Typography className={classes.description}>
-                            Generate key for your business account
-                          </Typography> */}
+          {!signupSuccess && (
+            <>
+              {/* for name */}
+              <Grid item style={{ marginTop: '1em', width: '100%' }}>
+                <Grid container spacing={2}>
+                  {/* firstname */}
+                  <Grid item xs={6}>
+                    <label htmlFor="firstName" className={classes.label}>
+                      {t('signup.firstName')}
+                    </label>
+                    <TextField
+                      placeholder={t('signup.firstName')}
+                      id="firstName"
+                      variant="outlined"
+                      fullWidth
+                      size="small"
+                      InputProps={{
+                        classes: {
+                          root: classes.input,
+                          notchedOutline: classes.inputOutline,
+                        },
+                      }}
+                      required
+                      error={user.firstName.error}
+                      helperText={user.firstName.error ? user.firstName.errorMessage : ''}
+                      value={user.firstName.value}
+                      onChange={(e) => {
+                        if (/^\S*$/.test(e.target.value)) {
+                          setUser({
+                            ...user,
+                            firstName: {
+                              value: e.target.value,
+                              error: false,
+                              errorMessage: '',
+                            },
+                          });
+                        }
+                      }}
+                    />
+                  </Grid>
+                  {/* lastName */}
+                  <Grid item xs={6}>
+                    <label htmlFor="lastName" className={classes.label}>
+                      {t('signup.lastName')}
+                    </label>
+                    <TextField
+                      placeholder={t('signup.lastName')}
+                      id="lastName"
+                      variant="outlined"
+                      fullWidth
+                      size="small"
+                      InputProps={{
+                        classes: {
+                          root: classes.input,
+                          notchedOutline: classes.inputOutline,
+                        },
+                      }}
+                      required
+                      error={user.lastName.error}
+                      helperText={user.lastName.error ? user.lastName.errorMessage : ''}
+                      value={user.lastName.value}
+                      onChange={(e) => {
+                        if (/^\S*$/.test(e.target.value)) {
+                          setUser({
+                            ...user,
+                            lastName: {
+                              value: e.target.value,
+                              error: false,
+                              errorMessage: '',
+                            },
+                          });
+                        }
+                      }}
+                    />
+                  </Grid>
                 </Grid>
               </Grid>
-            </Grid>
+              {/* for email */}
+              <Grid item style={{ marginTop: '1em', width: '100%' }}>
+                <label htmlFor="email" className={classes.label}>
+                  {t('signup.email')}
+                </label>
+                <TextField
+                  placeholder={t('signup.email')}
+                  id="email"
+                  variant="outlined"
+                  fullWidth
+                  size="small"
+                  InputProps={{
+                    classes: {
+                      root: classes.input,
+                      notchedOutline: classes.inputOutline,
+                    },
+                  }}
+                  required
+                  error={user.email.error}
+                  helperText={user.email.error ? user.email.errorMessage : ''}
+                  value={user.email.value}
+                  onChange={(e) =>
+                    setUser({
+                      ...user,
+                      email: {
+                        value: e.target.value,
+                        error: false,
+                        errorMessage: '',
+                      },
+                    })
+                  }
+                />
+              </Grid>
+              {/* for password */}
+              <Grid item style={{ marginTop: '1em', width: '100%' }}>
+                <label htmlFor="email" className={classes.label}>
+                  {t('signup.password')}
+                </label>
+                <TextField
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder={t('signup.password')}
+                  id="password"
+                  variant="outlined"
+                  fullWidth
+                  size="small"
+                  InputProps={{
+                    classes: {
+                      root: classes.input,
+                      notchedOutline: classes.inputOutline,
+                    },
+                    endAdornment: (
+                      <InputAdornment>
+                        <IconButton
+                          onClick={() => setShowPassword((p) => !p)}
+                          style={{ background: 'transparent' }}
+                        >
+                          {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                  required
+                  error={user.password.error}
+                  helperText={user.password.error ? user.password.errorMessage : ''}
+                  value={user.password.value}
+                  onChange={(e) =>
+                    setUser({
+                      ...user,
+                      password: {
+                        value: e.target.value,
+                        error: false,
+                        errorMessage: '',
+                      },
+                    })
+                  }
+                />
+              </Grid>
+              {/* for confirmPassword */}
+              <Grid item style={{ marginTop: '1em', width: '100%' }}>
+                <label htmlFor="email" className={classes.label}>
+                  {t('signup.confirmPassword')}
+                </label>
+                <TextField
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder={t('signup.confirmPassword')}
+                  id="confirmPassword"
+                  variant="outlined"
+                  fullWidth
+                  size="small"
+                  InputProps={{
+                    classes: {
+                      root: classes.input,
+                      notchedOutline: classes.inputOutline,
+                    },
+                    endAdornment: (
+                      <InputAdornment>
+                        <IconButton
+                          onClick={() => setShowPassword((p) => !p)}
+                          style={{ background: 'transparent' }}
+                        >
+                          {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                  required
+                  error={user.confirmPassword.error}
+                  helperText={user.confirmPassword.error ? user.confirmPassword.errorMessage : ''}
+                  value={user.confirmPassword.value}
+                  onChange={(e) =>
+                    setUser({
+                      ...user,
+                      confirmPassword: {
+                        value: e.target.value,
+                        error: false,
+                        errorMessage: '',
+                      },
+                    })
+                  }
+                />
+              </Grid>
 
-            <Grid item className={classes.arrow}>
-              <ArrowForwardIcon style={{ color: theme.palette.common.blue }} />
-            </Grid>
-          </Grid>
-        </Paper>
-      </Grid>
-      {/* already have account */}
-      <Grid item style={{ marginTop: '1em', width: '100%' }}>
-        <Typography
-          style={{
-            fontFamily: 'Roboto',
-            color: '#616161',
-            fontWeight: '300',
-          }}
-          align="center"
-          variant="subtitle2"
-        >
-          {t('signup.alreadyAccount')}{' '}
-          <Link href="/login">
-            <a
+              {error.status && (
+                <Grid item style={{ marginTop: '1em', width: '100%' }}>
+                  <Typography variant="subtitle2" style={{ display: 'flex', alignItems: 'center' }}>
+                    {' '}
+                    <ErrorOutlineIcon style={{ fill: 'red', marginRight: '4px' }} /> {error.message}
+                  </Typography>
+                </Grid>
+              )}
+            </>
+          )}
+          {signupSuccess && (
+            <Grid
+              item
               style={{
-                textDecoration: 'none',
-                color: '#2d2d2d',
-                fontWeight: '600',
+                marginTop: '1em',
+                minHeight: '30vh',
+                display: 'flex',
+                justifyContent: 'center',
               }}
             >
-              {t('signup.signIn')}
-            </a>
-          </Link>{' '}
-        </Typography>
-      </Grid>
-    </Grid>
-  );
+              <Typography
+                variant="subtitle2"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                }}
+              >
+                {' '}
+                <CheckCircleIcon
+                  style={{
+                    fill: theme.palette.primary.main,
+                    marginRight: '4px',
+                  }}
+                />{' '}
+                {t('signup.emailConfirmation')}
+              </Typography>
+            </Grid>
+          )}
+          {/* Signup button */}
+          {!signupSuccess && (
+            <Grid item style={{ marginTop: '1.5em', width: '100%' }}>
+              <Button
+                fullWidth
+                className={classes.button}
+                disabled={loading}
+                onClick={SubmitHandler}
+              >
+                {loading ? <CircularProgress size="2rem" color="primary" /> : t('signup.button')}
+              </Button>
+            </Grid>
+          )}
 
-  const comingSoon = (
-    <Grid container alignItems={matchesSM ? 'center' : undefined} direction="column">
-      <Grid item>
-        <Typography variant="h4" align="center">
-          {t('signup.comingSoonText')}
-        </Typography>
-      </Grid>
-      {/* description */}
-      <Grid item style={{ marginTop: '0.3em' }}>
-        <Typography variant="subtitle2" align="center">
-          {' '}
-          {t('signup.comingSoonDescription')}
-        </Typography>
-      </Grid>
-      <Grid item style={{ alignSelf: 'center' }}>
-        <Button
-          style={{
-            textTransform: 'none',
-            background: 'transparent',
-          }}
-          className={classes.label}
-          onClick={() => setAccountType('')}
-          startIcon={<ArrowForwardIcon style={{ transform: 'rotate(180deg)' }} />}
-        >
-          {t('signup.back')}
-        </Button>
-      </Grid>
-    </Grid>
-  );
-
-  const individualSignupForm = (
-    <Grid container alignItems={matchesSM ? 'center' : undefined} direction="column">
-      <Grid item>
-        {!matchesSM ? (
-          // <img
-          //   alt="check-mark"
-          //   src="/dev/check-mark.png"
-          //   style={{ width: '42px', height: '42px' }}
-          // />
-          <div></div>
-        ) : (
-          <img height="60" width="150" alt="logo" src="/dev/tappio.png" />
-        )}
-      </Grid>
-      <Grid item>
-        <Typography align={matchesSM ? 'center' : 'left'} variant="subtitle2">
-          {' '}
-          {t('signup.Welcome')}{' '}
-        </Typography>
-      </Grid>
-      <Grid item style={{ marginTop: '0.3em' }}>
-        <Typography align={matchesSM ? 'center' : 'left'} variant="h5">
-          {' '}
-          {t('signup.title')}
-        </Typography>
-      </Grid>
-
-      {!signupSuccess && (
-        <>
-          {/* for username */}
+          {/* signIn with other account */}
           <Grid item style={{ marginTop: '1em', width: '100%' }}>
-            <label htmlFor="userName" className={classes.label}>
-              {t('signup.userName')}
-            </label>
-            <TextField
-              placeholder={t('signup.userName')}
-              id="userName"
-              variant="outlined"
-              fullWidth
-              size="small"
-              InputProps={{
-                classes: {
-                  root: classes.input,
-                  notchedOutline: classes.inputOutline,
-                },
-              }}
-              required
-              error={user.userName.error}
-              helperText={user.userName.error ? user.userName.errorMessage : ''}
-              value={user.userName.value}
-              onChange={(e) => {
-                if (/^\S*$/.test(e.target.value)) {
-                  setUser({
-                    ...user,
-                    userName: {
-                      value: e.target.value,
-                      error: false,
-                      errorMessage: '',
-                    },
-                  });
-                }
-              }}
-            />
-          </Grid>
-          {/* for email */}
-          <Grid item style={{ marginTop: '1em', width: '100%' }}>
-            <label htmlFor="email" className={classes.label}>
-              {t('signup.email')}
-            </label>
-            <TextField
-              placeholder={t('signup.email')}
-              id="email"
-              variant="outlined"
-              fullWidth
-              size="small"
-              InputProps={{
-                classes: {
-                  root: classes.input,
-                  notchedOutline: classes.inputOutline,
-                },
-              }}
-              required
-              error={user.email.error}
-              helperText={user.email.error ? user.email.errorMessage : ''}
-              value={user.email.value}
-              onChange={(e) =>
-                setUser({
-                  ...user,
-                  email: {
-                    value: e.target.value,
-                    error: false,
-                    errorMessage: '',
-                  },
-                })
-              }
-            />
-          </Grid>
-          {/* for password */}
-          <Grid item style={{ marginTop: '1em', width: '100%' }}>
-            <label htmlFor="email" className={classes.label}>
-              {t('signup.password')}
-            </label>
-            <TextField
-              type="password"
-              placeholder={t('signup.password')}
-              id="password"
-              variant="outlined"
-              fullWidth
-              size="small"
-              InputProps={{
-                classes: {
-                  root: classes.input,
-                  notchedOutline: classes.inputOutline,
-                },
-              }}
-              required
-              error={user.password.error}
-              helperText={user.password.error ? user.password.errorMessage : ''}
-              value={user.password.value}
-              onChange={(e) =>
-                setUser({
-                  ...user,
-                  password: {
-                    value: e.target.value,
-                    error: false,
-                    errorMessage: '',
-                  },
-                })
-              }
-            />
-          </Grid>
-          {/* terms */}
-          <Grid item style={{ marginTop: '0.7em', width: '100%' }}>
-            <Grid container wrap="nowrap" alignItems="center">
-              <Grid item>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      id="terms"
-                      size="small"
-                      checked={user.terms.value}
-                      style={{ color: theme.palette.common.mainBack }}
-                      onChange={(e) =>
-                        setUser({
-                          ...user,
-                          terms: {
-                            value: e.target.checked,
-                          },
-                        })
-                      }
-                    />
-                  }
+            <Grid container alignItems="center" spacing={2}>
+              <Grid item style={{ flex: 1 }}>
+                <div
+                  style={{
+                    height: '2px',
+                    background: 'linear-gradient(89.98deg, #000000 0.98%, rgba(0, 0, 0, 0) 98.07%)',
+                    opacity: 0.3,
+                    transform: ' matrix(-1, 0, 0, 1, 0, 0)',
+                  }}
                 />
               </Grid>
               <Grid item>
                 <Typography
-                  variant="h4"
-                  component={'label'}
-                  htmlFor="terms"
-                  style={{
-                    color: '#2C5282',
-                    cursor: 'pointer',
-                    paddingLeft: 0,
-                  }}
+                  style={{ color: 'rgba(0, 0, 0, 0.5)' }}
                   className={classes.checkboxLabel}
                 >
-                  <Trans
-                    i18nKey="signup.termsLabel"
-                    components={{
-                      a1: (
-                        <a
-                          href="https://tappio.de/agb/"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          style={{
-                            textDecoration: 'none',
-                            fontWeight: 'bold',
-                            color: '#000',
-                          }}
-                        >
-                          {''}
-                        </a>
-                      ),
-                      a2: (
-                        <a
-                          href="https://tappio.de/datenschutzerklaerung/"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          style={{
-                            textDecoration: 'none',
-                            fontWeight: 'bold',
-                            color: '#000',
-                          }}
-                        >
-                          {''}
-                        </a>
-                      ),
-                      a3: (
-                        <a
-                          href="https://tappio.de/impressum/"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          style={{
-                            textDecoration: 'none',
-                            fontWeight: 'bold',
-                            color: '#000',
-                          }}
-                        >
-                          {''}
-                        </a>
-                      ),
-                    }}
-                  />
+                  {t('signup.otherAccount')}
                 </Typography>
+              </Grid>
+              <Grid item style={{ flex: 1 }}>
+                <div
+                  style={{
+                    height: '2px',
+                    background: 'linear-gradient(89.98deg, #000000 0.98%, rgba(0, 0, 0, 0) 98.07%)',
+                    opacity: 0.3,
+                  }}
+                />
               </Grid>
             </Grid>
           </Grid>
-          {error.status && (
-            <Grid item style={{ marginTop: '1em', width: '100%' }}>
-              <Typography variant="subtitle2" style={{ display: 'flex', alignItems: 'center' }}>
-                {' '}
-                <ErrorOutlineIcon style={{ fill: 'red', marginRight: '4px' }} /> {error.message}
-              </Typography>
-            </Grid>
-          )}
-        </>
-      )}
-      {signupSuccess && (
-        <Grid
-          item
-          style={{
-            marginTop: '1em',
-            minHeight: '30vh',
-            display: 'flex',
-            justifyContent: 'center',
-          }}
-        >
-          <Typography
-            variant="subtitle2"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-            }}
-          >
-            {' '}
-            <CheckCircleIcon
+          {/* already have account */}
+          <Grid item style={{ marginTop: '1em', width: '100%' }}>
+            <Typography
               style={{
-                fill: theme.palette.common.mainBack,
-                marginRight: '4px',
+                fontFamily: 'Roboto',
+                color: '#616161',
+                fontWeight: '300',
               }}
-            />{' '}
-            {t('signup.emailConfirmation')}
-          </Typography>
-        </Grid>
-      )}
-      {/* Signup button */}
-      {!signupSuccess && (
-        <Grid item style={{ marginTop: '0.7em', width: '100%' }}>
-          <Button fullWidth className={classes.button} disabled={loading} onClick={SubmitHandler}>
-            {loading ? (
-              <CircularProgress size="2rem" style={{ color: theme.palette.common.mainFront }} />
-            ) : (
-              t('signup.button')
-            )}
-          </Button>
-        </Grid>
-      )}
-      <Grid item style={{ alignSelf: 'center' }}>
-        {/* <Button
-          style={{
-            textTransform: "none",
-            background: "transparent",
-            fontFamily: "Roboto",
-          }}
-          className={classes.label}
-          onClick={() => setAccountType("")}
-          startIcon={
-            <ArrowForwardIcon style={{ transform: "rotate(180deg)" }} />
-          }
-        >
-          {t("signup.back")}
-        </Button> */}
-      </Grid>
-      {/* signIn with other account */}
-      <Grid item style={{ marginTop: '1em', width: '100%' }}>
-        <Grid container alignItems="center" spacing={2}>
-          <Grid item style={{ flex: 1 }}>
-            <div
-              style={{
-                height: '2px',
-                background: 'linear-gradient(89.98deg, #000000 0.98%, rgba(0, 0, 0, 0) 98.07%)',
-                opacity: 0.3,
-                transform: ' matrix(-1, 0, 0, 1, 0, 0)',
-              }}
-            />
-          </Grid>
-          <Grid item>
-            <Typography style={{ color: 'rgba(0, 0, 0, 0.5)' }} className={classes.checkboxLabel}>
-              {t('signup.otherAccount')}
+              align="center"
+              variant="subtitle2"
+            >
+              {t('signup.alreadyAccount')}{' '}
+              <Link href="/login">
+                <a
+                  style={{
+                    textDecoration: 'none',
+                    color: '#2d2d2d',
+                    fontWeight: '600',
+                  }}
+                >
+                  {t('signup.signIn')}
+                </a>
+              </Link>{' '}
             </Typography>
           </Grid>
-          <Grid item style={{ flex: 1 }}>
-            <div
-              style={{
-                height: '2px',
-                background: 'linear-gradient(89.98deg, #000000 0.98%, rgba(0, 0, 0, 0) 98.07%)',
-                opacity: 0.3,
-              }}
-            />
-          </Grid>
         </Grid>
-      </Grid>
-      {/* already have account */}
-      <Grid item style={{ marginTop: '1em', width: '100%' }}>
-        <Typography
-          style={{
-            fontFamily: 'Roboto',
-            color: '#616161',
-            fontWeight: '300',
-          }}
-          align="center"
-          variant="subtitle2"
-        >
-          {t('signup.alreadyAccount')}{' '}
-          <Link href="/login">
-            <a
-              style={{
-                textDecoration: 'none',
-                color: '#2d2d2d',
-                fontWeight: '600',
-              }}
-            >
-              {t('signup.signIn')}
-            </a>
-          </Link>{' '}
-        </Typography>
-      </Grid>
-    </Grid>
-  );
-  const businessAccountTypeForm = individualSignupForm;
-
-  return (
-    <Grid container alignItems="stretch">
-      {!matchesSM && (
-        <Grid item md={7} className={classes.pageHeight}>
-          <Welcome />
-        </Grid>
-      )}
-      <Grid item md={5} xs={12} className={[classes.pageHeight].join(' ')}>
-        <div className={classes.flexContainer}>
-          <div className={classes.formContainer}>
-            {accountType === ''
-              ? accountTypeForm
-              : accountType === 'Individual'
-              ? individualSignupForm
-              : businessAccountTypeForm}
-          </div>
-        </div>
-        .
-        <Footer />
       </Grid>
     </Grid>
   );
