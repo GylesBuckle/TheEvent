@@ -106,6 +106,20 @@ export default createTheme({
       paddingTop: '20px',
       paddingBottom: '20px',
     },
+    button: {
+      fontFamily: 'Poppins',
+      fontSize: '16px',
+      fontWeight: '400',
+      color: secondary,
+      backgroundColor: primary,
+      borderRadius: '12px',
+      fontWeight: 600,
+      textTransform: 'none',
+      '&:hover': {
+        color: secondary,
+        backgroundColor: primary,
+      },
+    },
   },
   overrides: {
     MuiInputLabel: {

@@ -1,11 +1,10 @@
 {
-  "welcome": "Welcome back",
   "title": "Login to your account",
-  "email": "Email",
+  "userName": "Username",
   "password": "Password",
   "rememberMe": "Remember me",
   "forgetPassword": "Forgot password?",
-  "button": "Login now",
+  "button": "Login",
   "otherAccount": "or sign in with other acccount",
   "account": "Don’t have an account?",
   "join": "Join free today"

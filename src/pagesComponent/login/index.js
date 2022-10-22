@@ -36,46 +36,27 @@ const useStyles = makeStyles((theme) => ({
       padding: '30px 20px',
     },
   },
-  flexContainer: {
-    height: '92%',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  formContainer: {
-    width: '60%',
-    [theme.breakpoints.down('xs')]: {
-      width: '90%',
-    },
-  },
   label: {
     ...theme.typography.label,
   },
   input: {
     ...theme.typography.input,
-    background: '#fff',
+    background: '#F1F1F1',
     borderRadius: '5px',
     boxShadow: 'none',
     marginTop: '5px',
   },
+  inputOutline: {
+    border: 'none',
+  },
   checkboxLabel: {
     ...theme.typography.label,
-    fontSize: '12px',
+    fontSize: '14px',
     fontWeight: 500,
     color: '#848199',
   },
   button: {
-    ...theme.typography.label,
-    color: theme.palette.common.mainFront,
-    backgroundColor: theme.palette.common.mainBack,
-    borderRadius: '12px',
-    fontWeight: 600,
-    textTransform: 'none',
-    '&:hover': {
-      color: theme.palette.common.mainFront,
-      backgroundColor: theme.palette.common.mainBack,
-    },
+    ...theme.typography.button,
   },
 }));
 
@@ -210,226 +191,197 @@ export default function Login() {
   return (
     <Grid container className={classes.pageHeight} justifyContent="center" alignItems="center">
       <Grid item md={5} xs={10} className={classes.card}>
-        <div className={classes.flexContainer}>
-          <div className={classes.formContainer}>
-            <Grid container direction="column" alignItems={matchesSM ? 'center' : undefined}>
-              {matchesSM && (
-                <Grid item>
-                  <img height="60" width="150" alt="logo" src="/dev/tappio.png" />
-                </Grid>
-              )}
+        <Grid container direction="column" alignItems={'center'}>
+          <Grid item>
+            <img style={{ width: '100%', height: '100%' }} alt="logo" src="/dev/logo.png" />
+          </Grid>
+
+          {/* <Grid item style={{ marginTop: '0.2em', width: '100%' }}>
+            <Typography align={matchesSM ? 'center' : 'left'} variant="h5">
+              {' '}
+              {t('signin.title')}
+            </Typography>
+          </Grid> */}
+          {/* for email */}
+          <Grid item style={{ marginTop: '1em', width: '100%' }}>
+            <label htmlFor="userName" className={classes.label}>
+              {t('signin.userName')}
+            </label>
+            <TextField
+              placeholder={t('signin.userName')}
+              id="userName"
+              variant="outlined"
+              fullWidth
+              //size="small"
+              InputProps={{
+                classes: {
+                  root: classes.input,
+                  notchedOutline: classes.inputOutline,
+                },
+              }}
+              required
+              error={user.email.error}
+              helperText={user.email.error ? user.email.errorMessage : ''}
+              value={user.email.value}
+              onChange={(e) =>
+                setUser({
+                  ...user,
+                  email: {
+                    value: e.target.value,
+                    error: false,
+                    errorMessage: '',
+                  },
+                })
+              }
+            />
+          </Grid>
+          {/* for password */}
+          <Grid item style={{ marginTop: '1em', width: '100%' }}>
+            <label htmlFor="password" className={classes.label}>
+              {t('signin.password')}
+            </label>
+            <TextField
+              type="password"
+              placeholder={t('signin.password')}
+              id="password"
+              variant="outlined"
+              fullWidth
+              // size="small"
+              InputProps={{
+                classes: {
+                  root: classes.input,
+                  notchedOutline: classes.inputOutline,
+                },
+              }}
+              required
+              error={user.password.error}
+              helperText={user.password.error ? user.password.errorMessage : ''}
+              value={user.password.value}
+              onChange={(e) =>
+                setUser({
+                  ...user,
+                  password: {
+                    value: e.target.value,
+                    error: false,
+                    errorMessage: '',
+                  },
+                })
+              }
+            />
+          </Grid>
+          {/* Forgot password */}
+          <Grid item style={{ marginTop: '0.7em', width: '100%' }}>
+            <Grid container alignItems="center" justifyContent="space-between">
               <Grid item>
-                <Typography align={matchesSM ? 'center' : 'left'} variant="subtitle2">
-                  {' '}
-                  {t('signin.welcome')}
-                </Typography>
-              </Grid>
-              <Grid item style={{ marginTop: '0.2em', width: '100%' }}>
-                <Typography align={matchesSM ? 'center' : 'left'} variant="h5">
-                  {' '}
-                  {t('signin.title')}
-                </Typography>
-              </Grid>
-              {/* for email */}
-              <Grid item style={{ marginTop: '1em', width: '100%' }}>
-                <label htmlFor="email" className={classes.label}>
-                  {t('signin.email')}
-                </label>
-                <TextField
-                  placeholder={t('signin.email')}
-                  id="email"
-                  variant="outlined"
-                  fullWidth
-                  size="small"
-                  InputProps={{
-                    classes: {
-                      root: classes.input,
-                      notchedOutline: classes.inputOutline,
-                    },
+                <FormControlLabel
+                  label={t('signin.rememberMe')}
+                  classes={{
+                    label: classes.checkboxLabel,
                   }}
-                  required
-                  error={user.email.error}
-                  helperText={user.email.error ? user.email.errorMessage : ''}
-                  value={user.email.value}
-                  onChange={(e) =>
-                    setUser({
-                      ...user,
-                      email: {
-                        value: e.target.value,
-                        error: false,
-                        errorMessage: '',
-                      },
-                    })
-                  }
-                />
-              </Grid>
-              {/* for password */}
-              <Grid item style={{ marginTop: '1em', width: '100%' }}>
-                <label htmlFor="password" className={classes.label}>
-                  {t('signin.password')}
-                </label>
-                <TextField
-                  type="password"
-                  placeholder={t('signin.password')}
-                  id="password"
-                  variant="outlined"
-                  fullWidth
-                  size="small"
-                  InputProps={{
-                    classes: {
-                      root: classes.input,
-                      notchedOutline: classes.inputOutline,
-                    },
-                  }}
-                  required
-                  error={user.password.error}
-                  helperText={user.password.error ? user.password.errorMessage : ''}
-                  value={user.password.value}
-                  onChange={(e) =>
-                    setUser({
-                      ...user,
-                      password: {
-                        value: e.target.value,
-                        error: false,
-                        errorMessage: '',
-                      },
-                    })
-                  }
-                />
-              </Grid>
-              {/* Forgot password */}
-              <Grid item style={{ marginTop: '0.7em', width: '100%' }}>
-                <Grid container alignItems="center" justifyContent="space-between">
-                  <Grid item>
-                    <FormControlLabel
-                      label={t('signin.rememberMe')}
-                      classes={{
-                        label: classes.checkboxLabel,
-                      }}
-                      control={
-                        <Checkbox
-                          size="small"
-                          checked={user.rememberMe.value}
-                          style={{ color: theme.palette.common.mainBack }}
-                          onChange={(e) =>
-                            setUser({
-                              ...user,
-                              rememberMe: {
-                                value: e.target.checked,
-                              },
-                            })
-                          }
-                        />
+                  control={
+                    <Checkbox
+                      size="small"
+                      checked={user.rememberMe.value}
+                      color="primary"
+                      onChange={(e) =>
+                        setUser({
+                          ...user,
+                          rememberMe: {
+                            value: e.target.checked,
+                          },
+                        })
                       }
                     />
-                  </Grid>
-                  <Grid item>
-                    <Link href="/forgetPassword" style={{ textDecoration: 'none' }}>
-                      <Typography
-                        variant="h4"
-                        style={{ color: '#848199' }}
-                        className={classes.checkboxLabel}
-                      >
-                        {t('signin.forgetPassword')}
-                      </Typography>
-                    </Link>
-                  </Grid>
-                </Grid>
+                  }
+                />
               </Grid>
-              {error.status && (
-                <Grid item style={{ marginTop: '1em', width: '100%' }}>
-                  <Alert severity="warning">{error.message}</Alert>
-                </Grid>
-              )}
-              {/* Login button */}
-              <Grid item style={{ marginTop: '0.5em', width: '100%' }}>
-                <Button
-                  fullWidth
-                  className={classes.button}
-                  disabled={loading}
-                  onClick={SubmitHandler}
-                >
-                  {loading ? (
-                    <CircularProgress
-                      size="2.1rem"
-                      style={{
-                        color: theme.palette.common.mainFront,
-                      }}
-                    />
-                  ) : (
-                    t('signin.button')
-                  )}
-                </Button>
-              </Grid>
-              {/* signIn with other account */}
-              <Grid item style={{ marginTop: '1.2em', width: '100%' }}>
-                <Grid container alignItems="center" spacing={2}>
-                  <Grid item style={{ flex: 1 }}>
-                    <div
-                      style={{
-                        height: '2px',
-                        background:
-                          'linear-gradient(89.98deg, #000000 0.98%, rgba(0, 0, 0, 0) 98.07%)',
-                        opacity: 0.3,
-                        transform: ' matrix(-1, 0, 0, 1, 0, 0)',
-                      }}
-                    />
-                  </Grid>
-                  <Grid item>
-                    <Typography
-                      style={{ color: 'rgba(0, 0, 0, 0.5)' }}
-                      className={classes.checkboxLabel}
-                    >
-                      {t('signin.otherAccount')}
-                    </Typography>
-                  </Grid>
-                  <Grid item style={{ flex: 1 }}>
-                    <div
-                      style={{
-                        height: '2px',
-                        background:
-                          'linear-gradient(89.98deg, #000000 0.98%, rgba(0, 0, 0, 0) 98.07%)',
-                        opacity: 0.3,
-                      }}
-                    />
-                  </Grid>
-                </Grid>
-              </Grid>
-              {
-                // <Grid item style={{ marginTop: '1em', width: '100%' }}>
-                // <GoogleAuth />
-                // </Grid>
-              }
-
-              {/* dont have account */}
-              <Grid item style={{ marginTop: '1.2em' }}>
-                <Typography
-                  style={{
-                    fontFamily: 'Roboto',
-                    color: '#616161',
-                    fontWeight: '300',
-                  }}
-                  align="center"
-                  variant="subtitle2"
-                >
-                  {t('signin.account')}{' '}
-                  <Link href="/signup">
-                    <a
-                      style={{
-                        textDecoration: 'none',
-                        color: '#2d2d2d',
-                        fontWeight: '600',
-                      }}
-                    >
-                      {t('signin.join')}
-                    </a>
-                  </Link>{' '}
-                </Typography>
+              <Grid item>
+                <Link href="/forgetPassword" style={{ textDecoration: 'none' }}>
+                  <Typography
+                    variant="h4"
+                    style={{ color: '#848199', cursor: 'pointer' }}
+                    className={classes.checkboxLabel}
+                  >
+                    {t('signin.forgetPassword')}
+                  </Typography>
+                </Link>
               </Grid>
             </Grid>
-          </div>
-        </div>
-        <Footer />
+          </Grid>
+          {error.status && (
+            <Grid item style={{ marginTop: '1em', width: '100%' }}>
+              <Alert severity="warning">{error.message}</Alert>
+            </Grid>
+          )}
+          {/* Login button */}
+          <Grid item style={{ marginTop: '0.5em', width: '100%' }}>
+            <Button fullWidth className={classes.button} disabled={loading} onClick={SubmitHandler}>
+              {loading ? <CircularProgress size="2.1rem" color="primary" /> : t('signin.button')}
+            </Button>
+          </Grid>
+          {/* signIn with other account */}
+          <Grid item style={{ marginTop: '1.2em', width: '100%' }}>
+            <Grid container alignItems="center" spacing={2}>
+              <Grid item style={{ flex: 1 }}>
+                <div
+                  style={{
+                    height: '2px',
+                    background: 'linear-gradient(89.98deg, #000000 0.98%, rgba(0, 0, 0, 0) 98.07%)',
+                    opacity: 0.3,
+                    transform: ' matrix(-1, 0, 0, 1, 0, 0)',
+                  }}
+                />
+              </Grid>
+              <Grid item>
+                <Typography
+                  style={{ color: 'rgba(0, 0, 0, 0.5)' }}
+                  className={classes.checkboxLabel}
+                >
+                  {t('signin.otherAccount')}
+                </Typography>
+              </Grid>
+              <Grid item style={{ flex: 1 }}>
+                <div
+                  style={{
+                    height: '2px',
+                    background: 'linear-gradient(89.98deg, #000000 0.98%, rgba(0, 0, 0, 0) 98.07%)',
+                    opacity: 0.3,
+                  }}
+                />
+              </Grid>
+            </Grid>
+          </Grid>
+
+          <Grid item style={{ marginTop: '1em', width: '100%' }}>
+            <GoogleAuth />
+          </Grid>
+
+          {/* dont have account */}
+          <Grid item style={{ marginTop: '1.2em' }}>
+            <Typography
+              style={{
+                fontFamily: 'Roboto',
+                color: '#616161',
+                fontWeight: '300',
+              }}
+              align="center"
+              variant="subtitle2"
+            >
+              {t('signin.account')}{' '}
+              <Link href="/signup">
+                <a
+                  style={{
+                    textDecoration: 'none',
+                    color: '#2d2d2d',
+                    fontWeight: '600',
+                  }}
+                >
+                  {t('signin.join')}
+                </a>
+              </Link>{' '}
+            </Typography>
+          </Grid>
+        </Grid>
       </Grid>
     </Grid>
   );
