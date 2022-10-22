@@ -1,0 +1,47 @@
+{
+  "header": {
+    "menu": {
+      "paperSaved": "Paper saved:",
+      "1": "Business Card",
+      "2": "Edit Profile",
+      "3": "Setting",
+      "4": "Website",
+      "5": "Preview"
+    },
+    "submenu": {
+      "settingSubmenu": {
+        "1": "Account",
+        "2": "Logout",
+        "3": "Dashboard"
+      }
+    },
+    "download": "Download",
+    "androidApp": "Android App",
+    "iosApp": "IOS App",
+    "getTappioCard": "Get Tappio Card"
+  },
+  "authFooter": {
+    "copyRight": "Copyright © 2022 Tappio. All rights reserved."
+  },
+  "footer": {
+    "text": "Made with ",
+    "text1": " for Tappio family © 2022 Tappio GMBH. All rights reserved.",
+    "terms": "Terms of Service",
+    "privacy": "Privacy Policy",
+    "impressum": "Impressum."
+  },
+  "welcomeCard": {
+    "heading": "Hello Networkers!",
+    "description": "We look forward to accompanying you on your journey"
+  },
+  "externalLogin": {
+    "google": "Continue with Google",
+    "facebook": "Continue With Meta",
+    "apple": "Continue With Apple"
+  },
+  "cookie": {
+    "text": "This site uses cookies for performance, analytics, and personalisation which helps us to improve our site and provide you with personalised content. You may choose to \"Accept\" the use of ALL cookies, \"Reject\" to refuse all but strictly necessary cookies or set \"Cookie Preferences\" to further manage your cookie selections.",
+    "smallText": "",
+    "acceptButton": "Accept"
+  }
+}
