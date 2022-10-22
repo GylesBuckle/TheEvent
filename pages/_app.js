@@ -26,7 +26,7 @@ const Main = ({ Component, pageProps }) => {
     publicPages.some((p) => router.pathname === p) ||
       allowedAuthPages.some((p) => router.pathname === p)
       ? false
-      : true
+      : false
   );
   const { setAuth } = useContext(GlobalContext);
 
@@ -96,9 +96,9 @@ function MyApp({ Component, pageProps }) {
           <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
           <meta name="theme-color" content="#000000" />
           <meta charSet="utf-8" />
-          <meta http-equiv="Content-Security-Policy" script-src="unsafe-inline" />
+          <meta httpEquiv="Content-Security-Policy" script-src="unsafe-inline" />
           <meta name="description" content={websiteInfo.websiteDescription} />
-          <meta http-equiv="Content-Security-Policy" script-src="unsafe-inline" />
+          <meta httpEquiv="Content-Security-Policy" script-src="unsafe-inline" />
           <meta name="Keywords" content={websiteInfo.websiteKeywords} />
 
           <meta httpEquiv="Content-Security-Policy" script-src="unsafe-inline" />

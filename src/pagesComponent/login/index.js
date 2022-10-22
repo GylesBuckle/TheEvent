@@ -17,16 +17,24 @@ import { GlobalContext } from '../../context/GlobalContext';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 
-import Welcome from '../../reusable/welcomeCurve';
 import GoogleAuth from '../../reusable/googleAuth';
-import FacebookAuth from '../../reusable/facebookAuth';
-// import AppleAuth from '../../reusable/appleLogin';
+
 import Footer from '../../reusable/footer';
 import Loading from '../../reusable/loading';
 
 const useStyles = makeStyles((theme) => ({
   pageHeight: {
-    minHeight: '100vh',
+    ...theme.typography.authBackground,
+  },
+  card: {
+    background: '#fff',
+    border: '3px solid #fff',
+    borderRadius: '29px',
+    boxShadow: '0px 4px 44px rgba(0, 0, 0, 0.05)',
+    padding: '50px 28px',
+    [theme.breakpoints.down('sm')]: {
+      padding: '30px 20px',
+    },
   },
   flexContainer: {
     height: '92%',
@@ -89,24 +97,9 @@ export default function Login() {
     router.push('/admin-dashboard');
     return <Loading />;
   }
-  if (
-    globaluser !== null &&
-    globaluser.token !== undefined &&
-    globaluser.roles.includes('Company')
-  ) {
-    router.push('/dashboard');
-    //return <Loading />;
-  }
+
   if (globaluser !== null && globaluser.token !== undefined && globaluser.roles.includes('User')) {
-    router.push('/choose-feature');
-    //return <Loading />;
-  }
-  if (
-    globaluser !== null &&
-    globaluser.token !== undefined &&
-    globaluser.roles.includes('Employee')
-  ) {
-    router.push('/edit-profile');
+    router.push('/');
     //return <Loading />;
   }
 
@@ -215,13 +208,8 @@ export default function Login() {
   };
 
   return (
-    <Grid container>
-      {!matchesSM && (
-        <Grid item md={7} className={classes.pageHeight}>
-          <Welcome />
-        </Grid>
-      )}
-      <Grid item md={5} xs={12} className={[classes.pageHeight].join(' ')}>
+    <Grid container className={classes.pageHeight} justifyContent="center" alignItems="center">
+      <Grid item md={5} xs={10} className={classes.card}>
         <div className={classes.flexContainer}>
           <div className={classes.formContainer}>
             <Grid container direction="column" alignItems={matchesSM ? 'center' : undefined}>
@@ -233,7 +221,7 @@ export default function Login() {
               <Grid item>
                 <Typography align={matchesSM ? 'center' : 'left'} variant="subtitle2">
                   {' '}
-                  {t('signin.welcome')}  
+                  {t('signin.welcome')}
                 </Typography>
               </Grid>
               <Grid item style={{ marginTop: '0.2em', width: '100%' }}>
@@ -409,15 +397,10 @@ export default function Login() {
               </Grid>
               {
                 // <Grid item style={{ marginTop: '1em', width: '100%' }}>
-                // <GoogleAuth /> 
+                // <GoogleAuth />
                 // </Grid>
               }
-              <Grid item style={{ marginTop: '1em', width: '100%' }}>
-                <FacebookAuth />
-              </Grid>
-              {/* <Grid item style={{ marginTop: '1em', width: '100%' }}>
-              <AppleAuth />
-            </Grid> */}
+
               {/* dont have account */}
               <Grid item style={{ marginTop: '1.2em' }}>
                 <Typography

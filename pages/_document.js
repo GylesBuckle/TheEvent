@@ -29,7 +29,7 @@ class MyDocument extends Document {
 
           <link rel="shortcut icon" href="favicon.ico" />
 
-          <link rel="apple-touch-icon" href="tappio.png" />
+          <link rel="apple-touch-icon" href="logo.png" />
 
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="*" />
@@ -42,10 +42,6 @@ class MyDocument extends Document {
             rel="stylesheet"
           />
           <script async src="https://www.googletagmanager.com/gtag/js?id=G-TS8QKTB817"></script>
-          <script type="text/javascript" src="/scripts/tawk.js"></script>
-          <script type="text/javascript" src="/scripts/Taboola.js"></script>
-          <script type="text/javascript" src="/scripts/ga.js"></script>
-          <script type="text/javascript" src="/scripts/fbPixel.js"></script>
         </Head>
         <body style={{ margin: 0 }}>
           <Main />

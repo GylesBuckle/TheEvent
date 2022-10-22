@@ -1,22 +1,18 @@
 import { createTheme } from '@material-ui/core/styles';
 
-const arcOrange = '#FFBA60';
+const primary = '#0D1358';
+const secondary = '#fff';
 const arcGrey = '#848199';
-
-const mainBack = '#000';
-const mainFront = '#fff';
 export default createTheme({
   palette: {
     common: {
-      mainBack: mainBack,
-      mainFront: mainFront,
-      orange: `${arcOrange}`,
+      grey: arcGrey,
     },
     primary: {
-      main: `${mainBack}`,
+      main: primary,
     },
     secondary: {
-      main: `${arcOrange}`,
+      main: secondary,
     },
   },
   typography: {
@@ -100,11 +96,21 @@ export default createTheme({
         boxShadow: '0 0 0 3px #dceefc',
       },
     },
+    authBackground: {
+      minHeight: '100vh',
+      backgroundColor: primary,
+      backgroundImage: 'url(/dev/authBackground.png)',
+      backgroundRepeat: 'no-repeat',
+      backgroundPosition: 'bottom',
+      backgroundSize: '100vw 50vh',
+      paddingTop: '20px',
+      paddingBottom: '20px',
+    },
   },
   overrides: {
     MuiInputLabel: {
       root: {
-        color: mainBack,
+        color: primary,
         fontSize: '1rem',
       },
     },
@@ -120,10 +126,10 @@ export default createTheme({
     MuiInput: {
       underline: {
         '&:before': {
-          borderBottom: `2px solid ${mainBack}`,
+          borderBottom: `2px solid ${primary}`,
         },
         '&:hover:not($disabled):not($focused):not($error):before': {
-          borderBottom: `2px solid ${mainBack}`,
+          borderBottom: `2px solid ${primary}`,
         },
       },
 
