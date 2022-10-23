@@ -16,6 +16,10 @@ import axios from '../src/utils/axios';
 import theme from '../src/utils/theme';
 import Loading from '../src/reusable/loading';
 
+import 'suneditor/dist/css/suneditor.min.css';
+import 'flatpickr/dist/themes/dark.css';
+import 'cropperjs/dist/cropper.css';
+
 const publicPages = [];
 const allowedAuthPages = ['/'];
 const Main = ({ Component, pageProps }) => {

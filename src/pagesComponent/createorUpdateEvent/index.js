@@ -14,16 +14,10 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-export default function Homepage(props) {
+export default function Index(props) {
   const classes = useStyles();
   return (
-    <Grid
-      container
-      direction="column"
-      style={{
-        background: '#fff',
-      }}
-    >
+    <Grid container direction="column">
       index
     </Grid>
   );

@@ -25,13 +25,7 @@ export default function CheckAuth(props) {
         return;
       }
     }
-    if (props.companyOnly) {
-      if (!user?.roles.some((item) => item === 'Company')) {
-        setNotFound(true);
-        setShowAuth(false);
-        return;
-      }
-    }
+
     if (props.adminOnly) {
       if (!user?.roles.some((item) => item === 'Admin')) {
         setNotFound(true);
