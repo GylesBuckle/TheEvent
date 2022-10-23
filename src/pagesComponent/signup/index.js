@@ -124,11 +124,11 @@ export default function Login() {
       status: false,
       message: '',
     });
-    if (user.userName.value === '') {
+    if (user.firstName.value === '') {
       setUser({
         ...user,
-        userName: {
-          value: user.userName.value,
+        firstName: {
+          value: user.firstName.value,
           error: true,
           errorMessage: t('signup.emptyUsername'),
         },
@@ -172,10 +172,10 @@ export default function Login() {
       });
       return;
     }
-    if (user.terms.value === false) {
+    if (user.password.value !== user.confirmPassword.value) {
       setError({
-        status: true,
-        message: t('signup.acceptTerms'),
+        active: true,
+        message: t('resetPassword.passwordMatch'),
       });
       return;
     }

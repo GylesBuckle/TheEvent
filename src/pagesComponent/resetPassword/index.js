@@ -14,50 +14,42 @@ import axios from '../../utils/axios';
 import { GlobalContext } from '../../context/GlobalContext';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
-import Welcome from '../../reusable/welcomeCurve';
 const useStyles = makeStyles((theme) => ({
   pageHeight: {
-    minHeight: '100vh',
-    backgroundColor: '#fff',
+    ...theme.typography.authBackground,
   },
-  flexContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  formContainer: {
-    width: '60%',
-    [theme.breakpoints.down('xs')]: {
-      width: '90%',
+  card: {
+    background: '#fff',
+    border: '3px solid #fff',
+    borderRadius: '29px',
+    boxShadow: '0px 4px 44px rgba(0, 0, 0, 0.05)',
+    padding: '50px 28px',
+    [theme.breakpoints.down('sm')]: {
+      padding: '30px 20px',
     },
   },
+
   label: {
     ...theme.typography.label,
   },
   input: {
     ...theme.typography.input,
+    background: '#F1F1F1',
     borderRadius: '5px',
     boxShadow: 'none',
-    marginTop: '9px',
+    marginTop: '5px',
+  },
+  inputOutline: {
+    border: 'none',
   },
   checkboxLabel: {
     ...theme.typography.label,
-    fontSize: '14px',
+    fontSize: '12px',
     fontWeight: 500,
     color: '#2D3748',
   },
   button: {
-    ...theme.typography.label,
-    color: theme.palette.common.mainFront,
-    backgroundColor: theme.palette.common.mainBack,
-    borderRadius: '12px',
-    fontWeight: 600,
-    textTransform: 'none',
-    '&:hover': {
-      color: theme.palette.common.mainFront,
-      backgroundColor: theme.palette.common.mainBack,
-    },
+    ...theme.typography.button,
   },
 }));
 
@@ -73,11 +65,7 @@ export default function Login() {
   const { user: globaluser } = useContext(GlobalContext);
 
   if (globaluser !== null && globaluser.token !== undefined) {
-    if (globaluser?.roles?.includes('User')) {
-      router.push('/choose-feature');
-    } else {
-      router.push('/edit-profile');
-    }
+    router.push('/');
   }
 
   const [loading, setLoading] = useState(false);
@@ -170,133 +158,113 @@ export default function Login() {
   };
 
   return (
-    <Grid container alignItems="stretch">
-      {!matchesSM && (
-        <Grid item md={6} className={classes.pageHeight}>
-          <Welcome />
-        </Grid>
-      )}
-      <Grid item md={6} xs={12} className={[classes.pageHeight, classes.flexContainer].join(' ')}>
-        <div className={classes.formContainer}>
-          <Grid container alignItems={matchesSM ? 'center' : undefined} direction="column">
-            <Grid item>
-              {!matchesSM ? (
-                <img
-                  alt="encryption"
-                  src="/dev/encryption.png"
-                  style={{ width: '42px', height: '42px' }}
-                />
-              ) : (
-                <img height="60" width="150" alt="logo" src="/dev/tappio.png" />
-              )}
-            </Grid>
-
-            <Grid item>
-              <Typography align={matchesSM ? 'center' : 'left'} variant="h4">
-                {' '}
-                {t('resetPassword.title')}
-              </Typography>
-            </Grid>
-            <Grid item style={{ marginTop: '0.3em' }}>
-              <Typography align={matchesSM ? 'center' : 'left'} variant="subtitle2">
-                {t('resetPassword.description')}
-              </Typography>
-            </Grid>
-
-            {/* for password */}
-            <Grid item style={{ marginTop: '1em', width: '100%' }}>
-              <label htmlFor="new-password" className={classes.label}>
-                {t('resetPassword.newPassword')}
-              </label>
-              <TextField
-                type="password"
-                placeholder={t('resetPassword.newPassword')}
-                id="new-password"
-                variant="outlined"
-                fullWidth
-                size="small"
-                InputProps={{
-                  classes: {
-                    root: classes.input,
-                    notchedOutline: classes.inputOutline,
-                  },
-                }}
-                required
-                error={user.password.error}
-                helperText={user.password.error ? user.password.errorMessage : ''}
-                value={user.password.value}
-                onChange={(e) =>
-                  setUser({
-                    ...user,
-                    password: {
-                      value: e.target.value,
-                      error: false,
-                      errorMessage: '',
-                    },
-                  })
-                }
-              />
-            </Grid>
-            {/* for confirm password */}
-            <Grid item style={{ marginTop: '1em', width: '100%' }}>
-              <label htmlFor="password" className={classes.label}>
-                {t('resetPassword.confirmPassword')}
-              </label>
-              <TextField
-                type="password"
-                placeholder={t('resetPassword.confirmPassword')}
-                id="password"
-                variant="outlined"
-                fullWidth
-                size="small"
-                InputProps={{
-                  classes: {
-                    root: classes.input,
-                    notchedOutline: classes.inputOutline,
-                  },
-                }}
-                required
-                error={user.confirmPassword.error}
-                helperText={user.confirmPassword.error ? user.confirmPassword.errorMessage : ''}
-                value={user.confirmPassword.value}
-                onChange={(e) =>
-                  setUser({
-                    ...user,
-                    confirmPassword: {
-                      value: e.target.value,
-                      error: false,
-                      errorMessage: '',
-                    },
-                  })
-                }
-              />
-            </Grid>
-
-            {error.status && (
-              <Grid item style={{ marginTop: '0.5em', width: '100%' }}>
-                <Typography variant="subtitle2" style={{ display: 'flex', alignItems: 'center' }}>
-                  {' '}
-                  <ErrorOutlineIcon style={{ fill: 'red', marginRight: '4px' }} /> {error.message}
-                </Typography>
-              </Grid>
-            )}
-            {/* Send button */}
-            <Grid item style={{ marginTop: '2em', width: '100%' }}>
-              <Button
-                fullWidth
-                className={classes.button}
-                disabled={loading}
-                onClick={SubmitHandler}
-              >
-                {loading ? (
-                  <CircularProgress size="2rem" style={{ color: theme.palette.common.mainFront }} />
-                ) : (
-                  t('resetPassword.button')
-                )}
-              </Button>
-            </Grid>
+    <Grid container className={classes.pageHeight} justifyContent="center" alignItems="center">
+      <Grid item md={5} xs={12} className={classes.card}>
+        <Grid container alignItems={'center'} direction="column">
+          <Grid item>
+            <img style={{ width: '100%', height: '100%' }} alt="logo" src="/dev/logo.png" />
           </Grid>
-        </div>
+
+          <Grid item>
+            <Typography align={matchesSM ? 'center' : 'left'} variant="h4">
+              {' '}
+              {t('resetPassword.title')}
+            </Typography>
+          </Grid>
+          <Grid item style={{ marginTop: '0.3em' }}>
+            <Typography align={matchesSM ? 'center' : 'left'} variant="subtitle2">
+              {t('resetPassword.description')}
+            </Typography>
+          </Grid>
+
+          {/* for password */}
+          <Grid item style={{ marginTop: '1em', width: '100%' }}>
+            <label htmlFor="new-password" className={classes.label}>
+              {t('resetPassword.newPassword')}
+            </label>
+            <TextField
+              type="password"
+              placeholder={t('resetPassword.newPassword')}
+              id="new-password"
+              variant="outlined"
+              fullWidth
+              size="small"
+              InputProps={{
+                classes: {
+                  root: classes.input,
+                  notchedOutline: classes.inputOutline,
+                },
+              }}
+              required
+              error={user.password.error}
+              helperText={user.password.error ? user.password.errorMessage : ''}
+              value={user.password.value}
+              onChange={(e) =>
+                setUser({
+                  ...user,
+                  password: {
+                    value: e.target.value,
+                    error: false,
+                    errorMessage: '',
+                  },
+                })
+              }
+            />
+          </Grid>
+          {/* for confirm password */}
+          <Grid item style={{ marginTop: '1em', width: '100%' }}>
+            <label htmlFor="password" className={classes.label}>
+              {t('resetPassword.confirmPassword')}
+            </label>
+            <TextField
+              type="password"
+              placeholder={t('resetPassword.confirmPassword')}
+              id="password"
+              variant="outlined"
+              fullWidth
+              size="small"
+              InputProps={{
+                classes: {
+                  root: classes.input,
+                  notchedOutline: classes.inputOutline,
+                },
+              }}
+              required
+              error={user.confirmPassword.error}
+              helperText={user.confirmPassword.error ? user.confirmPassword.errorMessage : ''}
+              value={user.confirmPassword.value}
+              onChange={(e) =>
+                setUser({
+                  ...user,
+                  confirmPassword: {
+                    value: e.target.value,
+                    error: false,
+                    errorMessage: '',
+                  },
+                })
+              }
+            />
+          </Grid>
+
+          {error.status && (
+            <Grid item style={{ marginTop: '0.5em', width: '100%' }}>
+              <Typography variant="subtitle2" style={{ display: 'flex', alignItems: 'center' }}>
+                {' '}
+                <ErrorOutlineIcon style={{ fill: 'red', marginRight: '4px' }} /> {error.message}
+              </Typography>
+            </Grid>
+          )}
+          {/* Send button */}
+          <Grid item style={{ marginTop: '2em', width: '100%' }}>
+            <Button fullWidth className={classes.button} disabled={loading} onClick={SubmitHandler}>
+              {loading ? (
+                <CircularProgress size="2rem" style={{ color: theme.palette.common.mainFront }} />
+              ) : (
+                t('resetPassword.button')
+              )}
+            </Button>
+          </Grid>
+        </Grid>
       </Grid>
     </Grid>
   );
