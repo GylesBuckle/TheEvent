@@ -27,6 +27,7 @@ i18n
           forgetPassword: enTran.forgetPassword,
           resetPassword: enTran.resetPassword,
           homepage: enTran.homepage,
+          events: enTran.events,
           // here we will place our translations...
         },
       },
