@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
 import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
@@ -13,16 +13,20 @@ import {
   DialogContent,
   Button,
   InputAdornment,
+  IconButton,
 } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import DeleteIcon from '@material-ui/icons/Delete';
+import CloseIcon from '@material-ui/icons/Close';
 
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import { TagsInput } from 'react-tag-input-component';
 import { DropzoneArea } from 'material-ui-dropzone';
 import Flatpickr from 'react-flatpickr';
 import { compressAccurately } from 'image-conversion';
 import Cropper from 'react-cropper';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 import * as websiteInfo from '../../data/websiteInfo';
 import dataURLtoFile from '../../utils/dataURLtoFile';
@@ -65,13 +69,24 @@ const useStyles = makeStyles((theme) => ({
   },
   dropZoneTextContainer: {
     margin: 0,
+    height: '100%',
   },
   dropzoneRoot: {
     minHeight: '100px',
     border: '1px dashed #989090',
-    padding: '10px 5px',
+    padding: '5px',
     borderRadius: 15,
     height: '100%',
+    boxSizing: 'border-box',
+  },
+  sponsorsDropzoneRoot: {
+    width: '150px',
+    height: '150px',
+  },
+  speakerDropzoneRoot: {
+    padding: 0,
+    width: '180px',
+    height: '200px',
   },
   hide: {
     display: 'none',
@@ -82,7 +97,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function Index(props) {
   const { t } = useTranslation();
+  const sponsorsDropzoneRef = useRef();
 
+  const theme = useTheme();
   const classes = useStyles();
   const [data, setData] = useState({
     name: '',
@@ -134,10 +151,26 @@ export default function Index(props) {
     active: false,
     file: null,
     fileName: '',
+    index: 0,
   });
 
   useEffect(() => {
     // bio.replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+    //globaluser.portfolio?.lifeStyleImages.map((x) => {
+    //   return {
+    //     img: x,
+    //     new: false,
+    //   };
+    // })
+    //deletedSponsorsImages:[]
+    // businessLinkImages: globaluser.portfolio?.businessLinkImages
+    // ? globaluser.portfolio?.businessLinkImages.map((x) => {
+    //     return {
+    //       ...x,
+    //       new: false,
+    //     };
+    //   })
+    // : [],
   }, []);
 
   const imageChangeHandler = (files) => {
@@ -200,6 +233,62 @@ export default function Index(props) {
       //   setCropData(cropper.getCroppedCanvas().toDataURL());
     }
   };
+  const sponsorsUploadHandler = () => {
+    if (typeof cropper !== 'undefined') {
+      let obj = dataURLtoFile(
+        cropper.getCroppedCanvas().toDataURL(showSponsorCropper.type),
+        showSponsorCropper.fileName
+      );
+
+      setData((pro) => {
+        return {
+          ...pro,
+          sponsors: [
+            ...pro.sponsors,
+            {
+              img: obj,
+              new: true,
+            },
+          ],
+        };
+      });
+      setShowSponsorCropper({
+        active: false,
+        file: null,
+        fileName: '',
+      });
+      setZoom(1);
+      setCropper();
+    }
+  };
+  const speakerUploadHandler = () => {
+    if (typeof cropper !== 'undefined') {
+      let obj = dataURLtoFile(
+        cropper.getCroppedCanvas().toDataURL(showSpeakerCropper.type),
+        showSpeakerCropper.fileName
+      );
+
+      setData({
+        ...data,
+        speakers: data.speakers.map((s, index) => {
+          if (index === showSpeakerCropper.index) {
+            s.image = obj;
+            s.new = true;
+          }
+          return s;
+        }),
+      });
+      setShowSpeakerCropper({
+        active: false,
+        file: null,
+        fileName: '',
+        index: 0,
+      });
+      setZoom(1);
+      setCropper();
+    }
+  };
+
   const searchLocationHandler = async (value) => {
     let language = 'en';
     if (value) {
@@ -208,6 +297,39 @@ export default function Index(props) {
         setAutoCompleteSuggestions(results.data);
       }
     }
+  };
+
+  const reorder = (list, startIndex, endIndex) => {
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+    return result;
+  };
+
+  const getItemStyle = (isDragging, draggableStyle) => ({
+    // some basic styles to make the items look a bit nicer
+    userSelect: 'none',
+
+    margin: `0 0 8px 0`,
+    //marginTop: '2em',
+    // change background colour if dragging
+    background: 'inherit',
+    overflow: 'hidden',
+    // styles we need to apply on draggables
+    ...draggableStyle,
+  });
+
+  const onDragEnd = async (result) => {
+    // dropped outside the list
+    if (!result.destination) {
+      return;
+    }
+
+    const items = reorder(data.speakers, result.source.index, result.destination.index);
+    setData({
+      ...data,
+      speakers: items,
+    });
   };
   const imageCroperDialog = (
     <Dialog
@@ -283,9 +405,153 @@ export default function Index(props) {
       </DialogContent>
     </Dialog>
   );
+  const sponsorsCroperDialog = (
+    <Dialog
+      maxWidth="lg"
+      fullWidth
+      open={showSponsorCropper.active}
+      onClose={() => {
+        setShowSponsorCropper({
+          active: false,
+          file: null,
+          fileName: '',
+        });
+      }}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      <DialogContent>
+        <Cropper
+          style={{ height: 390, width: '100%' }}
+          aspectRatio={1 / 1} //means 39% height as compare to width
+          guides={false}
+          src={showSponsorCropper.file}
+          viewMode={1}
+          dragMode="move"
+          cropBoxMovable={false}
+          zoomTo={zoom}
+          responsive={true}
+          onInitialized={(instance) => {
+            setCropper(instance);
+          }}
+        />
+
+        <div style={{ marginTop: '1em' }}>
+          <Slider
+            value={zoom}
+            //min={1}
+            max={3}
+            step={0.1}
+            aria-labelledby="Zoom"
+            onChange={(e, zoom) => setZoom(zoom)}
+            classes={{ root: 'slider' }}
+          />
+        </div>
+
+        <div style={{ marginTop: '1em' }}>
+          <Grid container spacing={2} justifyContent="flex-end">
+            <Grid item>
+              <Button
+                variant="outlined"
+                className={classes.button}
+                onClick={() =>
+                  setShowSponsorCropper({
+                    active: false,
+                    file: null,
+                    fileName: '',
+                  })
+                }
+              >
+                {t('events.createEvent.cancel')}
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button variant="outlined" className={classes.button} onClick={sponsorsUploadHandler}>
+                {t('events.createEvent.save')}
+              </Button>
+            </Grid>
+          </Grid>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+  const speakersCroperDialog = (
+    <Dialog
+      maxWidth="lg"
+      fullWidth
+      open={showSpeakerCropper.active}
+      onClose={() => {
+        setShowSpeakerCropper({
+          active: false,
+          file: null,
+          fileName: '',
+          index: 0,
+        });
+      }}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      <DialogContent>
+        <Cropper
+          style={{ height: 390, width: '100%' }}
+          aspectRatio={9 / 10}
+          guides={false}
+          src={showSpeakerCropper.file}
+          viewMode={1}
+          dragMode="move"
+          cropBoxMovable={false}
+          zoomTo={zoom}
+          responsive={true}
+          onInitialized={(instance) => {
+            setCropper(instance);
+          }}
+        />
+
+        <div style={{ marginTop: '1em' }}>
+          <Slider
+            value={zoom}
+            //min={1}
+            max={3}
+            step={0.1}
+            aria-labelledby="Zoom"
+            onChange={(e, zoom) => setZoom(zoom)}
+            classes={{ root: 'slider' }}
+          />
+        </div>
+
+        <div style={{ marginTop: '1em' }}>
+          <Grid container spacing={2} justifyContent="flex-end">
+            <Grid item>
+              <Button
+                variant="outlined"
+                className={classes.button}
+                onClick={() =>
+                  setShowSpeakerCropper({
+                    active: false,
+                    file: null,
+                    fileName: '',
+                    index: 0,
+                  })
+                }
+              >
+                {t('events.createEvent.cancel')}
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button variant="outlined" className={classes.button} onClick={speakerUploadHandler}>
+                {t('events.createEvent.save')}
+              </Button>
+            </Grid>
+          </Grid>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
   return (
     <Grid container direction="column" className={classes.paddingContainer}>
       {imageCroperDialog}
+      {sponsorsCroperDialog}
+      {speakersCroperDialog}
       <Snackbar
         open={showToast.active}
         autoHideDuration={6000}
@@ -1372,7 +1638,386 @@ export default function Index(props) {
           </Grid>
         </Grid>
       </Grid>
-
+      {/* sponsors heading */}
+      <Grid item style={{ marginTop: '2em' }}>
+        <Typography variant="h5">{t('events.createEvent.sponsors')}</Typography>
+      </Grid>
+      {/* sponsors */}
+      <Grid item style={{ marginTop: '1em' }}>
+        <Grid container spacing={2}>
+          <Grid item>
+            <DropzoneArea
+              classes={{
+                icon: classes.hide,
+                root: [classes.dropzoneRoot, classes.sponsorsDropzoneRoot].join(' '),
+                text: classes.dropZoneTextContainer,
+              }}
+              ref={sponsorsDropzoneRef}
+              showAlerts={false}
+              filesLimit={1}
+              showPreviewsInDropzone={false}
+              acceptedFiles={['image/*']}
+              dropzoneText={
+                <Grid
+                  container
+                  justify="center"
+                  alignItems="center"
+                  direction="column"
+                  style={{ padding: '0.3em', height: '100%' }}
+                >
+                  <Grid item>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="61"
+                      height="61"
+                      fill="none"
+                      viewBox="0 0 61 61"
+                    >
+                      <path
+                        fill="#5D5D5D"
+                        d="M47.508 28.163l-.99.142a1 1 0 001.007.858l-.017-1zm-33.152-4.974l.065.997a1 1 0 00.84-.57l-.905-.427zM47.685 49.16c6.075 0 11-4.924 11-11h-2a9 9 0 01-9 9v2zm11-11c0-6.075-4.925-11-11-11v2a9 9 0 019 9h2zm-11-11l-.195.002.035 2 .16-.002v-2zm.813.86c-1.282-8.966-8.992-15.86-18.313-15.86v2c8.312 0 15.19 6.148 16.333 14.144l1.98-.284zm-18.313-15.86c-7.393 0-13.77 4.337-16.733 10.6l1.808.855c2.644-5.59 8.334-9.454 14.925-9.454v-2zM14.29 22.191c-7.04.46-12.606 6.315-12.606 13.47h2c0-6.094 4.742-11.082 10.736-11.475l-.13-1.995zM1.685 35.66c0 7.456 6.044 13.5 13.5 13.5v-2c-6.351 0-11.5-5.148-11.5-11.5h-2zm46 11.5h-32.5v2h32.5v-2z"
+                      ></path>
+                      <path
+                        stroke="#5D5D5D"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M30.185 40.661v-15M22.685 30.662l7.5-5 7.5 5"
+                      ></path>
+                    </svg>
+                  </Grid>
+                  <Grid item>
+                    <Typography
+                      variant="body2"
+                      style={{ fontSize: '16px', color: '#989090', fontWeight: 400 }}
+                      align="center"
+                      className={[classes.label, classes.roboto].join(' ')}
+                    >
+                      {t('events.createEvent.uploadImage')}
+                    </Typography>
+                  </Grid>
+                </Grid>
+              }
+              onChange={(files) => {
+                const maximumSize = websiteInfo.maximumFileSize;
+                if (!files || !files[0]) {
+                  return;
+                }
+                if (files[0].size > maximumSize) {
+                  setShowToast({
+                    active: true,
+                    message: t('events.createEvent.sizeError'),
+                    severity: 'error',
+                  });
+                  return;
+                }
+                const fn = files[0].name;
+                const type = files[0].type;
+                const reader = new FileReader();
+                reader.onload = () => {
+                  setShowSponsorCropper({
+                    active: true,
+                    file: reader.result,
+                    type: type,
+                    fileName: fn,
+                  });
+                };
+                reader.readAsDataURL(files[0]);
+              }}
+            />
+          </Grid>
+          {data.sponsors.map((item, i) => (
+            <Grid item>
+              <div
+                key={i}
+                style={{
+                  width: '100%',
+                  position: 'relative',
+                }}
+              >
+                <img
+                  src={
+                    item.new === true
+                      ? URL.createObjectURL(item.img)
+                      : publicRuntimeConfig.REACT_APP_API_URL + '/files/sponsors/' + item.img
+                  }
+                  alt={item.new === true ? item.img.name : item.img}
+                  className={[classes.dropzoneRoot, classes.sponsorsDropzoneRoot].join(' ')}
+                />
+                <IconButton
+                  size="small"
+                  onClick={() => {
+                    const dataCopy = { ...data };
+                    const images = [...dataCopy.sponsors];
+                    let deletedImages = [];
+                    const newImages = images.filter((im, index) => {
+                      if (i === index && im.new === false) {
+                        deletedImages.push(im.img);
+                      }
+                      return i !== index;
+                    });
+                    setData({
+                      ...data,
+                      sponsors: newImages,
+                      deletedSponsorsImages: deletedImages,
+                    });
+                  }}
+                  style={{
+                    position: 'absolute',
+                    top: -8,
+                    right: -8,
+                    backgroundColor: theme.palette.primary.main,
+                    color: theme.palette.secondary.main,
+                  }}
+                >
+                  <DeleteIcon size="small" />
+                </IconButton>
+              </div>
+            </Grid>
+          ))}
+        </Grid>
+      </Grid>
+      {/* speakers heading */}
+      <Grid item style={{ marginTop: '2em' }}>
+        <Typography variant="h5">{t('events.createEvent.speakers')}</Typography>
+      </Grid>
+      {/* speakers add icon */}
+      <Grid item style={{ marginTop: '1em' }}>
+        <div
+          className={classes.dropzoneRoot}
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '140px',
+            height: '140px',
+            cursor: 'pointer',
+          }}
+          onClick={() => {
+            setData({
+              ...data,
+              speakers: [
+                {
+                  image: '',
+                  name: '',
+                  description: '',
+                  occupation: '',
+                  facebook: '',
+                  twitter: '',
+                  insta: '',
+                  linkdin: '',
+                  snapchat: '',
+                  whatsApp: '',
+                  new: true,
+                },
+                ...data.speakers,
+              ],
+            });
+            setTimeout(() => {
+              window.scrollBy(0, 500);
+            }, 1000);
+          }}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="71"
+            height="71"
+            fill="none"
+            viewBox="0 0 71 71"
+          >
+            <path
+              stroke="#989090"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="3"
+              d="M18.343 35.609h35M35.843 53.109v-35"
+            ></path>
+          </svg>
+        </div>
+      </Grid>
+      {/* speakers list */}
+      <Grid item style={{ marginTop: '1.5em' }}>
+        <Grid container direction="column">
+          <DragDropContext onDragEnd={onDragEnd}>
+            <Droppable droppableId="characters">
+              {(provided, snapshot) => (
+                <div className="characters" {...provided.droppableProps} ref={provided.innerRef}>
+                  {data.speakers.map((item, i) => (
+                    <Grid
+                      item
+                      key={i}
+                      style={{
+                        border: '1px solid #D1D0D3',
+                        borderRadius: '15px',
+                        padding: '20px',
+                        position: 'relative',
+                        marginTop: i === 0 ? 0 : '20px',
+                      }}
+                    >
+                      <Draggable key={`${i}`} draggableId={`${i}`} index={i}>
+                        {(provided, snapshot) => (
+                          <div
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
+                          >
+                            {/* delete icon */}
+                            <div
+                              style={{
+                                position: 'absolute',
+                                top: 10,
+                                right: 10,
+                                cursor: 'pointer',
+                              }}
+                              onClick={() => {
+                                const dataCopy = { ...data };
+                                const images = [...dataCopy.speakers];
+                                let deletedImages = [];
+                                const newImages = images.filter((im, index) => {
+                                  if (i === index && im.new === false) {
+                                    deletedImages.push(im.img);
+                                  }
+                                  return i !== index;
+                                });
+                                setData({
+                                  ...data,
+                                  speakers: newImages,
+                                  deletedSpeakersImages: deletedImages,
+                                });
+                              }}
+                            >
+                              <CloseIcon />
+                            </div>
+                            <Grid container direction="column">
+                              {/* for image */}
+                              <Grid item style={{ width: '100%' }}>
+                                <Grid container>
+                                  {/* for image */}
+                                  <Grid item>
+                                    <DropzoneArea
+                                      classes={{
+                                        icon: classes.hide,
+                                        root: [
+                                          classes.dropzoneRoot,
+                                          classes.speakerDropzoneRoot,
+                                        ].join(' '),
+                                        text: classes.dropZoneTextContainer,
+                                      }}
+                                      showAlerts={false}
+                                      filesLimit={1}
+                                      showPreviewsInDropzone={false}
+                                      acceptedFiles={['image/*']}
+                                      dropzoneText={
+                                        item.image !== '' ? (
+                                          <img
+                                            src={
+                                              item.new === true
+                                                ? URL.createObjectURL(item.image)
+                                                : publicRuntimeConfig.REACT_APP_API_URL +
+                                                  '/files/speakers/' +
+                                                  item.image
+                                            }
+                                            style={{ borderRadius: 15 }}
+                                            className={[classes.speakerDropzoneRoot].join(' ')}
+                                          />
+                                        ) : (
+                                          <Grid
+                                            container
+                                            justify="center"
+                                            alignItems="center"
+                                            direction="column"
+                                            style={{ padding: '0.3em', height: '100%' }}
+                                          >
+                                            <Grid item>
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="61"
+                                                height="61"
+                                                fill="none"
+                                                viewBox="0 0 61 61"
+                                              >
+                                                <path
+                                                  fill="#5D5D5D"
+                                                  d="M47.508 28.163l-.99.142a1 1 0 001.007.858l-.017-1zm-33.152-4.974l.065.997a1 1 0 00.84-.57l-.905-.427zM47.685 49.16c6.075 0 11-4.924 11-11h-2a9 9 0 01-9 9v2zm11-11c0-6.075-4.925-11-11-11v2a9 9 0 019 9h2zm-11-11l-.195.002.035 2 .16-.002v-2zm.813.86c-1.282-8.966-8.992-15.86-18.313-15.86v2c8.312 0 15.19 6.148 16.333 14.144l1.98-.284zm-18.313-15.86c-7.393 0-13.77 4.337-16.733 10.6l1.808.855c2.644-5.59 8.334-9.454 14.925-9.454v-2zM14.29 22.191c-7.04.46-12.606 6.315-12.606 13.47h2c0-6.094 4.742-11.082 10.736-11.475l-.13-1.995zM1.685 35.66c0 7.456 6.044 13.5 13.5 13.5v-2c-6.351 0-11.5-5.148-11.5-11.5h-2zm46 11.5h-32.5v2h32.5v-2z"
+                                                ></path>
+                                                <path
+                                                  stroke="#5D5D5D"
+                                                  strokeLinecap="round"
+                                                  strokeLinejoin="round"
+                                                  strokeWidth="2"
+                                                  d="M30.185 40.661v-15M22.685 30.662l7.5-5 7.5 5"
+                                                ></path>
+                                              </svg>
+                                            </Grid>
+                                            <Grid item>
+                                              <Typography
+                                                variant="body2"
+                                                style={{
+                                                  fontSize: '16px',
+                                                  color: '#989090',
+                                                  fontWeight: 400,
+                                                }}
+                                                align="center"
+                                                className={[classes.label, classes.roboto].join(
+                                                  ' '
+                                                )}
+                                              >
+                                                {t('events.createEvent.uploadImage')}
+                                              </Typography>
+                                            </Grid>
+                                          </Grid>
+                                        )
+                                      }
+                                      onChange={(files) => {
+                                        const maximumSize = websiteInfo.maximumFileSize;
+                                        if (!files || !files[0]) {
+                                          return;
+                                        }
+                                        if (files[0].size > maximumSize) {
+                                          setShowToast({
+                                            active: true,
+                                            message: t('events.createEvent.sizeError'),
+                                            severity: 'error',
+                                          });
+                                          return;
+                                        }
+                                        const fn = files[0].name;
+                                        const type = files[0].type;
+                                        const reader = new FileReader();
+                                        reader.onload = () => {
+                                          setShowSpeakerCropper({
+                                            active: true,
+                                            file: reader.result,
+                                            type: type,
+                                            fileName: fn,
+                                            index: i,
+                                          });
+                                        };
+                                        reader.readAsDataURL(files[0]);
+                                      }}
+                                    />
+                                  </Grid>
+                                  {/* name description */}
+                                  <Grid item style={{ flex: 1 }}></Grid>
+                                  {/* occupation */}
+                                  <Grid item style={{ flex: 1 }}></Grid>
+                                </Grid>
+                              </Grid>
+                              {/* for speaker network */}
+                              <Grid item style={{ width: '100%' }}></Grid>
+                            </Grid>
+                          </div>
+                        )}
+                      </Draggable>
+                    </Grid>
+                  ))}
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
+        </Grid>
+      </Grid>
       <style>
         {`
      
@@ -1387,6 +2032,9 @@ export default function Index(props) {
           }
           .rti--container input{
             background: #F1F1F1;
+          }
+          .MuiDropzoneArea-textContainer{
+            height: 100%;
           }
         `}
       </style>
