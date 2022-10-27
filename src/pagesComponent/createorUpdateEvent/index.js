@@ -15,6 +15,7 @@ import {
   InputAdornment,
   IconButton,
   useMediaQuery,
+  CircularProgress,
 } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -128,6 +129,10 @@ export default function Index(props) {
     sponsors: [],
     speakers: [],
     schedule: [],
+  });
+  const [loading, setLoading] = useState({
+    active: false,
+    action: '',
   });
   const [errors, setError] = useState([]);
   const [showToast, setShowToast] = useState({
@@ -335,6 +340,10 @@ export default function Index(props) {
       [key]: items,
     });
   };
+
+  const validate = () => {};
+  const resetHandler = () => {};
+  const SubmitHandler = () => {};
 
   const imageCroperDialog = (
     <Dialog
@@ -2543,26 +2552,26 @@ export default function Index(props) {
         </div>
       </Grid>
       {/* schedule list */}
-      <Grid item style={{ marginTop: '1.5em', marginBottom: '4em' }}>
+      <Grid item style={{ marginTop: '1.5em' }}>
         <Grid container direction="column">
           <DragDropContext onDragEnd={(result) => onDragEnd('schedule', result)}>
-            <Droppable droppableId="characterss">
+            <Droppable droppableId="characters">
               {(provided, snapshot) => (
-                <div className="characterss" {...provided.droppableProps} ref={provided.innerRef}>
+                <div className="characters" {...provided.droppableProps} ref={provided.innerRef}>
                   {data.schedule.map((item, i) => (
                     <Grid
                       item
                       key={i}
                       style={{
+                        boxSizing: 'border-box',
                         border: '1px solid #D1D0D3',
                         borderRadius: '15px',
-                        padding: '20px',
-                        paddingTop: '40px',
+
                         position: 'relative',
                         marginTop: i === 0 ? 0 : '20px',
                       }}
                     >
-                      <Draggable key={`${i}`} draggableId={`${i}`} index={i}>
+                      <Draggable draggableId={`${i}`} index={i}>
                         {(provided, snapshot) => (
                           <div
                             ref={provided.innerRef}
@@ -2570,277 +2579,279 @@ export default function Index(props) {
                             {...provided.dragHandleProps}
                             style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
                           >
-                            {/* delete icon */}
-                            <div
-                              style={{
-                                position: 'absolute',
-                                top: 10,
-                                right: 10,
-                                cursor: 'pointer',
-                              }}
-                              onClick={() => {
-                                const dataCopy = { ...data };
-                                const scheduleCopy = [...dataCopy.schedule];
-                                const newSchedule = scheduleCopy.filter((im, index) => {
-                                  return i !== index;
-                                });
-                                setData({
-                                  ...data,
-                                  schedule: newSchedule,
-                                });
-                              }}
-                            >
-                              <CloseIcon />
-                            </div>
-                            <Grid container direction="column">
-                              {/* startDate time topic */}
-                              <Grid item style={{ width: '100%' }}>
-                                <Grid container spacing={2}>
-                                  {/* startDate */}
-                                  <Grid item sm={4} xs={12}>
-                                    <Flatpickr
-                                      value={item.startDate}
-                                      onChange={(date) => {
-                                        setData({
-                                          ...data,
-                                          schedule: data.schedule.map((s, index) => {
-                                            if (index === i) {
-                                              s.startDate = date[0];
-                                            }
-                                            return s;
-                                          }),
-                                        });
-                                      }}
-                                      options={{
-                                        dateFormat: 'd M Y',
-                                        altFormat: 'F j, Y',
-                                        altInput: false,
-                                        altInputClass: classes.input,
-                                        // formatDate: (d) => {
-                                        //   console.log(d, '');
-                                        // },
-                                      }}
-                                      render={({ defaultValue, value, ...props }, ref) => {
-                                        return (
-                                          <TextField
-                                            placeholder={t('events.createEvent.startDate')}
-                                            variant="outlined"
-                                            fullWidth
-                                            //size="small"
-                                            InputProps={{
-                                              classes: {
-                                                root: classes.input,
-                                                notchedOutline: classes.inputOutline,
-                                              },
-                                              endAdornment: (
-                                                <InputAdornment>
-                                                  <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    width="25"
-                                                    height="25"
-                                                    fill="none"
-                                                    viewBox="0 0 25 25"
-                                                  >
-                                                    <path
-                                                      stroke="#5D5D5D"
-                                                      strokeLinecap="round"
-                                                      strokeLinejoin="round"
-                                                      strokeWidth="2"
-                                                      d="M19.231 4.854h-14a1 1 0 00-1 1v14a1 1 0 001 1h14a1 1 0 001-1v-14a1 1 0 00-1-1z"
-                                                    ></path>
-                                                    <path
-                                                      stroke="#5D5D5D"
-                                                      strokeLinecap="round"
-                                                      strokeLinejoin="round"
-                                                      strokeWidth="2"
-                                                      d="M16.231 16.854h.002v.002h-.002v-.002zM12.231 16.854h.002v.002h-.002v-.002zM8.231 16.854h.002v.002h-.002v-.002zM16.231 12.854h.002v.002h-.002v-.002zM12.231 12.854h.002v.002h-.002v-.002zM8.231 12.854h.002v.002h-.002v-.002zM4.231 8.854h16M16.231 2.854v2M8.231 2.854v2"
-                                                    ></path>
-                                                  </svg>
-                                                </InputAdornment>
-                                              ),
-                                            }}
-                                            inputRef={ref}
-                                          />
-                                        );
-                                      }}
-                                    />
-                                  </Grid>
+                            <div style={{ margin: '20px', marginTop: '40px' }}>
+                              {/* delete icon */}
+                              <div
+                                style={{
+                                  position: 'absolute',
+                                  top: 10,
+                                  right: 10,
+                                  cursor: 'pointer',
+                                }}
+                                onClick={() => {
+                                  const dataCopy = { ...data };
+                                  const scheduleCopy = [...dataCopy.schedule];
+                                  const newSchedule = scheduleCopy.filter((im, index) => {
+                                    return i !== index;
+                                  });
+                                  setData({
+                                    ...data,
+                                    schedule: newSchedule,
+                                  });
+                                }}
+                              >
+                                <CloseIcon />
+                              </div>
+                              <Grid container direction="column">
+                                {/* startDate time topic */}
+                                <Grid item style={{ width: '100%' }}>
+                                  <Grid container spacing={2}>
+                                    {/* startDate */}
+                                    <Grid item sm={4} xs={12}>
+                                      <Flatpickr
+                                        value={item.startDate}
+                                        onChange={(date) => {
+                                          setData({
+                                            ...data,
+                                            schedule: data.schedule.map((s, index) => {
+                                              if (index === i) {
+                                                s.startDate = date[0];
+                                              }
+                                              return s;
+                                            }),
+                                          });
+                                        }}
+                                        options={{
+                                          dateFormat: 'd M Y',
+                                          altFormat: 'F j, Y',
+                                          altInput: false,
+                                          altInputClass: classes.input,
+                                          // formatDate: (d) => {
+                                          //   console.log(d, '');
+                                          // },
+                                        }}
+                                        render={({ defaultValue, value, ...props }, ref) => {
+                                          return (
+                                            <TextField
+                                              placeholder={t('events.createEvent.startDate')}
+                                              variant="outlined"
+                                              fullWidth
+                                              //size="small"
+                                              InputProps={{
+                                                classes: {
+                                                  root: classes.input,
+                                                  notchedOutline: classes.inputOutline,
+                                                },
+                                                endAdornment: (
+                                                  <InputAdornment>
+                                                    <svg
+                                                      xmlns="http://www.w3.org/2000/svg"
+                                                      width="25"
+                                                      height="25"
+                                                      fill="none"
+                                                      viewBox="0 0 25 25"
+                                                    >
+                                                      <path
+                                                        stroke="#5D5D5D"
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                        strokeWidth="2"
+                                                        d="M19.231 4.854h-14a1 1 0 00-1 1v14a1 1 0 001 1h14a1 1 0 001-1v-14a1 1 0 00-1-1z"
+                                                      ></path>
+                                                      <path
+                                                        stroke="#5D5D5D"
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                        strokeWidth="2"
+                                                        d="M16.231 16.854h.002v.002h-.002v-.002zM12.231 16.854h.002v.002h-.002v-.002zM8.231 16.854h.002v.002h-.002v-.002zM16.231 12.854h.002v.002h-.002v-.002zM12.231 12.854h.002v.002h-.002v-.002zM8.231 12.854h.002v.002h-.002v-.002zM4.231 8.854h16M16.231 2.854v2M8.231 2.854v2"
+                                                      ></path>
+                                                    </svg>
+                                                  </InputAdornment>
+                                                ),
+                                              }}
+                                              inputRef={ref}
+                                            />
+                                          );
+                                        }}
+                                      />
+                                    </Grid>
 
-                                  {/* time */}
-                                  <Grid item sm={4} xs={12}>
-                                    <Flatpickr
-                                      value={item.time}
-                                      onChange={(date) => {
-                                        setData({
-                                          ...data,
-                                          schedule: data.schedule.map((s, index) => {
-                                            if (index === i) {
-                                              s.time = date[0];
-                                            }
-                                            return s;
-                                          }),
-                                        });
-                                      }}
-                                      options={{
-                                        mode: 'time',
-                                        // dateFormat: 'd M Y',
-                                        // altFormat: 'F j, Y',
-                                        altInput: false,
-                                        altInputClass: classes.input,
-                                        // formatDate: (d) => {
-                                        //   console.log(d, '');
-                                        // },
-                                      }}
-                                      render={({ defaultValue, value, ...props }, ref) => {
-                                        return (
-                                          <TextField
-                                            placeholder={t('events.createEvent.time')}
-                                            //label={data.startDate ? '' : 'Start Date'}
-                                            id="endDate"
-                                            variant="outlined"
-                                            fullWidth
-                                            //size="small"
-                                            InputProps={{
-                                              classes: {
-                                                root: classes.input,
-                                                notchedOutline: classes.inputOutline,
-                                              },
-                                              endAdornment: (
-                                                <InputAdornment>
-                                                  <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    width="25"
-                                                    height="24"
-                                                    fill="none"
-                                                    viewBox="0 0 25 24"
-                                                  >
-                                                    <path
-                                                      stroke="#5D5D5D"
-                                                      strokeLinecap="round"
-                                                      strokeLinejoin="round"
-                                                      strokeMiterlimit="10"
-                                                      strokeWidth="2"
-                                                      d="M12.231 21a9 9 0 100-18 9 9 0 000 18z"
-                                                    ></path>
-                                                    <path
-                                                      stroke="#5D5D5D"
-                                                      strokeLinecap="round"
-                                                      strokeLinejoin="round"
-                                                      strokeWidth="2"
-                                                      d="M12.231 7v5h5"
-                                                    ></path>
-                                                  </svg>
-                                                </InputAdornment>
-                                              ),
-                                            }}
-                                            // defaultValue={data.dob
-                                            //   .toLocaleDateString(window.navigator?.language, {
-                                            //     year: 'numeric',
-                                            //     month: 'long',
-                                            //     day: 'numeric',
-                                            //   })
-                                            //   .split('.')
-                                            //   .join('')
-                                            //   .split(',')
-                                            //   .join('')}
-                                            inputRef={ref}
-                                          />
-                                        );
-                                      }}
-                                    />
+                                    {/* time */}
+                                    <Grid item sm={4} xs={12}>
+                                      <Flatpickr
+                                        value={item.time}
+                                        onChange={(date) => {
+                                          setData({
+                                            ...data,
+                                            schedule: data.schedule.map((s, index) => {
+                                              if (index === i) {
+                                                s.time = date[0];
+                                              }
+                                              return s;
+                                            }),
+                                          });
+                                        }}
+                                        options={{
+                                          mode: 'time',
+                                          // dateFormat: 'd M Y',
+                                          // altFormat: 'F j, Y',
+                                          altInput: false,
+                                          altInputClass: classes.input,
+                                          // formatDate: (d) => {
+                                          //   console.log(d, '');
+                                          // },
+                                        }}
+                                        render={({ defaultValue, value, ...props }, ref) => {
+                                          return (
+                                            <TextField
+                                              placeholder={t('events.createEvent.time')}
+                                              //label={data.startDate ? '' : 'Start Date'}
+                                              id="endDate"
+                                              variant="outlined"
+                                              fullWidth
+                                              //size="small"
+                                              InputProps={{
+                                                classes: {
+                                                  root: classes.input,
+                                                  notchedOutline: classes.inputOutline,
+                                                },
+                                                endAdornment: (
+                                                  <InputAdornment>
+                                                    <svg
+                                                      xmlns="http://www.w3.org/2000/svg"
+                                                      width="25"
+                                                      height="24"
+                                                      fill="none"
+                                                      viewBox="0 0 25 24"
+                                                    >
+                                                      <path
+                                                        stroke="#5D5D5D"
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                        strokeMiterlimit="10"
+                                                        strokeWidth="2"
+                                                        d="M12.231 21a9 9 0 100-18 9 9 0 000 18z"
+                                                      ></path>
+                                                      <path
+                                                        stroke="#5D5D5D"
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                        strokeWidth="2"
+                                                        d="M12.231 7v5h5"
+                                                      ></path>
+                                                    </svg>
+                                                  </InputAdornment>
+                                                ),
+                                              }}
+                                              // defaultValue={data.dob
+                                              //   .toLocaleDateString(window.navigator?.language, {
+                                              //     year: 'numeric',
+                                              //     month: 'long',
+                                              //     day: 'numeric',
+                                              //   })
+                                              //   .split('.')
+                                              //   .join('')
+                                              //   .split(',')
+                                              //   .join('')}
+                                              inputRef={ref}
+                                            />
+                                          );
+                                        }}
+                                      />
+                                    </Grid>
+                                    {/* topic */}
+                                    <Grid item sm={4} xs={12}>
+                                      <TextField
+                                        placeholder={t('events.createEvent.topic')}
+                                        variant="outlined"
+                                        fullWidth
+                                        //size="small"
+                                        InputProps={{
+                                          classes: {
+                                            root: classes.input,
+                                            notchedOutline: classes.inputOutline,
+                                          },
+                                        }}
+                                        required
+                                        value={item.topic}
+                                        onChange={(e) => {
+                                          setData({
+                                            ...data,
+                                            schedule: data.schedule.map((s, index) => {
+                                              if (index === i) {
+                                                s.topic = date[0];
+                                              }
+                                              return s;
+                                            }),
+                                          });
+                                        }}
+                                      />
+                                    </Grid>
                                   </Grid>
-                                  {/* topic */}
-                                  <Grid item sm={4} xs={12}>
-                                    <TextField
-                                      placeholder={t('events.createEvent.topic')}
-                                      variant="outlined"
-                                      fullWidth
-                                      //size="small"
-                                      InputProps={{
-                                        classes: {
-                                          root: classes.input,
-                                          notchedOutline: classes.inputOutline,
-                                        },
-                                      }}
-                                      required
-                                      value={item.topic}
-                                      onChange={(e) => {
-                                        setData({
-                                          ...data,
-                                          schedule: data.schedule.map((s, index) => {
-                                            if (index === i) {
-                                              s.topic = date[0];
-                                            }
-                                            return s;
-                                          }),
-                                        });
-                                      }}
-                                    />
+                                </Grid>
+                                {/* topicDetails speakerName */}
+                                <Grid item style={{ width: '100%', marginTop: '19px' }}>
+                                  <Grid container spacing={2}>
+                                    {/* topicDetails */}
+                                    <Grid item sm={8} xs={12}>
+                                      <TextField
+                                        placeholder={t('events.createEvent.topicDetails')}
+                                        variant="outlined"
+                                        fullWidth
+                                        //size="small"
+                                        InputProps={{
+                                          classes: {
+                                            root: classes.input,
+                                            notchedOutline: classes.inputOutline,
+                                          },
+                                        }}
+                                        required
+                                        value={item.topicDetails}
+                                        onChange={(e) => {
+                                          setData({
+                                            ...data,
+                                            schedule: data.schedule.map((s, index) => {
+                                              if (index === i) {
+                                                s.topicDetails = date[0];
+                                              }
+                                              return s;
+                                            }),
+                                          });
+                                        }}
+                                      />
+                                    </Grid>
+                                    {/* speakerName */}
+                                    <Grid item sm={4} xs={12}>
+                                      <TextField
+                                        placeholder={t('events.createEvent.speakerName')}
+                                        variant="outlined"
+                                        fullWidth
+                                        //size="small"
+                                        InputProps={{
+                                          classes: {
+                                            root: classes.input,
+                                            notchedOutline: classes.inputOutline,
+                                          },
+                                        }}
+                                        required
+                                        value={item.speaker}
+                                        onChange={(e) => {
+                                          setData({
+                                            ...data,
+                                            schedule: data.schedule.map((s, index) => {
+                                              if (index === i) {
+                                                s.speaker = date[0];
+                                              }
+                                              return s;
+                                            }),
+                                          });
+                                        }}
+                                      />
+                                    </Grid>
                                   </Grid>
                                 </Grid>
                               </Grid>
-                              {/* topicDetails speakerName */}
-                              <Grid item style={{ width: '100%', marginTop: '19px' }}>
-                                <Grid container spacing={2}>
-                                  {/* topicDetails */}
-                                  <Grid item sm={8} xs={12}>
-                                    <TextField
-                                      placeholder={t('events.createEvent.topicDetails')}
-                                      variant="outlined"
-                                      fullWidth
-                                      //size="small"
-                                      InputProps={{
-                                        classes: {
-                                          root: classes.input,
-                                          notchedOutline: classes.inputOutline,
-                                        },
-                                      }}
-                                      required
-                                      value={item.topicDetails}
-                                      onChange={(e) => {
-                                        setData({
-                                          ...data,
-                                          schedule: data.schedule.map((s, index) => {
-                                            if (index === i) {
-                                              s.topicDetails = date[0];
-                                            }
-                                            return s;
-                                          }),
-                                        });
-                                      }}
-                                    />
-                                  </Grid>
-                                  {/* speakerName */}
-                                  <Grid item sm={4} xs={12}>
-                                    <TextField
-                                      placeholder={t('events.createEvent.speakerName')}
-                                      variant="outlined"
-                                      fullWidth
-                                      //size="small"
-                                      InputProps={{
-                                        classes: {
-                                          root: classes.input,
-                                          notchedOutline: classes.inputOutline,
-                                        },
-                                      }}
-                                      required
-                                      value={item.speaker}
-                                      onChange={(e) => {
-                                        setData({
-                                          ...data,
-                                          schedule: data.schedule.map((s, index) => {
-                                            if (index === i) {
-                                              s.speaker = date[0];
-                                            }
-                                            return s;
-                                          }),
-                                        });
-                                      }}
-                                    />
-                                  </Grid>
-                                </Grid>
-                              </Grid>
-                            </Grid>
+                            </div>
                           </div>
                         )}
                       </Draggable>
@@ -2850,6 +2861,40 @@ export default function Index(props) {
               )}
             </Droppable>
           </DragDropContext>
+        </Grid>
+      </Grid>
+
+      {/* submit */}
+      <Grid item style={{ marginTop: '1.5em', marginBottom: '4em' }}>
+        <Grid container justifyContent="center" spacing={3}>
+          <Grid item md={3} sm={6}>
+            <Button
+              fullWidth
+              className={classes.button}
+              disabled={loading.active}
+              onClick={SubmitHandler}
+            >
+              {loading.active && loading.action === 'submit' && (
+                <CircularProgress size="2rem" style={{ color: theme.palette.secondary.main }} />
+              )}
+
+              {t('events.createEvent.save')}
+            </Button>
+          </Grid>
+          <Grid item md={3} sm={6}>
+            <Button
+              fullWidth
+              className={classes.button}
+              disabled={loading.active}
+              onClick={resetHandler}
+              style={{
+                background: '#DEDEDE',
+                color: '#5D5D5D',
+              }}
+            >
+              {t('events.createEvent.reset')}
+            </Button>
+          </Grid>
         </Grid>
       </Grid>
       <style>

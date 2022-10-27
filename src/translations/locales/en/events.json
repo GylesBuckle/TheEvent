@@ -29,7 +29,7 @@
     "speakerNetwork": "Speaker Network",
     "schedule": "Schedule",
     "topic": "Topic",
-    "detailedTopic": "Detailed Topic",
+    "topicDetails": "Detailed Topic",
     "save": "Save",
     "reset": "Reset",
     "cancel": "Cancel"
