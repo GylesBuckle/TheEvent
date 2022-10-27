@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import dynamic from 'next/dynamic';
 import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
-
+import { useRouter } from 'next/router';
 import {
   Grid,
   TextField,
@@ -33,7 +33,8 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import * as websiteInfo from '../../data/websiteInfo';
 import dataURLtoFile from '../../utils/dataURLtoFile';
 import searchLocations from '../../utils/getLocation';
-
+import { GlobalContext } from '../../context/GlobalContext';
+import axios from '../../utils/axios';
 const SunEditor = dynamic(() => import('suneditor-react'), {
   ssr: false,
 });
@@ -99,12 +100,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function Index(props) {
   const { t } = useTranslation();
+  const router = useRouter();
   const sponsorsDropzoneRef = useRef();
 
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
 
   const classes = useStyles();
+  const { user: globaluser } = useContext(GlobalContext);
+
   const [data, setData] = useState({
     name: '',
     tags: [],
@@ -343,7 +347,111 @@ export default function Index(props) {
 
   const validate = () => {};
   const resetHandler = () => {};
-  const SubmitHandler = () => {};
+  const SubmitHandler = async () => {
+    if (validate() === false) {
+      return;
+    }
+    try {
+      setLoading({
+        active: true,
+        action: 'submit',
+      });
+
+      let formData = new FormData();
+
+      formData.append('name', data.name);
+      formData.append('tags', JSON.stringify(data.tags));
+      formData.append('description', data.description);
+      formData.append('image', data.image);
+
+      const startDate = new Date(data.startDate);
+      startDate.setTime(new Date(data.time).getTime());
+      formData.append('startDate', startDate);
+      formData.append('endDate', data.endDate);
+      formData.append('location', data.location);
+      formData.append('locationCoordinates', JSON.stringify(data.locationCoordinates));
+      formData.append('venue', data.venue);
+      formData.append('price', data.price);
+      formData.append('address', data.address);
+      formData.append('email', data.email);
+      formData.append('facebook', data.facebook);
+      formData.append('twitter', data.twitter);
+      formData.append('insta', data.insta);
+      formData.append('linkdin', data.linkdin);
+      formData.append('snapchat', data.snapchat);
+      formData.append('whatsApp', data.whatsApp);
+      formData.append('schedule', JSON.stringify(data.schedule));
+
+      //sponsors
+      let newSponsorsImages = [];
+      let newSponsorsImagesIndex = [];
+      data.sponsors.map((img, ind) => {
+        if (img.new === true) {
+          {
+            newSponsorsImages.push(img.img);
+            newSponsorsImagesIndex.push(ind);
+          }
+        }
+      });
+      formData.append(
+        'deleteImages',
+        data.deletedSponsorsImages ? JSON.stringify(data.deletedSponsorsImages) : JSON.stringify([])
+      );
+      for (let i = 0; i < newSponsorsImages.length; i++) {
+        formData.append('newSponsorsImages', newSponsorsImages[i]);
+      }
+      formData.append('newSponsorsImagesIndex', JSON.stringify(newSponsorsImagesIndex));
+      formData.append('sponsors', JSON.stringify(data.sponsors));
+
+      // speakers
+      let newSpeakersImages = [];
+      let newSpeakersImagesIndex = [];
+      data.speakers.map((img, ind) => {
+        if (img.new === true) {
+          {
+            newSpeakersImages.push(img.image);
+            newSpeakersImagesIndex.push(ind);
+          }
+        }
+      });
+
+      formData.append(
+        'deleteSpeakersImages',
+        data.deletedSpeakersImages ? JSON.stringify(data.deletedSpeakersImages) : JSON.stringify([])
+      );
+      for (let i = 0; i < newSpeakersImages.length; i++) {
+        formData.append('newSpeakersImages', newSpeakersImages[i]);
+      }
+      formData.append('newSpeakersImagesIndex', JSON.stringify(newSpeakersImagesIndex));
+      formData.append('speakers', JSON.stringify(data.speakers));
+
+      let url = `/events`;
+      if (props.edit) {
+        url = `/events/${router.query.id}`;
+      }
+      const response = await axios.post(url, formData, {
+        headers: {
+          authorization: 'Bearer ' + globaluser?.token,
+        },
+      });
+
+      if (response.data.status === 'success') {
+        router.push('/admin-dashboard');
+      } else {
+        setError([response.data.message]);
+      }
+      setLoading({
+        active: false,
+        action: '',
+      });
+    } catch (err) {
+      setLoading({
+        active: false,
+        action: '',
+      });
+      setError([err.response?.data?.message || 'Fail to update profile']);
+    }
+  };
 
   const imageCroperDialog = (
     <Dialog
