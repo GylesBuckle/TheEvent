@@ -14,6 +14,7 @@ import {
   Button,
   InputAdornment,
   IconButton,
+  useMediaQuery,
 } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -100,6 +101,8 @@ export default function Index(props) {
   const sponsorsDropzoneRef = useRef();
 
   const theme = useTheme();
+  const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
+
   const classes = useStyles();
   const [data, setData] = useState({
     name: '',
@@ -682,7 +685,7 @@ export default function Index(props) {
                   justify="center"
                   alignItems="center"
                   direction="column"
-                  style={{ padding: '0.3em' }}
+                  style={{ padding: '0.3em', height: '100%' }}
                 >
                   <Grid item>
                     <svg
@@ -1850,6 +1853,7 @@ export default function Index(props) {
                         border: '1px solid #D1D0D3',
                         borderRadius: '15px',
                         padding: '20px',
+                        paddingTop: '40px',
                         position: 'relative',
                         marginTop: i === 0 ? 0 : '20px',
                       }}
@@ -1892,7 +1896,11 @@ export default function Index(props) {
                             <Grid container direction="column">
                               {/* for image */}
                               <Grid item style={{ width: '100%' }}>
-                                <Grid container>
+                                <Grid
+                                  container
+                                  direction={matchesSM ? 'column' : 'row'}
+                                  spacing={2}
+                                >
                                   {/* for image */}
                                   <Grid item>
                                     <DropzoneArea
@@ -1999,13 +2007,100 @@ export default function Index(props) {
                                     />
                                   </Grid>
                                   {/* name description */}
-                                  <Grid item style={{ flex: 1 }}></Grid>
+                                  <Grid item style={{ flex: 1 }}>
+                                    <TextField
+                                      placeholder={t('events.createEvent.speakerName')}
+                                      variant="outlined"
+                                      fullWidth
+                                      //size="small"
+                                      InputProps={{
+                                        classes: {
+                                          root: classes.input,
+                                          notchedOutline: classes.inputOutline,
+                                        },
+                                      }}
+                                      required
+                                      value={item.name}
+                                      onChange={(e) => {
+                                        setData({
+                                          ...data,
+                                          speakers: data.speakers.map((s, index) => {
+                                            if (index === i) {
+                                              s.name = e.target.value;
+                                            }
+                                            return s;
+                                          }),
+                                        });
+                                      }}
+                                    />
+                                    <div style={{ marginTop: '15px' }} />
+                                    <TextField
+                                      multiline
+                                      minRows={4}
+                                      placeholder={t('events.createEvent.speakerDescription')}
+                                      variant="outlined"
+                                      fullWidth
+                                      //size="small"
+                                      InputProps={{
+                                        classes: {
+                                          root: classes.input,
+                                          notchedOutline: classes.inputOutline,
+                                        },
+                                      }}
+                                      required
+                                      value={item.description}
+                                      onChange={(e) => {
+                                        setData({
+                                          ...data,
+                                          speakers: data.speakers.map((s, index) => {
+                                            if (index === i) {
+                                              s.description = e.target.value;
+                                            }
+                                            return s;
+                                          }),
+                                        });
+                                      }}
+                                    />
+                                  </Grid>
                                   {/* occupation */}
-                                  <Grid item style={{ flex: 1 }}></Grid>
+                                  <Grid item style={{ flex: 1 }}>
+                                    <TextField
+                                      placeholder={t('events.createEvent.occupation')}
+                                      variant="outlined"
+                                      fullWidth
+                                      //size="small"
+                                      InputProps={{
+                                        classes: {
+                                          root: classes.input,
+                                          notchedOutline: classes.inputOutline,
+                                        },
+                                      }}
+                                      required
+                                      value={item.occupation}
+                                      onChange={(e) => {
+                                        setData({
+                                          ...data,
+                                          speakers: data.speakers.map((s, index) => {
+                                            if (index === i) {
+                                              s.occupation = e.target.value;
+                                            }
+                                            return s;
+                                          }),
+                                        });
+                                      }}
+                                    />
+                                  </Grid>
                                 </Grid>
                               </Grid>
+                              {/* for speaker network heading*/}
+                              <Grid item style={{ width: '100%', marginTop: '2em' }}>
+                                <Typography variant="h5">
+                                  {t('events.createEvent.speakerNetwork')}
+                                </Typography>
+                              </Grid>
                               {/* for speaker network */}
-                              <Grid item style={{ width: '100%' }}></Grid>
+
+                              <Grid item style={{ width: '100%', marginTop: '1em' }}></Grid>
                             </Grid>
                           </div>
                         )}
