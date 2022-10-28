@@ -41,7 +41,7 @@ const Main = ({ Component, pageProps }) => {
       }
       let Token = null;
       try {
-        Token = await localStorage.getItem('tappio-jwt');
+        Token = await localStorage.getItem('deiven-jwt');
       } catch (e) {
         console.log('Error Fetching jwt Token');
         setLoadingAuth(false);
@@ -56,14 +56,10 @@ const Main = ({ Component, pageProps }) => {
               authorization: 'Bearer ' + Token,
             },
           });
-          if (result.data.status === 'success') {
+          if (result.data.success === true) {
             setAuth({ ...result.data.data.user, token: Token });
-            console.log(result.data.data.user.portfolio);
           }
           setLoadingAuth(false);
-          if (result.data.status === 'success') {
-            updateUserActivity(Token);
-          }
         } catch (e) {
           setLoadingAuth(false);
         }
@@ -72,7 +68,7 @@ const Main = ({ Component, pageProps }) => {
       }
     };
     if (!publicPages.some((p) => router.pathname === p)) {
-      //fetchToken();
+      fetchToken();
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 

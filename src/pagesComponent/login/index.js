@@ -81,10 +81,9 @@ export default function Login() {
     router.push('/admin-dashboard');
     return <Loading />;
   }
-
   if (globaluser !== null && globaluser.token !== undefined && globaluser.roles.includes('User')) {
     router.push('/');
-    //return <Loading />;
+    return <Loading />;
   }
 
   const [showPassword, setShowPassword] = useState(false);
@@ -160,9 +159,9 @@ export default function Login() {
         password: user.password.value,
       });
 
-      if (result.data.status === 'success') {
+      if (result.data.success === true) {
         if (user.rememberMe.value) {
-          await localStorage.setItem('tappio-jwt', result.data.token);
+          await localStorage.setItem('deiven-jwt', result.data.token);
         }
         setAuth({ ...result.data.data.user, token: result.data.token });
         if (
@@ -170,11 +169,8 @@ export default function Login() {
           result.data.data.user.roles.includes('Admin')
         ) {
           router.push('/admin-dashboard');
-        }
-        if (result.data.data.user.roles.includes('Company')) {
-          router.push('/dashboard');
         } else {
-          router.push('/choose-feature');
+          router.push('/');
         }
       } else {
         setError({
@@ -331,7 +327,10 @@ export default function Login() {
           {/* Login button */}
           <Grid item style={{ marginTop: '0.5em', width: '100%' }}>
             <Button fullWidth className={classes.button} disabled={loading} onClick={SubmitHandler}>
-              {loading ? <CircularProgress size="2.1rem" color="primary" /> : t('signin.button')}
+              {loading && (
+                <CircularProgress size="2rem" color="secondary" style={{ marginRight: '20px' }} />
+              )}{' '}
+              {t('signin.button')}
             </Button>
           </Grid>
           {/* signIn with other account */}

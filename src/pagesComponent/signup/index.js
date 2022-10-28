@@ -83,7 +83,6 @@ export default function Login() {
   }
 
   const [showPassword, setShowPassword] = useState(false);
-  const [signupSuccess, setSignupSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({
     status: false,
@@ -118,8 +117,7 @@ export default function Login() {
     },
   });
 
-  const SubmitHandler = async (e) => {
-    e.preventDefault();
+  const SubmitHandler = async () => {
     setError({
       status: false,
       message: '',
@@ -174,7 +172,7 @@ export default function Login() {
     }
     if (user.password.value !== user.confirmPassword.value) {
       setError({
-        active: true,
+        status: true,
         message: t('resetPassword.passwordMatch'),
       });
       return;
@@ -182,19 +180,22 @@ export default function Login() {
     try {
       setLoading(true);
       const result = await axios.post('/users/signup', {
-        userName: user.userName.value,
+        firstName: user.firstName.value,
+        lastName: user.lastName.value,
         email: user.email.value,
         password: user.password.value,
-        accountType,
       });
-      if (result.data.status === 'success') {
-        setSignupSuccess(true);
+      if (result.data.success === true) {
+        router.push('/login');
+        setError({
+          status: false,
+          message: '',
+        });
       } else {
         setError({
           status: true,
           message: result.data.message,
         });
-        setSignupSuccess(false);
       }
       setLoading(false);
     } catch (err) {
@@ -229,256 +230,224 @@ export default function Login() {
           <Grid item>
             <img style={{ width: '100%', height: '100%' }} alt="logo" src="/dev/logo.png" />
           </Grid>
-          {!signupSuccess && (
-            <>
-              {/* for name */}
-              <Grid item style={{ marginTop: '1em', width: '100%' }}>
-                <Grid container spacing={2}>
-                  {/* firstname */}
-                  <Grid item xs={6}>
-                    <label htmlFor="firstName" className={classes.label}>
-                      {t('signup.firstName')}
-                    </label>
-                    <TextField
-                      placeholder={t('signup.firstName')}
-                      id="firstName"
-                      variant="outlined"
-                      fullWidth
-                      size="small"
-                      InputProps={{
-                        classes: {
-                          root: classes.input,
-                          notchedOutline: classes.inputOutline,
-                        },
-                      }}
-                      required
-                      error={user.firstName.error}
-                      helperText={user.firstName.error ? user.firstName.errorMessage : ''}
-                      value={user.firstName.value}
-                      onChange={(e) => {
-                        if (/^\S*$/.test(e.target.value)) {
-                          setUser({
-                            ...user,
-                            firstName: {
-                              value: e.target.value,
-                              error: false,
-                              errorMessage: '',
-                            },
-                          });
-                        }
-                      }}
-                    />
-                  </Grid>
-                  {/* lastName */}
-                  <Grid item xs={6}>
-                    <label htmlFor="lastName" className={classes.label}>
-                      {t('signup.lastName')}
-                    </label>
-                    <TextField
-                      placeholder={t('signup.lastName')}
-                      id="lastName"
-                      variant="outlined"
-                      fullWidth
-                      size="small"
-                      InputProps={{
-                        classes: {
-                          root: classes.input,
-                          notchedOutline: classes.inputOutline,
-                        },
-                      }}
-                      required
-                      error={user.lastName.error}
-                      helperText={user.lastName.error ? user.lastName.errorMessage : ''}
-                      value={user.lastName.value}
-                      onChange={(e) => {
-                        if (/^\S*$/.test(e.target.value)) {
-                          setUser({
-                            ...user,
-                            lastName: {
-                              value: e.target.value,
-                              error: false,
-                              errorMessage: '',
-                            },
-                          });
-                        }
-                      }}
-                    />
-                  </Grid>
-                </Grid>
-              </Grid>
-              {/* for email */}
-              <Grid item style={{ marginTop: '1em', width: '100%' }}>
-                <label htmlFor="email" className={classes.label}>
-                  {t('signup.email')}
-                </label>
-                <TextField
-                  placeholder={t('signup.email')}
-                  id="email"
-                  variant="outlined"
-                  fullWidth
-                  size="small"
-                  InputProps={{
-                    classes: {
-                      root: classes.input,
-                      notchedOutline: classes.inputOutline,
-                    },
-                  }}
-                  required
-                  error={user.email.error}
-                  helperText={user.email.error ? user.email.errorMessage : ''}
-                  value={user.email.value}
-                  onChange={(e) =>
-                    setUser({
-                      ...user,
-                      email: {
-                        value: e.target.value,
-                        error: false,
-                        errorMessage: '',
-                      },
-                    })
-                  }
-                />
-              </Grid>
-              {/* for password */}
-              <Grid item style={{ marginTop: '1em', width: '100%' }}>
-                <label htmlFor="email" className={classes.label}>
-                  {t('signup.password')}
-                </label>
-                <TextField
-                  type={showPassword ? 'text' : 'password'}
-                  placeholder={t('signup.password')}
-                  id="password"
-                  variant="outlined"
-                  fullWidth
-                  size="small"
-                  InputProps={{
-                    classes: {
-                      root: classes.input,
-                      notchedOutline: classes.inputOutline,
-                    },
-                    endAdornment: (
-                      <InputAdornment>
-                        <IconButton
-                          onClick={() => setShowPassword((p) => !p)}
-                          style={{ background: 'transparent' }}
-                        >
-                          {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                  required
-                  error={user.password.error}
-                  helperText={user.password.error ? user.password.errorMessage : ''}
-                  value={user.password.value}
-                  onChange={(e) =>
-                    setUser({
-                      ...user,
-                      password: {
-                        value: e.target.value,
-                        error: false,
-                        errorMessage: '',
-                      },
-                    })
-                  }
-                />
-              </Grid>
-              {/* for confirmPassword */}
-              <Grid item style={{ marginTop: '1em', width: '100%' }}>
-                <label htmlFor="email" className={classes.label}>
-                  {t('signup.confirmPassword')}
-                </label>
-                <TextField
-                  type={showPassword ? 'text' : 'password'}
-                  placeholder={t('signup.confirmPassword')}
-                  id="confirmPassword"
-                  variant="outlined"
-                  fullWidth
-                  size="small"
-                  InputProps={{
-                    classes: {
-                      root: classes.input,
-                      notchedOutline: classes.inputOutline,
-                    },
-                    endAdornment: (
-                      <InputAdornment>
-                        <IconButton
-                          onClick={() => setShowPassword((p) => !p)}
-                          style={{ background: 'transparent' }}
-                        >
-                          {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                  required
-                  error={user.confirmPassword.error}
-                  helperText={user.confirmPassword.error ? user.confirmPassword.errorMessage : ''}
-                  value={user.confirmPassword.value}
-                  onChange={(e) =>
-                    setUser({
-                      ...user,
-                      confirmPassword: {
-                        value: e.target.value,
-                        error: false,
-                        errorMessage: '',
-                      },
-                    })
-                  }
-                />
-              </Grid>
 
-              {error.status && (
-                <Grid item style={{ marginTop: '1em', width: '100%' }}>
-                  <Typography variant="subtitle2" style={{ display: 'flex', alignItems: 'center' }}>
-                    {' '}
-                    <ErrorOutlineIcon style={{ fill: 'red', marginRight: '4px' }} /> {error.message}
-                  </Typography>
-                </Grid>
-              )}
-            </>
-          )}
-          {signupSuccess && (
-            <Grid
-              item
-              style={{
-                marginTop: '1em',
-                minHeight: '30vh',
-                display: 'flex',
-                justifyContent: 'center',
-              }}
-            >
-              <Typography
-                variant="subtitle2"
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
-              >
-                {' '}
-                <CheckCircleIcon
-                  style={{
-                    fill: theme.palette.primary.main,
-                    marginRight: '4px',
+          {/* for name */}
+          <Grid item style={{ marginTop: '1em', width: '100%' }}>
+            <Grid container spacing={2}>
+              {/* firstname */}
+              <Grid item xs={6}>
+                <label htmlFor="firstName" className={classes.label}>
+                  {t('signup.firstName')}
+                </label>
+                <TextField
+                  placeholder={t('signup.firstName')}
+                  id="firstName"
+                  variant="outlined"
+                  fullWidth
+                  size="small"
+                  InputProps={{
+                    classes: {
+                      root: classes.input,
+                      notchedOutline: classes.inputOutline,
+                    },
                   }}
-                />{' '}
-                {t('signup.emailConfirmation')}
+                  required
+                  error={user.firstName.error}
+                  helperText={user.firstName.error ? user.firstName.errorMessage : ''}
+                  value={user.firstName.value}
+                  onChange={(e) => {
+                    if (/^\S*$/.test(e.target.value)) {
+                      setUser({
+                        ...user,
+                        firstName: {
+                          value: e.target.value,
+                          error: false,
+                          errorMessage: '',
+                        },
+                      });
+                    }
+                  }}
+                />
+              </Grid>
+              {/* lastName */}
+              <Grid item xs={6}>
+                <label htmlFor="lastName" className={classes.label}>
+                  {t('signup.lastName')}
+                </label>
+                <TextField
+                  placeholder={t('signup.lastName')}
+                  id="lastName"
+                  variant="outlined"
+                  fullWidth
+                  size="small"
+                  InputProps={{
+                    classes: {
+                      root: classes.input,
+                      notchedOutline: classes.inputOutline,
+                    },
+                  }}
+                  required
+                  error={user.lastName.error}
+                  helperText={user.lastName.error ? user.lastName.errorMessage : ''}
+                  value={user.lastName.value}
+                  onChange={(e) => {
+                    if (/^\S*$/.test(e.target.value)) {
+                      setUser({
+                        ...user,
+                        lastName: {
+                          value: e.target.value,
+                          error: false,
+                          errorMessage: '',
+                        },
+                      });
+                    }
+                  }}
+                />
+              </Grid>
+            </Grid>
+          </Grid>
+          {/* for email */}
+          <Grid item style={{ marginTop: '1em', width: '100%' }}>
+            <label htmlFor="email" className={classes.label}>
+              {t('signup.email')}
+            </label>
+            <TextField
+              placeholder={t('signup.email')}
+              id="email"
+              variant="outlined"
+              fullWidth
+              size="small"
+              InputProps={{
+                classes: {
+                  root: classes.input,
+                  notchedOutline: classes.inputOutline,
+                },
+              }}
+              required
+              error={user.email.error}
+              helperText={user.email.error ? user.email.errorMessage : ''}
+              value={user.email.value}
+              onChange={(e) =>
+                setUser({
+                  ...user,
+                  email: {
+                    value: e.target.value,
+                    error: false,
+                    errorMessage: '',
+                  },
+                })
+              }
+            />
+          </Grid>
+          {/* for password */}
+          <Grid item style={{ marginTop: '1em', width: '100%' }}>
+            <label htmlFor="email" className={classes.label}>
+              {t('signup.password')}
+            </label>
+            <TextField
+              type={showPassword ? 'text' : 'password'}
+              placeholder={t('signup.password')}
+              id="password"
+              variant="outlined"
+              fullWidth
+              size="small"
+              InputProps={{
+                classes: {
+                  root: classes.input,
+                  notchedOutline: classes.inputOutline,
+                },
+                endAdornment: (
+                  <InputAdornment>
+                    <IconButton
+                      onClick={() => setShowPassword((p) => !p)}
+                      style={{ background: 'transparent' }}
+                    >
+                      {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+              required
+              error={user.password.error}
+              helperText={user.password.error ? user.password.errorMessage : ''}
+              value={user.password.value}
+              onChange={(e) =>
+                setUser({
+                  ...user,
+                  password: {
+                    value: e.target.value,
+                    error: false,
+                    errorMessage: '',
+                  },
+                })
+              }
+            />
+          </Grid>
+          {/* for confirmPassword */}
+          <Grid item style={{ marginTop: '1em', width: '100%' }}>
+            <label htmlFor="email" className={classes.label}>
+              {t('signup.confirmPassword')}
+            </label>
+            <TextField
+              type={showPassword ? 'text' : 'password'}
+              placeholder={t('signup.confirmPassword')}
+              id="confirmPassword"
+              variant="outlined"
+              fullWidth
+              size="small"
+              InputProps={{
+                classes: {
+                  root: classes.input,
+                  notchedOutline: classes.inputOutline,
+                },
+                endAdornment: (
+                  <InputAdornment>
+                    <IconButton
+                      onClick={() => setShowPassword((p) => !p)}
+                      style={{ background: 'transparent' }}
+                    >
+                      {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+              required
+              error={user.confirmPassword.error}
+              helperText={user.confirmPassword.error ? user.confirmPassword.errorMessage : ''}
+              value={user.confirmPassword.value}
+              onChange={(e) =>
+                setUser({
+                  ...user,
+                  confirmPassword: {
+                    value: e.target.value,
+                    error: false,
+                    errorMessage: '',
+                  },
+                })
+              }
+            />
+          </Grid>
+
+          {error.status && (
+            <Grid item style={{ marginTop: '1em', width: '100%' }}>
+              <Typography variant="subtitle2" style={{ display: 'flex', alignItems: 'center' }}>
+                {' '}
+                <ErrorOutlineIcon style={{ fill: 'red', marginRight: '4px' }} /> {error.message}
               </Typography>
             </Grid>
           )}
+
           {/* Signup button */}
-          {!signupSuccess && (
-            <Grid item style={{ marginTop: '1.5em', width: '100%' }}>
-              <Button
-                fullWidth
-                className={classes.button}
-                disabled={loading}
-                onClick={SubmitHandler}
-              >
-                {loading ? <CircularProgress size="2rem" color="primary" /> : t('signup.button')}
-              </Button>
-            </Grid>
-          )}
+
+          <Grid item style={{ marginTop: '1.5em', width: '100%' }}>
+            <Button fullWidth className={classes.button} disabled={loading} onClick={SubmitHandler}>
+              {loading ? (
+                <CircularProgress size="2rem" color="secondary" style={{ marginRight: '20px' }} />
+              ) : (
+                t('signup.button')
+              )}
+            </Button>
+          </Grid>
 
           {/* signIn with other account */}
           <Grid item style={{ marginTop: '1em', width: '100%' }}>
