@@ -305,7 +305,7 @@ export default function Index(props) {
   const searchLocationHandler = async (value) => {
     let language = 'en';
     if (value) {
-      let results = await searchLocations(value, language);
+      let results = await searchLocations(value, language, globaluser.token);
       if (results.success) {
         setAutoCompleteSuggestions(results.data);
       }
@@ -345,7 +345,45 @@ export default function Index(props) {
     });
   };
 
-  const validate = () => {};
+  const validate = () => {
+    let err = [];
+    if (data.name.trim() === '') err.push('Event title cannot be Empty');
+    if (data.description.trim() === '') err.push('Event Description cannot be Empty');
+    if (data.image === '') err.push('Event Cover Image cannot be Empty');
+    if (data.startDate === '') err.push('Event Start Date cannot be Empty');
+    if (data.endDate === '') err.push('Event End Date cannot be Empty');
+    if (data.time === '') err.push('Event Start time cannot be Empty');
+    if (data.location === '') err.push('Event Location cannot be Empty');
+    if (data.locationCoordinates.length === 0) err.push('Event Co-ordinates cannot be Empty');
+    if (data.price === '') err.push('Event Price cannot be Empty');
+    if (isNaN(data.price) || data.price <= 0) err.push('Invalid Price value');
+    if (data.address.trim() === '') err.push('Event Address cannot be Empty');
+    if (data.phone.trim() === '') err.push('Phone value cannot be Empty');
+    if (data.email.trim() === '') err.push('Event title cannot be Empty');
+    if (
+      !/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+        data.email
+      )
+    ) {
+      err.push('Invalid Email');
+    }
+    if (data.speakers.length > 0) {
+      if (
+        data.speakers.some((obj) => Object.keys(obj).some((nestedKey) => obj[nestedKey] === ''))
+      ) {
+        err.push('Speaker values cannot be Empty');
+      }
+    }
+    if (data.schedule.length > 0) {
+      if (
+        data.schedule.some((obj) => Object.keys(obj).some((nestedKey) => obj[nestedKey] === ''))
+      ) {
+        err.push('Schedule values cannot be Empty');
+      }
+    }
+    setError(err);
+    return err.length === 0;
+  };
   const resetHandler = () => {};
   const SubmitHandler = async () => {
     if (validate() === false) {
@@ -393,15 +431,15 @@ export default function Index(props) {
           }
         }
       });
-      formData.append(
-        'deleteImages',
-        data.deletedSponsorsImages ? JSON.stringify(data.deletedSponsorsImages) : JSON.stringify([])
-      );
-      for (let i = 0; i < newSponsorsImages.length; i++) {
-        formData.append('newSponsorsImages', newSponsorsImages[i]);
-      }
-      formData.append('newSponsorsImagesIndex', JSON.stringify(newSponsorsImagesIndex));
-      formData.append('sponsors', JSON.stringify(data.sponsors));
+      // formData.append(
+      //   'deleteImages',
+      //   data.deletedSponsorsImages ? JSON.stringify(data.deletedSponsorsImages) : JSON.stringify([])
+      // );
+      // for (let i = 0; i < newSponsorsImages.length; i++) {
+      //   formData.append('newSponsorsImages', newSponsorsImages[i]);
+      // }
+      // formData.append('newSponsorsImagesIndex', JSON.stringify(newSponsorsImagesIndex));
+      // formData.append('sponsors', JSON.stringify(data.sponsors));
 
       // speakers
       let newSpeakersImages = [];
@@ -415,21 +453,26 @@ export default function Index(props) {
         }
       });
 
-      formData.append(
-        'deleteSpeakersImages',
-        data.deletedSpeakersImages ? JSON.stringify(data.deletedSpeakersImages) : JSON.stringify([])
-      );
-      for (let i = 0; i < newSpeakersImages.length; i++) {
-        formData.append('newSpeakersImages', newSpeakersImages[i]);
-      }
-      formData.append('newSpeakersImagesIndex', JSON.stringify(newSpeakersImagesIndex));
-      formData.append('speakers', JSON.stringify(data.speakers));
+      // formData.append(
+      //   'deleteSpeakersImages',
+      //   data.deletedSpeakersImages ? JSON.stringify(data.deletedSpeakersImages) : JSON.stringify([])
+      // );
+      // for (let i = 0; i < newSpeakersImages.length; i++) {
+      //   formData.append('newSpeakersImages', newSpeakersImages[i]);
+      // }
+      // formData.append('newSpeakersImagesIndex', JSON.stringify(newSpeakersImagesIndex));
+      // formData.append('speakers', JSON.stringify(data.speakers));
 
       let url = `/events`;
+      let method = 'post';
       if (props.edit) {
         url = `/events/${router.query.id}`;
+        method = 'patch';
       }
-      const response = await axios.post(url, formData, {
+      const response = await axios({
+        method: method,
+        url: url,
+        data: formData,
         headers: {
           authorization: 'Bearer ' + globaluser?.token,
         },
@@ -775,12 +818,12 @@ export default function Index(props) {
               }}
               className={classes.input}
               placeholder={t('events.createEvent.description')}
-              setContents={data.bio}
+              setContents={data.description}
               onChange={(content) =>
                 setData((d) => {
                   return {
                     ...d,
-                    bio: content,
+                    description: content,
                   };
                 })
               }
@@ -2887,7 +2930,7 @@ export default function Index(props) {
                                             ...data,
                                             schedule: data.schedule.map((s, index) => {
                                               if (index === i) {
-                                                s.topic = date[0];
+                                                s.topic = e.target.value;
                                               }
                                               return s;
                                             }),
@@ -2920,7 +2963,7 @@ export default function Index(props) {
                                             ...data,
                                             schedule: data.schedule.map((s, index) => {
                                               if (index === i) {
-                                                s.topicDetails = date[0];
+                                                s.topicDetails = e.target.value;
                                               }
                                               return s;
                                             }),
@@ -2948,7 +2991,7 @@ export default function Index(props) {
                                             ...data,
                                             schedule: data.schedule.map((s, index) => {
                                               if (index === i) {
-                                                s.speaker = date[0];
+                                                s.speaker = e.target.value;
                                               }
                                               return s;
                                             }),
@@ -2971,7 +3014,18 @@ export default function Index(props) {
           </DragDropContext>
         </Grid>
       </Grid>
-
+      {/* errors */}
+      {errors.length > 0 && (
+        <Grid item style={{ marginTop: '14px' }}>
+          <ul>
+            {errors.map((err, i) => (
+              <li style={{ color: 'red', paddingBottom: '10px' }} key={i} className={classes.label}>
+                {err}
+              </li>
+            ))}
+          </ul>
+        </Grid>
+      )}
       {/* submit */}
       <Grid item style={{ marginTop: '1.5em', marginBottom: '4em' }}>
         <Grid container justifyContent="center" spacing={3}>
@@ -2983,7 +3037,10 @@ export default function Index(props) {
               onClick={SubmitHandler}
             >
               {loading.active && loading.action === 'submit' && (
-                <CircularProgress size="2rem" style={{ color: theme.palette.secondary.main }} />
+                <CircularProgress
+                  size="1rem"
+                  style={{ marginRight: '5px', color: theme.palette.secondary.main }}
+                />
               )}
 
               {t('events.createEvent.save')}
