@@ -119,6 +119,10 @@ export default createTheme({
         color: secondary,
         backgroundColor: primary,
       },
+      '&.Mui-disabled': {
+        color: '#B3B3B3',
+        background: '#E3E3E3',
+      },
     },
   },
   overrides: {

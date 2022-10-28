@@ -22,7 +22,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 
 import GoogleAuth from '../../reusable/googleAuth';
-
+import * as websiteInfo from '../../data/websiteInfo';
 import Loading from '../../reusable/loading';
 
 const useStyles = makeStyles((theme) => ({
@@ -83,7 +83,7 @@ export default function Login() {
   }
   if (globaluser !== null && globaluser.token !== undefined && globaluser.roles.includes('User')) {
     router.push('/');
-    return <Loading />;
+    //return <Loading />;
   }
 
   const [showPassword, setShowPassword] = useState(false);
@@ -161,7 +161,7 @@ export default function Login() {
 
       if (result.data.success === true) {
         if (user.rememberMe.value) {
-          await localStorage.setItem('deiven-jwt', result.data.token);
+          await localStorage.setItem(websiteInfo.tokenKey, result.data.token);
         }
         setAuth({ ...result.data.data.user, token: result.data.token });
         if (

@@ -121,24 +121,13 @@ export default function Login() {
       });
       return;
     }
-    if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*]).{8,}$/.test(user.password.value)) {
-      setUser({
-        ...user,
-        password: {
-          value: user.password.value,
-          error: true,
-          errorMessage: t('resetPassword.invalidPassword'),
-        },
-      });
-      return;
-    }
 
     try {
       setLoading(true);
       const result = await axios.post(`/users/resetPassword/${router.query.token}`, {
         password: user.password.value,
       });
-      if (result.data.status === 'success') {
+      if (result.data.success === true) {
         router.push('/login');
       } else {
         setError({
@@ -247,7 +236,7 @@ export default function Login() {
           </Grid>
 
           {error.status && (
-            <Grid item style={{ marginTop: '0.5em', width: '100%' }}>
+            <Grid item style={{ marginTop: '0.8em', width: '100%' }}>
               <Typography variant="subtitle2" style={{ display: 'flex', alignItems: 'center' }}>
                 {' '}
                 <ErrorOutlineIcon style={{ fill: 'red', marginRight: '4px' }} /> {error.message}
@@ -257,11 +246,10 @@ export default function Login() {
           {/* Send button */}
           <Grid item style={{ marginTop: '2em', width: '100%' }}>
             <Button fullWidth className={classes.button} disabled={loading} onClick={SubmitHandler}>
-              {loading ? (
-                <CircularProgress size="2rem" style={{ color: theme.palette.common.mainFront }} />
-              ) : (
-                t('resetPassword.button')
-              )}
+              {loading && (
+                <CircularProgress size="2rem" style={{ color: theme.palette.secondary.main }} />
+              )}{' '}
+              {t('resetPassword.button')}
             </Button>
           </Grid>
         </Grid>

@@ -41,7 +41,7 @@ const Main = ({ Component, pageProps }) => {
       }
       let Token = null;
       try {
-        Token = await localStorage.getItem('deiven-jwt');
+        Token = await localStorage.getItem(websiteInfo.tokenKey);
       } catch (e) {
         console.log('Error Fetching jwt Token');
         setLoadingAuth(false);

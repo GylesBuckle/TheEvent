@@ -122,7 +122,7 @@ export default function Login() {
       const result = await axios.post('/users/forgetpassword', {
         email: user.email.value,
       });
-      if (result.data.status === 'success') {
+      if (result.data.success === true) {
         setForgetPasswordSuccess(true);
       } else {
         setError({
@@ -197,12 +197,12 @@ export default function Login() {
           </Grid>
 
           {foretPasswordSuccess && (
-            <Grid item style={{ marginTop: '0.5em', width: '100%' }}>
+            <Grid item style={{ marginTop: '0.8em', width: '100%' }}>
               <Alert severity="success">{t('forgetPassword.success')}</Alert>
             </Grid>
           )}
           {error.status && (
-            <Grid item style={{ marginTop: '0.5em', width: '100%' }}>
+            <Grid item style={{ marginTop: '0.8em', width: '100%' }}>
               <Typography variant="subtitle2" style={{ display: 'flex', alignItems: 'center' }}>
                 {' '}
                 <ErrorOutlineIcon style={{ fill: 'red', marginRight: '4px' }} /> {error.message}
@@ -212,11 +212,13 @@ export default function Login() {
           {/* Send button */}
           <Grid item style={{ marginTop: '2em', width: '100%' }}>
             <Button fullWidth className={classes.button} disabled={loading} onClick={SubmitHandler}>
-              {loading ? (
-                <CircularProgress size="2rem" style={{ color: theme.palette.common.mainFront }} />
-              ) : (
-                t('forgetPassword.button')
+              {loading && (
+                <CircularProgress
+                  size="2rem"
+                  style={{ color: theme.palette.secondary.main, marginRight: '20px' }}
+                />
               )}
+              {t('forgetPassword.button')}
             </Button>
           </Grid>
         </Grid>
