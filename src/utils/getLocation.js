@@ -1,7 +1,7 @@
 import axios from './axios';
 const searchLocations = async (query, lang, token) => {
   try {
-    const response = await axios.get(`/events/searchLocation/?q=${query}&lang=${lang}`, {
+    const response = await axios.get(`/events/location/searchLocation/?q=${query}&lang=${lang}`, {
       headers: {
         authorization: 'Bearer ' + token,
       },

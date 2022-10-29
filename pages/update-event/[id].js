@@ -3,7 +3,7 @@ import CreateorUpdateEvent from '../../src/pagesComponent/createorUpdateEvent';
 import Loading from '../../src/reusable/loading';
 import Error from '../../src/reusable/error';
 import axios from '../../src/utils/axios';
-
+import CheckAuth from '../../src/reusable/checkAuth';
 function Update(props) {
   if (!props.error && !props.event) {
     return <Loading />;
@@ -11,7 +11,11 @@ function Update(props) {
   if (props.error) {
     return <Error message={props.error} />;
   }
-  return <CreateorUpdateEvent edit={true} event={props.event} />;
+  return (
+    <CheckAuth adminSuperAdmin>
+      <CreateorUpdateEvent edit={true} event={props.event} />
+    </CheckAuth>
+  );
 }
 
 export async function getServerSideProps({ params }) {

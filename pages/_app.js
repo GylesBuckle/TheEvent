@@ -30,7 +30,7 @@ const Main = ({ Component, pageProps }) => {
     publicPages.some((p) => router.pathname === p) ||
       allowedAuthPages.some((p) => router.pathname === p)
       ? false
-      : false
+      : true
   );
   const { setAuth } = useContext(GlobalContext);
 

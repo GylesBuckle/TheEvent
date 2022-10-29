@@ -79,7 +79,7 @@ export default function Login() {
     (globaluser.roles.includes('Super Admin') || globaluser.roles.includes('Admin'))
   ) {
     router.push('/admin-dashboard');
-    return <Loading />;
+    //return <Loading />;
   }
   if (globaluser !== null && globaluser.token !== undefined && globaluser.roles.includes('User')) {
     router.push('/');

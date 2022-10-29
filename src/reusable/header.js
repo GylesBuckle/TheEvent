@@ -250,7 +250,6 @@ export default function PrimarySearchAppBar(props) {
           paddingTop: '0.4em',
           paddingBottom: '0.4em',
           backgroundColor: '#fff',
-          position: 'fixed',
         }}
         className={classes.root}
       >

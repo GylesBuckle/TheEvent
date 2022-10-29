@@ -40,6 +40,13 @@ export default function CheckAuth(props) {
         return;
       }
     }
+    if (props.adminSuperAdmin) {
+      if (!user?.roles.some((item) => item === 'Admin' || item === 'Super Admin')) {
+        setNotFound(true);
+        setShowAuth(false);
+        return;
+      }
+    }
     setShowAuth(false);
   }, []);
 

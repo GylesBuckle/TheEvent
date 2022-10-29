@@ -29,6 +29,7 @@ import Flatpickr from 'react-flatpickr';
 import { compressAccurately } from 'image-conversion';
 import Cropper from 'react-cropper';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import * as moment from 'moment';
 
 import * as websiteInfo from '../../data/websiteInfo';
 import dataURLtoFile from '../../utils/dataURLtoFile';
@@ -168,7 +169,6 @@ export default function Index(props) {
   });
 
   useEffect(() => {
-    console.log(props.event);
     if (props.event) {
       setData({
         ...props.event,
@@ -415,6 +415,7 @@ export default function Index(props) {
       });
 
       let formData = new FormData();
+      formData.append('timezone', Intl.DateTimeFormat().resolvedOptions().timeZone);
 
       formData.append('name', data.name);
       formData.append('tags', JSON.stringify(data.tags));
@@ -422,12 +423,15 @@ export default function Index(props) {
       formData.append('image', data.image);
 
       const startDate = new Date(data.startDate);
-      startDate.setTime(new Date(data.time).getTime());
+      startDate.setHours(new Date(data.time).getHours());
+      startDate.setMinutes(new Date(data.time).getMinutes());
 
       const endDate = new Date(data.endDate);
-      endDate.setTime(new Date(data.time).getTime());
-      formData.append('startDate', startDate);
-      formData.append('endDate', endDate);
+      endDate.setHours(new Date(data.time).getHours());
+      endDate.setMinutes(new Date(data.time).getMinutes());
+
+      formData.append('startDate', moment(startDate).format('Y-MM-DD hh:mm'));
+      formData.append('endDate', moment(endDate).format('Y-MM-DD hh:mm'));
       formData.append('location', data.location);
       formData.append('locationCoordinates', JSON.stringify(data.locationCoordinates));
       formData.append('venue', data.venue);
@@ -447,10 +451,12 @@ export default function Index(props) {
         JSON.stringify(
           data.schedule.map((sc) => {
             const sd = new Date(sc.startDate);
-            sd.setTime(new Date(sc.time).getTime());
+            sd.setHours(new Date(sc.time).getHours());
+            sd.setMinutes(new Date(sc.time).getMinutes());
+
             return {
               ...sc,
-              startDate: sd,
+              startDate: moment(sd).format('Y-MM-DD hh:mm'),
             };
           })
         )
@@ -516,7 +522,7 @@ export default function Index(props) {
       });
 
       if (response.data.success === true) {
-        router.push('/admin-dashboard');
+        //router.push('/admin-dashboard');
       } else {
         setError([response.data.message]);
       }
@@ -950,7 +956,6 @@ export default function Index(props) {
             <Flatpickr
               value={data.startDate}
               onChange={(date) => {
-                console.log(date);
                 setData((d) => {
                   return {
                     ...d,
@@ -1929,7 +1934,7 @@ export default function Index(props) {
             />
           </Grid>
           {data.sponsors.map((item, i) => (
-            <Grid item>
+            <Grid item key={i}>
               <div
                 key={i}
                 style={{
