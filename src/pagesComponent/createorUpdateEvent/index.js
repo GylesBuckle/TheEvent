@@ -168,23 +168,40 @@ export default function Index(props) {
   });
 
   useEffect(() => {
-    // bio.replace(/&lt;/g, '<').replace(/&gt;/g, '>')
-    //globaluser.portfolio?.lifeStyleImages.map((x) => {
-    //   return {
-    //     img: x,
-    //     new: false,
-    //   };
-    // })
-    //deletedSponsorsImages:[]
-    // businessLinkImages: globaluser.portfolio?.businessLinkImages
-    // ? globaluser.portfolio?.businessLinkImages.map((x) => {
-    //     return {
-    //       ...x,
-    //       new: false,
-    //     };
-    //   })
-    // : [],
-  }, []);
+    console.log(props.event);
+    if (props.event) {
+      setData({
+        ...props.event,
+        description: props.event.description
+          ? props.event.description.replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+          : '',
+        startDate: new Date(props.event.startDate),
+        endDate: new Date(props.event.endDate),
+        time: new Date(props.event.startDate),
+        sponsors: props.event.sponsors.map((x) => {
+          return {
+            img: x,
+            new: false,
+          };
+        }),
+        deletedSponsorsImages: [],
+        speakers: props.event.speakers.map((x) => {
+          return {
+            ...x,
+            new: false,
+          };
+        }),
+        deletedSpeakersImages: [],
+        schedule: props.event.schedule.map((x) => {
+          return {
+            ...x,
+            startDate: new Date(x.startDate),
+            time: new Date(x.startDate),
+          };
+        }),
+      });
+    }
+  }, [props.event]);
 
   const imageChangeHandler = (files) => {
     const maximumSize = websiteInfo.maximumFileSize;
@@ -384,7 +401,9 @@ export default function Index(props) {
     setError(err);
     return err.length === 0;
   };
-  const resetHandler = () => {};
+  const resetHandler = () => {
+    router.push('/admin-dashboard');
+  };
   const SubmitHandler = async () => {
     if (validate() === false) {
       return;
@@ -404,13 +423,18 @@ export default function Index(props) {
 
       const startDate = new Date(data.startDate);
       startDate.setTime(new Date(data.time).getTime());
+
+      const endDate = new Date(data.endDate);
+      endDate.setTime(new Date(data.time).getTime());
       formData.append('startDate', startDate);
-      formData.append('endDate', data.endDate);
+      formData.append('endDate', endDate);
       formData.append('location', data.location);
       formData.append('locationCoordinates', JSON.stringify(data.locationCoordinates));
       formData.append('venue', data.venue);
       formData.append('price', data.price);
       formData.append('address', data.address);
+      formData.append('phone', data.phone);
+
       formData.append('email', data.email);
       formData.append('facebook', data.facebook);
       formData.append('twitter', data.twitter);
@@ -418,7 +442,19 @@ export default function Index(props) {
       formData.append('linkdin', data.linkdin);
       formData.append('snapchat', data.snapchat);
       formData.append('whatsApp', data.whatsApp);
-      formData.append('schedule', JSON.stringify(data.schedule));
+      formData.append(
+        'schedule',
+        JSON.stringify(
+          data.schedule.map((sc) => {
+            const sd = new Date(sc.startDate);
+            sd.setTime(new Date(sc.time).getTime());
+            return {
+              ...sc,
+              startDate: sd,
+            };
+          })
+        )
+      );
 
       //sponsors
       let newSponsorsImages = [];
@@ -431,15 +467,15 @@ export default function Index(props) {
           }
         }
       });
-      // formData.append(
-      //   'deleteImages',
-      //   data.deletedSponsorsImages ? JSON.stringify(data.deletedSponsorsImages) : JSON.stringify([])
-      // );
-      // for (let i = 0; i < newSponsorsImages.length; i++) {
-      //   formData.append('newSponsorsImages', newSponsorsImages[i]);
-      // }
-      // formData.append('newSponsorsImagesIndex', JSON.stringify(newSponsorsImagesIndex));
-      // formData.append('sponsors', JSON.stringify(data.sponsors));
+      formData.append(
+        'deletedSponsorsImages',
+        data.deletedSponsorsImages ? JSON.stringify(data.deletedSponsorsImages) : JSON.stringify([])
+      );
+      for (let i = 0; i < newSponsorsImages.length; i++) {
+        formData.append('newSponsorsImages', newSponsorsImages[i]);
+      }
+      formData.append('newSponsorsImagesIndex', JSON.stringify(newSponsorsImagesIndex));
+      formData.append('sponsors', JSON.stringify(data.sponsors));
 
       // speakers
       let newSpeakersImages = [];
@@ -453,15 +489,15 @@ export default function Index(props) {
         }
       });
 
-      // formData.append(
-      //   'deleteSpeakersImages',
-      //   data.deletedSpeakersImages ? JSON.stringify(data.deletedSpeakersImages) : JSON.stringify([])
-      // );
-      // for (let i = 0; i < newSpeakersImages.length; i++) {
-      //   formData.append('newSpeakersImages', newSpeakersImages[i]);
-      // }
-      // formData.append('newSpeakersImagesIndex', JSON.stringify(newSpeakersImagesIndex));
-      // formData.append('speakers', JSON.stringify(data.speakers));
+      formData.append(
+        'deleteSpeakersImages',
+        data.deletedSpeakersImages ? JSON.stringify(data.deletedSpeakersImages) : JSON.stringify([])
+      );
+      for (let i = 0; i < newSpeakersImages.length; i++) {
+        formData.append('newSpeakersImages', newSpeakersImages[i]);
+      }
+      formData.append('newSpeakersImagesIndex', JSON.stringify(newSpeakersImagesIndex));
+      formData.append('speakers', JSON.stringify(data.speakers));
 
       let url = `/events`;
       let method = 'post';
@@ -475,10 +511,11 @@ export default function Index(props) {
         data: formData,
         headers: {
           authorization: 'Bearer ' + globaluser?.token,
+          'Content-Type': 'multipart/form-data',
         },
       });
 
-      if (response.data.status === 'success') {
+      if (response.data.success === true) {
         router.push('/admin-dashboard');
       } else {
         setError([response.data.message]);
@@ -894,7 +931,7 @@ export default function Index(props) {
                           ? imageFile.name.length > 10
                             ? imageFile.name
                             : imageFile.name.slice(0, 10) + '...'
-                          : publicRuntimeConfig.REACT_APP_API_URL + '/files/events/' + data.image}
+                          : data.image}
                       </Typography>
                     </Grid>
                   )}
@@ -2857,7 +2894,6 @@ export default function Index(props) {
                                             <TextField
                                               placeholder={t('events.createEvent.time')}
                                               //label={data.startDate ? '' : 'Start Date'}
-                                              id="endDate"
                                               variant="outlined"
                                               fullWidth
                                               //size="small"
