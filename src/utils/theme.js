@@ -41,6 +41,7 @@ export default createTheme({
       fontFamily: 'Poppins',
       fontWeight: '700',
       fontSize: '22px',
+      color: '#000',
     },
     subtitle1: {
       fontSize: '18px',
@@ -77,6 +78,23 @@ export default createTheme({
       fontWeight: 400,
       color: `${arcGrey}`,
       lineHeight: '30.5px',
+    },
+    container: {
+      zIndex: 2,
+      paddingLeft: '60px',
+      paddingRight: '60px',
+      '@media (max-width:1300px)': {
+        paddingLeft: '50px',
+        paddingRight: '50px',
+      },
+      '@media (max-width:1000px)': {
+        paddingLeft: '30px',
+        paddingRight: '30px',
+      },
+      '@media (max-width:700px)': {
+        paddingLeft: '20px',
+        paddingRight: '20px',
+      },
     },
     label: {
       fontFamily: 'Poppins',

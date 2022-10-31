@@ -7,42 +7,25 @@ import {
   Typography,
   MenuItem,
   Menu,
-  useTheme,
   Grid,
   useMediaQuery,
-  IconButton,
   SwipeableDrawer,
   List,
   ListItem,
   ListItemText,
+  Button,
 } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 
 import SettingsIcon from '@material-ui/icons/Settings';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
-import AppsIcon from '@material-ui/icons/Apps';
 
 import { GlobalContext } from '../context/GlobalContext';
 import * as websiteInfo from '../data/websiteInfo';
 const useStyles = makeStyles((theme) => ({
-  root: {
-    [theme.breakpoints.down('sm')]: {
-      paddingLeft: '0.5em',
-      paddingRight: '0.5em',
-    },
-  },
   container: {
-    zIndex: 2,
-    width: '95%',
-
-    [theme.breakpoints.down('md')]: {
-      width: '96%',
-    },
-    [theme.breakpoints.down('sm')]: {
-      width: '98%',
-    },
+    ...theme.typography.container,
   },
   menuPaper: {
     backgroundColor: '#fff',
@@ -60,22 +43,10 @@ const useStyles = makeStyles((theme) => ({
     ...theme.typography.label,
   },
   button: {
-    ...theme.typography.label,
-    fontSize: '20px',
-    color: '#fff',
-    backgroundColor: '#1A1A1A',
-    borderRadius: '9px',
-    fontWeight: 700,
-    textTransform: 'none',
-    boxShadow: '0px 4px 4px 0px #00000040',
-
-    '&:hover': {
-      color: '#fff',
-      backgroundColor: '#1A1A1A',
-    },
-    [theme.breakpoints.down('md')]: {
-      fontSize: '12px',
-      fontWeight: 500,
+    ...theme.typography.button,
+    padding: '10px 21px',
+    [theme.breakpoints.down('550')]: {
+      display: 'none',
     },
   },
   tab: {
@@ -247,11 +218,8 @@ export default function PrimarySearchAppBar(props) {
         elevation={0}
         position="static"
         style={{
-          paddingTop: '0.4em',
-          paddingBottom: '0.4em',
           backgroundColor: '#fff',
         }}
-        className={classes.root}
       >
         <Toolbar disableGutters>
           <div
@@ -268,6 +236,7 @@ export default function PrimarySearchAppBar(props) {
               justifyContent="space-between"
               alignItems="center"
               wrap="nowrap"
+              style={{ gap: '30px' }}
             >
               {/* {matchesSM && (
                 <Grid item>
@@ -289,12 +258,16 @@ export default function PrimarySearchAppBar(props) {
                 </Grid>
               )} */}
               {/* {!matchesSM && ( */}
-              <Grid item style={{ flex: 1 }} container={matchesSM} md={2} justifyContent="center">
-                <Grid item>{logoContainer}</Grid>
-              </Grid>
+              <Grid item>{logoContainer}</Grid>
               {/* )} */}
-
-              <Grid item md xs>
+              {!matchesSM && (
+                <Grid item style={{ flex: 1 }}>
+                  <Typography variant="h5" align="center">
+                    {t('common.header.text')}
+                  </Typography>
+                </Grid>
+              )}
+              <Grid item>
                 <Grid
                   container
                   spacing={matches1150 ? 0 : matchesXL ? 5 : 3}
@@ -311,6 +284,9 @@ export default function PrimarySearchAppBar(props) {
                   )} */}
                   {/* {!matchesSM && ( */}
                   <Grid item>
+                    <Button className={classes.button}>{t('common.header.buy')}</Button>
+                  </Grid>
+                  <Grid item>
                     <Typography
                       style={{ cursor: 'pointer' }}
                       className={classes.tab}
@@ -323,6 +299,7 @@ export default function PrimarySearchAppBar(props) {
                       {/* {t('common.header.menu.3')} */}
                     </Typography>
                   </Grid>
+
                   {/* )} */}
                   <Grid item style={{ marginRight: matchesSM ? '0.45em' : 0 }}></Grid>
                 </Grid>
