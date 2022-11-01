@@ -117,7 +117,7 @@ export default function Index(props) {
     image: '',
     startDate: '',
     endDate: '',
-    totalTicket: '',
+    totalTickets: '',
     location: '',
     locationCoordinates: [],
     venue: '',
@@ -370,7 +370,7 @@ export default function Index(props) {
     if (data.endDate === '') err.push('Event End Date cannot be Empty');
     if (data.location === '') err.push('Event Location cannot be Empty');
     if (data.locationCoordinates.length === 0) err.push('Event Co-ordinates cannot be Empty');
-    if (data.totalTicket === '') err.push('Total tickets cannot be Empty');
+    if (data.totalTickets === '') err.push('Total tickets cannot be Empty');
     if (data.price === '') err.push('Event Price cannot be Empty');
     if (isNaN(data.price) || data.price <= 0) err.push('Invalid Price value');
     if (data.address.trim() === '') err.push('Event Address cannot be Empty');
@@ -431,7 +431,7 @@ export default function Index(props) {
 
       formData.append('startDate', moment(startDate).format('Y-MM-DD hh:mm'));
       formData.append('endDate', moment(endDate).format('Y-MM-DD hh:mm'));
-      formData.append('totalTicket', data.totalTicket);
+      formData.append('totalTickets', data.totalTickets);
       formData.append('location', data.location);
       formData.append('locationCoordinates', JSON.stringify(data.locationCoordinates));
       formData.append('venue', data.venue);
@@ -1099,7 +1099,7 @@ export default function Index(props) {
               }}
             />
           </Grid>
-          {/* totalTicket */}
+          {/* totalTickets */}
           <Grid item sm={4} xs={12}>
             {/* <Flatpickr
               value={data.time}
@@ -1179,8 +1179,8 @@ export default function Index(props) {
               }}
             /> */}
             <TextField
-              placeholder={t('events.createEvent.totalTicket')}
-              id="totalTicket"
+              placeholder={t('events.createEvent.totalTickets')}
+              id="totalTickets"
               //label={t('signup.firstName')}
               variant="outlined"
               fullWidth
@@ -1211,18 +1211,18 @@ export default function Index(props) {
                 ),
               }}
               required
-              value={data.totalTicket}
+              value={data.totalTickets}
               onChange={(e) => {
                 if (!e.target.value) {
                   setData({
                     ...data,
-                    totalTicket: '',
+                    totalTickets: '',
                   });
                 }
                 if (/[1-9]/.test(e.target.value) && !isNaN(e.target.value)) {
                   setData({
                     ...data,
-                    totalTicket: e.target.value,
+                    totalTickets: e.target.value,
                   });
                 }
               }}

@@ -49,6 +49,8 @@ const eventsData = [
     image: '1667001427732-pexels-julia-sakelli-1532244.jpg',
     startDate: '2022-10-29T07:00:00.000Z',
     endDate: '2022-10-29T07:00:00.000Z',
+    totalTickets: 50,
+    remainingTickets: 24,
     location: 'Karachi, Sindh, Pakistan',
     venue: 'Venue',
     price: 20,
@@ -232,18 +234,21 @@ export default function Events() {
                             ? t('homepage.events.book')
                             : t('homepage.events.signup')}
                         </Button>
-                        <Typography
-                          variant="body2"
-                          align="center"
-                          style={{
-                            alignSelf: 'center',
-                            marginTop: '4px',
-                            fontWeight: '600',
-                            color: '#FF5B21',
-                          }}
-                        >
-                          80% Sold Out
-                        </Typography>
+                        {((ev.totalTickets - ev.remainingTickets) / ev.totalTickets) * 100 > 50 && (
+                          <Typography
+                            variant="body2"
+                            align="center"
+                            style={{
+                              alignSelf: 'center',
+                              marginTop: '4px',
+                              fontWeight: '600',
+                              color: '#FF5B21',
+                            }}
+                          >
+                            {((ev.totalTickets - ev.remainingTickets) / ev.totalTickets) * 100}%
+                            Sold Out
+                          </Typography>
+                        )}
                       </TableCell>
                     </TableRow>
                   ))}
