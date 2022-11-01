@@ -1,11 +1,13 @@
 import React from 'react';
 import { Grid } from '@material-ui/core';
 
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Header from '../../reusable/header';
 import Hero from './hero';
 import About from './about';
 import Events from './events';
+import Features from './features';
+
 const useStyles = makeStyles((theme) => ({
   paddingContainer: {
     padding: '30px 70px',
@@ -18,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 export default function Homepage(props) {
+  const theme = useTheme();
   const classes = useStyles();
   return (
     <Grid
@@ -38,6 +41,12 @@ export default function Homepage(props) {
       </Grid>
       <Grid item style={{ width: '100%' }}>
         <Events />
+      </Grid>
+      <Grid
+        item
+        style={{ width: '100%', marginTop: '50px', backgroundColor: theme.palette.primary.main }}
+      >
+        <Features />
       </Grid>
     </Grid>
   );

@@ -1,8 +1,20 @@
-import React from 'react';
-import { Typography, Grid, useMediaQuery, Button } from '@material-ui/core';
+import React, { useContext } from 'react';
+import {
+  Typography,
+  Grid,
+  useMediaQuery,
+  Button,
+  TableContainer,
+  Table,
+  TableBody,
+  TableRow,
+  TableCell,
+} from '@material-ui/core';
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
+import * as moment from 'moment';
+import { GlobalContext } from '../../context/GlobalContext';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -15,6 +27,14 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '15px',
     background: '#fff',
     padding: '30px 23px',
+  },
+  button: {
+    ...theme.typography.button,
+    padding: '11px 50px',
+    borderRadius: 0,
+  },
+  tableCell: {
+    borderBottom: '0.5px solid rgba(13, 19, 88, 0.8)',
   },
 }));
 
@@ -88,11 +108,14 @@ const eventsData = [
     __v: 0,
   },
 ];
+
 export default function Events() {
   const { t } = useTranslation();
   const theme = useTheme();
   const classes = useStyles();
   const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const { user: globaluser } = useContext(GlobalContext);
 
   return (
     <Grid
@@ -177,8 +200,57 @@ export default function Events() {
         </Grid>
 
         {/* for events */}
-        <Grid container direction="column" style={{ marginTop: '20px' }}>
-          <Grid item></Grid>
+        <Grid container direction="column" style={{ marginTop: '20px', marginBottom: '20px' }}>
+          <Grid item>
+            <TableContainer>
+              <Table>
+                <TableBody>
+                  {eventsData.map((ev, i) => (
+                    <TableRow
+                      key={i}
+                      style={{ background: i % 2 === 0 ? 'rgba(13, 19, 88, 0.2)' : '#F8F6FF' }}
+                    >
+                      <TableCell className={classes.tableCell}>
+                        <Typography variant="subtitle1" style={{ fontWeight: 700 }}>
+                          {moment(ev.startDate).format('MMMM DD,YYYY')}
+                        </Typography>
+                      </TableCell>
+                      <TableCell className={classes.tableCell}>
+                        <Typography variant="subtitle1" style={{ fontWeight: 400 }}>
+                          {ev.location} ({moment(ev.startDate, ['HH mm']).format('hh:mm a')} -{' '}
+                          {moment(ev.endDate, ['HH mm']).format('hh:mm a')})
+                        </Typography>
+                      </TableCell>
+                      <TableCell className={classes.tableCell}>
+                        <Typography variant="subtitle1" style={{ fontWeight: 700 }}>
+                          {ev.speakers.map((x) => x.name).join(', ')}
+                        </Typography>
+                      </TableCell>
+                      <TableCell className={classes.tableCell} width="16%" align="right">
+                        <Button className={classes.button}>
+                          {globaluser?.token
+                            ? t('homepage.events.book')
+                            : t('homepage.events.signup')}
+                        </Button>
+                        <Typography
+                          variant="body2"
+                          align="center"
+                          style={{
+                            alignSelf: 'center',
+                            marginTop: '4px',
+                            fontWeight: '600',
+                            color: '#FF5B21',
+                          }}
+                        >
+                          80% Sold Out
+                        </Typography>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Grid>
         </Grid>
       </Grid>
     </Grid>

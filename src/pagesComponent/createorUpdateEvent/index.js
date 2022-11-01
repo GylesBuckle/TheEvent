@@ -117,7 +117,7 @@ export default function Index(props) {
     image: '',
     startDate: '',
     endDate: '',
-    time: '',
+    totalTicket: '',
     location: '',
     locationCoordinates: [],
     venue: '',
@@ -177,7 +177,6 @@ export default function Index(props) {
           : '',
         startDate: new Date(props.event.startDate),
         endDate: new Date(props.event.endDate),
-        time: new Date(props.event.startDate),
         sponsors: props.event.sponsors.map((x) => {
           return {
             img: x,
@@ -369,9 +368,9 @@ export default function Index(props) {
     if (data.image === '') err.push('Event Cover Image cannot be Empty');
     if (data.startDate === '') err.push('Event Start Date cannot be Empty');
     if (data.endDate === '') err.push('Event End Date cannot be Empty');
-    if (data.time === '') err.push('Event Start time cannot be Empty');
     if (data.location === '') err.push('Event Location cannot be Empty');
     if (data.locationCoordinates.length === 0) err.push('Event Co-ordinates cannot be Empty');
+    if (data.totalTicket === '') err.push('Total tickets cannot be Empty');
     if (data.price === '') err.push('Event Price cannot be Empty');
     if (isNaN(data.price) || data.price <= 0) err.push('Invalid Price value');
     if (data.address.trim() === '') err.push('Event Address cannot be Empty');
@@ -423,15 +422,16 @@ export default function Index(props) {
       formData.append('image', data.image);
 
       const startDate = new Date(data.startDate);
-      startDate.setHours(new Date(data.time).getHours());
-      startDate.setMinutes(new Date(data.time).getMinutes());
+      //startDate.setHours(new Date(data.time).getHours());
+      //startDate.setMinutes(new Date(data.time).getMinutes());
 
       const endDate = new Date(data.endDate);
-      endDate.setHours(new Date(data.time).getHours());
-      endDate.setMinutes(new Date(data.time).getMinutes());
+      //endDate.setHours(new Date(data.time).getHours());
+      //endDate.setMinutes(new Date(data.time).getMinutes());
 
       formData.append('startDate', moment(startDate).format('Y-MM-DD hh:mm'));
       formData.append('endDate', moment(endDate).format('Y-MM-DD hh:mm'));
+      formData.append('totalTicket', data.totalTicket);
       formData.append('location', data.location);
       formData.append('locationCoordinates', JSON.stringify(data.locationCoordinates));
       formData.append('venue', data.venue);
@@ -964,8 +964,9 @@ export default function Index(props) {
                 });
               }}
               options={{
-                dateFormat: 'd M Y',
-                altFormat: 'F j, Y',
+                enableTime: true,
+                dateFormat: 'd M Y H:i',
+                altFormat: 'F j, Y H:i',
                 altInput: false,
                 altInputClass: classes.input,
                 // formatDate: (d) => {
@@ -1032,8 +1033,9 @@ export default function Index(props) {
                 });
               }}
               options={{
-                dateFormat: 'd M Y',
-                altFormat: 'F j, Y',
+                enableTime: true,
+                dateFormat: 'd M Y H:i',
+                altFormat: 'F j, Y H:i',
                 altInput: false,
                 altInputClass: classes.input,
                 // formatDate: (d) => {
@@ -1097,9 +1099,9 @@ export default function Index(props) {
               }}
             />
           </Grid>
-          {/* time */}
+          {/* totalTicket */}
           <Grid item sm={4} xs={12}>
-            <Flatpickr
+            {/* <Flatpickr
               value={data.time}
               onChange={(date) => {
                 setData((d) => {
@@ -1174,6 +1176,55 @@ export default function Index(props) {
                     inputRef={ref}
                   />
                 );
+              }}
+            /> */}
+            <TextField
+              placeholder={t('events.createEvent.totalTicket')}
+              id="totalTicket"
+              //label={t('signup.firstName')}
+              variant="outlined"
+              fullWidth
+              //size="small"
+              InputProps={{
+                classes: {
+                  root: classes.input,
+                  notchedOutline: classes.inputOutline,
+                },
+                endAdornment: (
+                  <InputAdornment>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="25"
+                      height="24"
+                      fill="none"
+                      viewBox="0 0 25 24"
+                    >
+                      <path
+                        stroke="#5D5D5D"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M20.231 5h-16a1 1 0 00-1 1v12a1 1 0 001 1h16a1 1 0 001-1V6a1 1 0 00-1-1zM7.231 15h4M3.231 11h18M3.231 9h18"
+                      ></path>
+                    </svg>
+                  </InputAdornment>
+                ),
+              }}
+              required
+              value={data.totalTicket}
+              onChange={(e) => {
+                if (!e.target.value) {
+                  setData({
+                    ...data,
+                    totalTicket: '',
+                  });
+                }
+                if (/[1-9]/.test(e.target.value) && !isNaN(e.target.value)) {
+                  setData({
+                    ...data,
+                    totalTicket: e.target.value,
+                  });
+                }
               }}
             />
           </Grid>
