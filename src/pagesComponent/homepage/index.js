@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Header from '../../reusable/header';
 import Hero from './hero';
 import About from './about';
-
+import Events from './events';
 const useStyles = makeStyles((theme) => ({
   paddingContainer: {
     padding: '30px 70px',
@@ -24,7 +24,7 @@ export default function Homepage(props) {
       container
       direction="column"
       style={{
-        background: '#fff',
+        background: '#FAFAFA',
       }}
     >
       <Grid item style={{ width: '100%' }}>
@@ -35,6 +35,9 @@ export default function Homepage(props) {
       </Grid>
       <Grid item style={{ width: '100%' }}>
         <About />
+      </Grid>
+      <Grid item style={{ width: '100%' }}>
+        <Events />
       </Grid>
     </Grid>
   );

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, Grid, useMediaQuery, Button, CardMedia } from '@material-ui/core';
+import { Typography, Grid, useMediaQuery } from '@material-ui/core';
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
@@ -8,7 +8,6 @@ const useStyles = makeStyles((theme) => ({
   container: {
     ...theme.typography.container,
     paddingTop: '70px',
-    backgroundColor: '#FAFAFA',
     zIndex: 1,
   },
   card: {
@@ -37,7 +36,7 @@ export default function about() {
         <Grid container spacing={3}>
           {/* profile */}
           <Grid item>
-            <div style={{ padding: '30px 25px', position: 'relative' }}>
+            <div style={{ padding: '30px 25px', position: 'relative', zIndex: 2 }}>
               {/* top left svg */}
               <div style={{ position: 'absolute', zIndex: '-1', left: '-5px', top: '-2px' }}>
                 <svg
@@ -138,7 +137,7 @@ export default function about() {
               ></path>
             </svg>
             <Typography
-              variant="25px"
+              variant="h6"
               style={{
                 display: 'block',
                 color: '#1B1C31',
@@ -151,7 +150,7 @@ export default function about() {
               {t('homepage.about.text1')}
             </Typography>
             <Typography
-              variant="25px"
+              variant="h6"
               style={{
                 display: 'block',
                 color: '#1B1C31',
