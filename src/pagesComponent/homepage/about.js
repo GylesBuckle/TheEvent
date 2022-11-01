@@ -9,6 +9,7 @@ const useStyles = makeStyles((theme) => ({
     ...theme.typography.container,
     paddingTop: '70px',
     backgroundColor: '#FAFAFA',
+    zIndex: 1,
   },
   card: {
     boxShadow: '0px 4px 44px rgba(0, 0, 0, 0.1)',
@@ -38,7 +39,7 @@ export default function about() {
           <Grid item>
             <div style={{ padding: '30px 25px', position: 'relative' }}>
               {/* top left svg */}
-              <div style={{ position: 'absolute', left: '-5px', top: '-2px' }}>
+              <div style={{ position: 'absolute', zIndex: '-1', left: '-5px', top: '-2px' }}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="66"
@@ -54,7 +55,7 @@ export default function about() {
                 </svg>
               </div>
               {/* top right dots */}
-              <div style={{ position: 'absolute', zIndex: 2, right: '-5px', top: '13px' }}>
+              <div style={{ position: 'absolute', zIndex: '-1', right: '-5px', top: '13px' }}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="100"
@@ -67,14 +68,11 @@ export default function about() {
                   </g>
                 </svg>
               </div>
-              <div style={{ width: '100%', height: '100%', zIndex: 50 }}>
-                <img
-                  src="/dev/homepageAbout.png"
-                  style={{ width: '100%', height: '100%', zIndex: 50 }}
-                />
+              <div style={{ width: '100%', height: '100%', zIndex: 2 }}>
+                <img src="/dev/homepageAbout.png" style={{ width: '100%', height: '100%' }} />
               </div>
               {/* bottom left line */}
-              <div style={{ position: 'absolute', zIndex: 2, bottom: '2px', left: '33%' }}>
+              <div style={{ position: 'absolute', zIndex: '-1', bottom: '2px', left: '33%' }}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="86"
@@ -108,7 +106,7 @@ export default function about() {
                 </svg>
               </div>
               {/* bottom right svg */}
-              <div style={{ position: 'absolute', zIndex: 2, bottom: '-18px', right: '-16px' }}>
+              <div style={{ position: 'absolute', zIndex: '-1', bottom: '-18px', right: '-16px' }}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="90"
