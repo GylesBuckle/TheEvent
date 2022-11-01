@@ -92,13 +92,19 @@ export default function Hero() {
         </Typography>
       </Grid>
       {/* images */}
-      <Grid item style={{ width: '100%', zIndex: 2 }}>
+      <Grid
+        item
+        style={{ width: '100%', zIndex: 2 }}
+        className={matchesSM ? classes.container : ''}
+      >
         <Grid container justifyContent="space-between">
           {/* left man */}
-          <Grid item>
-            <img style={{ width: '100%', height: '100%' }} src="/dev/heroMan.png" />
-          </Grid>
-          <Grid item style={{ flex: 1, zIndex: 2, marginRight: '-30px' }}>
+          {!matchesSM && (
+            <Grid item>
+              <img style={{ width: '100%', height: '100%' }} src="/dev/heroMan.png" />
+            </Grid>
+          )}
+          <Grid item style={{ flex: 1, zIndex: 2, marginRight: matchesSM ? 0 : '-30px' }}>
             <Grid container direction="column" alignItems="center" style={{ paddingTop: '55px' }}>
               {/* for video */}
               <Grid item style={{ width: '100%' }}>
@@ -143,9 +149,11 @@ export default function Hero() {
             </Grid>
           </Grid>
           {/* right woman */}
-          <Grid item>
-            <img style={{ width: '100%', height: '100%', zIndex: 1 }} src="/dev/heroWomen.png" />
-          </Grid>
+          {!matchesSM && (
+            <Grid item>
+              <img style={{ width: '100%', height: '100%', zIndex: 1 }} src="/dev/heroWomen.png" />
+            </Grid>
+          )}
         </Grid>
       </Grid>
     </Grid>
