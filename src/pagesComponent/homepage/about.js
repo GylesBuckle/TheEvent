@@ -33,7 +33,7 @@ export default function about() {
       className={classes.container}
     >
       <Grid item style={{ width: '100%' }} className={classes.card}>
-        <Grid container spacing={3}>
+        <Grid container direction={matchesSM ? 'column' : 'row'} alignItems="center" spacing={3}>
           {/* profile */}
           <Grid item>
             <div style={{ padding: '30px 25px', position: 'relative', zIndex: 2 }}>
@@ -67,8 +67,19 @@ export default function about() {
                   </g>
                 </svg>
               </div>
-              <div style={{ width: '100%', height: '100%', zIndex: 2 }}>
-                <img src="/dev/homepageAbout.png" style={{ width: '100%', height: '100%' }} />
+              <div
+                style={{
+                  zIndex: 2,
+                  width: '100%',
+                  height: '100%',
+                  maxWidth: '270px',
+                  maxHeight: '320px',
+                }}
+              >
+                <img
+                  src="/dev/homepageAbout.png"
+                  style={{ width: '100%', height: '100%', maxWidth: '270px', maxHeight: '320px' }}
+                />
               </div>
               {/* bottom left line */}
               <div style={{ position: 'absolute', zIndex: '-1', bottom: '2px', left: '33%' }}>
