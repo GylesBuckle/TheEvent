@@ -529,9 +529,12 @@ export default function features() {
               </div>
             </Grid>
             {/* image */}
-            <Grid item md={6}>
+            <Grid item md={6} style={{ marginTop: matchesSM ? '25px' : 0 }}>
               <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <img src="/dev/Group.png" style={{ width: '60%', height: '60%' }} />
+                <img
+                  src="/dev/Group.png"
+                  style={{ width: matchesSM ? '80%' : '60%', height: matchesSM ? '80%' : '60%' }}
+                />
               </div>
             </Grid>
           </Grid>
