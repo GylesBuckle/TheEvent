@@ -13,5 +13,16 @@
     "heading": "Julien and Owen Events",
     "signup": "SIGN UP NOW",
     "book": "Book Your Ticket"
+  },
+  "features": {
+    "text1": "Lorem Ipsum is simply dummy text",
+    "text2": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
+    "feature1": "Will you continue to let procrastination take over?",
+    "feature2": "Allow a lack of confidence riddle you with anxiety for the rest of your life?",
+    "feature3": "Continue to follow advice that hasn't worked?",
+    "feature4": "Continue to blame others for your lack of success?",
+    "text3": "If you've had ENOUGH and are ready to BREAK FREE from Group Think and Social Conditioning that keeps you in the Self Actualization Rat Race…",
+    "text4": "Grab Your FREE Ticket to the Higher Purpose Tour Before Our Limited Seating Books Out!",
+    "higherPurposeText": "The Higher Purpose Tour has a $25 deposit that's refunded when you attend, in an effort to book the most comfortable sized room for everyone. Email <a>{{email}}</a> (if you attended) to receive your refund, or simply donate it if you enjoyed the talk!"
   }
 }

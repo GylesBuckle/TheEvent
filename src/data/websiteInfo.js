@@ -7,3 +7,5 @@ export const websiteKeywords =
 export const heroPageVideo = 'https://www.youtube.com/embed/of8buoGVees';
 export const tokenKey = 'driven-jwt';
 export const maximumFileSize = 5 * 1024 * 1024;
+
+export const hightPurposeSupportEmail = 'support@selfmasteryco.com';
