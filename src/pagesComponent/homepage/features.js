@@ -256,7 +256,286 @@ export default function features() {
             padding: '27px 35px',
             position: 'relative',
           }}
-        ></Paper>
+        >
+          <Grid
+            container
+            direction={matchesSM ? 'column' : 'row'}
+            alignItems={matchesSM ? 'center' : 'flex-start'}
+          >
+            {/* for text */}
+            <Grid item md={6}>
+              <Typography
+                variant="h2"
+                align={matchesSM ? 'center' : 'left'}
+                style={{
+                  fontFamily: 'Manrope',
+                  fontSize: '42px',
+                  color: theme.palette.primary.main,
+                  fontWeight: '800',
+                  zIndex: 1,
+                  lineHeight: '57px',
+                }}
+              >
+                {t('homepage.features.featuresImageHeadline')}
+              </Typography>
+
+              <Typography
+                variant="h5"
+                align={matchesSM ? 'center' : 'left'}
+                style={{
+                  marginTop: '34px',
+                  fontFamily: 'Manrope',
+                  color: '#000',
+                  fontWeight: '800',
+                  zIndex: 1,
+                  lineHeight: '30px',
+                }}
+              >
+                {t('homepage.features.featuresImageText1')}
+              </Typography>
+              <Typography
+                variant="h5"
+                align={matchesSM ? 'center' : 'left'}
+                style={{
+                  marginTop: '28px',
+                  fontFamily: 'Manrope',
+                  color: '#000',
+                  fontWeight: '800',
+                  zIndex: 1,
+                  lineHeight: '30px',
+                }}
+              >
+                {t('homepage.features.featuresImageText2')}
+              </Typography>
+              <Typography
+                variant="h5"
+                align={matchesSM ? 'center' : 'left'}
+                style={{
+                  marginTop: '28px',
+                  fontFamily: 'Manrope',
+                  color: '#000',
+                  fontWeight: '800',
+                  zIndex: 1,
+                  lineHeight: '30px',
+                }}
+              >
+                {t('homepage.features.featuresImageText3')}
+              </Typography>
+              <Typography
+                variant="h5"
+                align={matchesSM ? 'center' : 'left'}
+                style={{
+                  marginTop: '28px',
+                  fontFamily: 'Manrope',
+                  color: '#000',
+                  fontWeight: '800',
+                  zIndex: 1,
+                  lineHeight: '30px',
+                }}
+              >
+                {t('homepage.features.featuresImageText4')}
+              </Typography>
+              <Typography
+                variant="h5"
+                align={matchesSM ? 'center' : 'left'}
+                style={{
+                  marginTop: '28px',
+                  fontFamily: 'Manrope',
+                  color: '#000',
+                  fontWeight: '800',
+                  zIndex: 1,
+                  lineHeight: '30px',
+                }}
+              >
+                {t('homepage.features.featuresImageText5')}
+              </Typography>
+              {/* featuresImageFeature1 */}
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: matchesSM ? 'center' : 'flex-start',
+                  gap: '7px',
+                  marginTop: '28px',
+                }}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="23"
+                  fill="none"
+                  viewBox="0 0 24 23"
+                >
+                  <circle
+                    cx="11.978"
+                    cy="11.804"
+                    r="10.345"
+                    stroke="url(#paint0_linear_50_1094)"
+                    strokeWidth="1.5"
+                  ></circle>
+                  <path
+                    stroke="#FB5A23"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="1.5"
+                    d="M6.697 11.805l3.268 3.366 7-7.213"
+                  ></path>
+                  <defs>
+                    <linearGradient
+                      id="paint0_linear_50_1094"
+                      x1="11.978"
+                      x2="11.978"
+                      y1="0.709"
+                      y2="22.9"
+                      gradientUnits="userSpaceOnUse"
+                    >
+                      <stop stopColor="#161B55"></stop>
+                      <stop offset="1" stopColor="#FF5B21"></stop>
+                    </linearGradient>
+                  </defs>
+                </svg>
+                <Typography
+                  variant="subtitle1"
+                  style={{
+                    fontSize: '19px',
+                    color: '#000',
+                    fontWeight: '800',
+                    zIndex: 1,
+                    lineHeight: '29px',
+                    marginTop: '-3px',
+
+                    //textShadow: '0px 0px 20px #fff, 0px 0px 20px #fff',
+                  }}
+                >
+                  {t('homepage.features.featuresImageFeature1')}
+                </Typography>
+              </div>
+              {/* featuresImageFeature2 */}
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: matchesSM ? 'center' : 'flex-start',
+                  gap: '7px',
+                  marginTop: '24px',
+                }}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="23"
+                  fill="none"
+                  viewBox="0 0 24 23"
+                >
+                  <circle
+                    cx="11.978"
+                    cy="11.804"
+                    r="10.345"
+                    stroke="url(#paint0_linear_50_1094)"
+                    strokeWidth="1.5"
+                  ></circle>
+                  <path
+                    stroke="#FB5A23"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="1.5"
+                    d="M6.697 11.805l3.268 3.366 7-7.213"
+                  ></path>
+                  <defs>
+                    <linearGradient
+                      id="paint0_linear_50_1094"
+                      x1="11.978"
+                      x2="11.978"
+                      y1="0.709"
+                      y2="22.9"
+                      gradientUnits="userSpaceOnUse"
+                    >
+                      <stop stopColor="#161B55"></stop>
+                      <stop offset="1" stopColor="#FF5B21"></stop>
+                    </linearGradient>
+                  </defs>
+                </svg>
+                <Typography
+                  variant="subtitle1"
+                  style={{
+                    fontSize: '19px',
+                    color: '#000',
+                    fontWeight: '800',
+                    zIndex: 1,
+                    lineHeight: '29px',
+                    marginTop: '-3px',
+                    //textShadow: '0px 0px 20px #fff, 0px 0px 20px #fff',
+                  }}
+                >
+                  {t('homepage.features.featuresImageFeature2')}
+                </Typography>
+              </div>
+              {/* featuresImageFeature3 */}
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: matchesSM ? 'center' : 'flex-start',
+                  gap: '7px',
+                  marginTop: '24px',
+                }}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="23"
+                  fill="none"
+                  viewBox="0 0 24 23"
+                >
+                  <circle
+                    cx="11.978"
+                    cy="11.804"
+                    r="10.345"
+                    stroke="url(#paint0_linear_50_1094)"
+                    strokeWidth="1.5"
+                  ></circle>
+                  <path
+                    stroke="#FB5A23"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="1.5"
+                    d="M6.697 11.805l3.268 3.366 7-7.213"
+                  ></path>
+                  <defs>
+                    <linearGradient
+                      id="paint0_linear_50_1094"
+                      x1="11.978"
+                      x2="11.978"
+                      y1="0.709"
+                      y2="22.9"
+                      gradientUnits="userSpaceOnUse"
+                    >
+                      <stop stopColor="#161B55"></stop>
+                      <stop offset="1" stopColor="#FF5B21"></stop>
+                    </linearGradient>
+                  </defs>
+                </svg>
+                <Typography
+                  variant="subtitle1"
+                  style={{
+                    fontSize: '19px',
+                    color: '#000',
+                    fontWeight: '800',
+                    zIndex: 1,
+                    lineHeight: '29px',
+                    marginTop: '-3px',
+                    //textShadow: '0px 0px 20px #fff, 0px 0px 20px #fff',
+                  }}
+                >
+                  {t('homepage.features.featuresImageFeature3')}
+                </Typography>
+              </div>
+            </Grid>
+            {/* image */}
+            <Grid item md={6}>
+              <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <img src="/dev/Group.png" style={{ width: '60%', height: '60%' }} />
+              </div>
+            </Grid>
+          </Grid>
+        </Paper>
       </Grid>
     </Grid>
   );

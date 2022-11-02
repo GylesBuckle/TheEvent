@@ -213,7 +213,7 @@ export default function Events() {
                       style={{ background: i % 2 === 0 ? 'rgba(13, 19, 88, 0.2)' : '#F8F6FF' }}
                     >
                       <TableCell className={classes.tableCell}>
-                        <Typography variant="subtitle1" style={{ fontWeight: 700 }}>
+                        <Typography variant="subtitle1" style={{ fontWeight: 800 }}>
                           {moment(ev.startDate).format('MMMM DD,YYYY')}
                         </Typography>
                       </TableCell>
@@ -224,7 +224,7 @@ export default function Events() {
                         </Typography>
                       </TableCell>
                       <TableCell className={classes.tableCell}>
-                        <Typography variant="subtitle1" style={{ fontWeight: 700 }}>
+                        <Typography variant="subtitle1" style={{ fontWeight: 800 }}>
                           {ev.speakers.map((x) => x.name).join(', ')}
                         </Typography>
                       </TableCell>
@@ -241,8 +241,9 @@ export default function Events() {
                             style={{
                               alignSelf: 'center',
                               marginTop: '4px',
-                              fontWeight: '600',
+                              fontWeight: '800',
                               color: '#FF5B21',
+                              fontFamily: 'Manrope',
                             }}
                           >
                             {((ev.totalTickets - ev.remainingTickets) / ev.totalTickets) * 100}%

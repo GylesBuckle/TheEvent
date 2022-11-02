@@ -46,7 +46,7 @@ export default createTheme({
     subtitle1: {
       fontSize: '18px',
       fontWeight: 300,
-      fontFamily: 'Poppins',
+      fontFamily: 'Manrope',
     },
     subtitle2: {
       fontSize: '16px',
