@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, Grid, useMediaQuery, Button, Paper } from '@material-ui/core';
+import { Typography, Grid, useMediaQuery, Button, Paper, CardMedia } from '@material-ui/core';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundSize: 'cover',
     position: 'relative',
   },
-  card: {
+  paper: {
     boxShadow: '0px 4px 44px rgba(0, 0, 0, 0.1)',
     borderRadius: '15px',
     background: '#fff',
@@ -26,10 +26,48 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 10,
     backgroundColor: '#FF5B21',
   },
+  cardContainer: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(380px, 1fr))',
+    gap: '15px',
+    position: 'relative',
+    [theme.breakpoints.down('1080')]: {
+      gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
+    },
+  },
+  card: {
+    position: 'relative',
+    cursor: 'default',
+    width: '100%',
+    boxShadow: '0 10px 30px -15px rgba(2,12,27,0.7)',
+    padding: '13px',
+    borderRadius: '4px',
+    backgroundColor: '#fff',
+    transition: 'all 0.25s cubic-bezier(0.645,0.045,0.355,1)',
+    '&:hover': {
+      transform: 'translateY(-7px)',
+    },
+  },
 }));
 export default function Testnomials() {
   const { t } = useTranslation();
-
+  const cards = [
+    {
+      img: '/dev/card1.png',
+      heading: t('homepage.testnomials.card1Heading'),
+      text: t('homepage.testnomials.card1Text'),
+    },
+    {
+      img: '/dev/card2.png',
+      heading: t('homepage.testnomials.card2Heading'),
+      text: t('homepage.testnomials.card2Text'),
+    },
+    {
+      img: '/dev/card3.png',
+      heading: t('homepage.testnomials.card3Heading'),
+      text: t('homepage.testnomials.card3Text'),
+    },
+  ];
   const theme = useTheme();
   const classes = useStyles();
   const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
@@ -52,7 +90,7 @@ export default function Testnomials() {
         className={classes.container}
         style={{ width: '100%', zIndex: 2, marginTop: '90px' }}
       >
-        <Paper elevation={0} className={classes.card}>
+        <Paper elevation={0} className={classes.paper}>
           <Grid container direction={matchesSM ? 'column' : 'row'} alignItems="center" spacing={3}>
             {/* profile */}
             <Grid item>
@@ -203,6 +241,7 @@ export default function Testnomials() {
       {/* heading */}
       <Grid
         item
+        className={classes.container}
         style={{
           zIndex: 2,
           width: '100%',
@@ -227,7 +266,60 @@ export default function Testnomials() {
           />
         </Typography>
       </Grid>
-
+      {/* cards */}
+      <Grid
+        item
+        className={classes.container}
+        style={{ marginTop: matchesSM ? '30px' : '50px', width: '100%' }}
+      >
+        <Grid container spacing={3}>
+          {cards.map((c, i) => (
+            <Grid item key={i} sm={4} xs={12} style={{ display: 'flex' }}>
+              <Grid container direction="column" className={classes.card}>
+                {/* img */}
+                <Grid item style={{ width: '100%' }}>
+                  <CardMedia
+                    component="img"
+                    style={{ borderRadius: '4px' }}
+                    height="240"
+                    image={c.img}
+                    alt="green iguana"
+                  />
+                </Grid>
+                {/* heading */}
+                <Grid item style={{ width: '100%', marginTop: '10px' }}>
+                  <Typography
+                    variant="h5"
+                    style={{
+                      color: '#000',
+                      fontWeight: '800',
+                      zIndex: 1,
+                      lineHeight: '29px',
+                    }}
+                  >
+                    {c.heading}
+                  </Typography>
+                </Grid>
+                {/* text */}
+                <Grid item style={{ width: '100%', marginTop: '10px' }}>
+                  <Typography
+                    variant="subtitle1"
+                    style={{
+                      color: '#000',
+                      fontWeight: '700',
+                      zIndex: 1,
+                      lineHeight: '29px',
+                      whiteSpace: 'pre-line',
+                    }}
+                  >
+                    {c.text}
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Grid>
+          ))}
+        </Grid>
+      </Grid>
       {/* button */}
       <Grid item style={{ marginBottom: '90px', marginTop: matchesSM ? '20px' : '30px' }}>
         <Button

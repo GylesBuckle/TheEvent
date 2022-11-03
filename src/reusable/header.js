@@ -286,19 +286,21 @@ export default function PrimarySearchAppBar(props) {
                   <Grid item>
                     <Button className={classes.button}>{t('common.header.buy')}</Button>
                   </Grid>
-                  <Grid item>
-                    <Typography
-                      style={{ cursor: 'pointer' }}
-                      className={classes.tab}
-                      aria-owns={profileMenu ? menuID : undefined}
-                      aria-haspopup={profileMenu ? true : false}
-                      onMouseOver={(e) => (matchesSM ? '' : setProfileMenu(e.currentTarget))}
-                      onClick={(e) => setProfileMenu(e.currentTarget)}
-                    >
-                      <SettingsIcon />
-                      {/* {t('common.header.menu.3')} */}
-                    </Typography>
-                  </Grid>
+                  {globaluser && globaluser.token && (
+                    <Grid item>
+                      <Typography
+                        style={{ cursor: 'pointer' }}
+                        className={classes.tab}
+                        aria-owns={profileMenu ? menuID : undefined}
+                        aria-haspopup={profileMenu ? true : false}
+                        onMouseOver={(e) => (matchesSM ? '' : setProfileMenu(e.currentTarget))}
+                        onClick={(e) => setProfileMenu(e.currentTarget)}
+                      >
+                        <SettingsIcon />
+                        {/* {t('common.header.menu.3')} */}
+                      </Typography>
+                    </Grid>
+                  )}
 
                   {/* )} */}
                   <Grid item style={{ marginRight: matchesSM ? '0.45em' : 0 }}></Grid>
