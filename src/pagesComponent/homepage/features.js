@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme) => ({
   container: {
     ...theme.typography.container,
     paddingTop: '90px',
+    paddingBottom: '90px',
     zIndex: 1,
   },
   card: {
@@ -246,7 +247,7 @@ export default function features() {
           )}
         </Paper>
       </Grid>
-
+      {/* paper2 */}
       <Grid item style={{ width: '100%', marginTop: matchesSM ? '40px' : '50px' }}>
         <Paper
           elevation={0}

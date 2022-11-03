@@ -32,6 +32,9 @@ const useStyles = makeStyles((theme) => ({
     ...theme.typography.button,
     padding: '11px 50px',
     borderRadius: 0,
+    [theme.breakpoints.down('md')]: {
+      padding: '11px 20px',
+    },
   },
   tableCell: {
     borderBottom: '0.5px solid rgba(13, 19, 88, 0.8)',
@@ -203,7 +206,7 @@ export default function Events() {
 
         {/* for events */}
         <Grid container direction="column" style={{ marginTop: '20px', marginBottom: '20px' }}>
-          <Grid item>
+          <Grid item style={{ width: '100%' }}>
             <TableContainer>
               <Table>
                 <TableBody>
@@ -228,8 +231,12 @@ export default function Events() {
                           {ev.speakers.map((x) => x.name).join(', ')}
                         </Typography>
                       </TableCell>
-                      <TableCell className={classes.tableCell} width="16%" align="right">
-                        <Button className={classes.button}>
+                      <TableCell
+                        className={classes.tableCell}
+                        width={matchesSM ? undefined : '16%'}
+                        align="right"
+                      >
+                        <Button style={{ wrap: false }} className={classes.button}>
                           {globaluser?.token
                             ? t('homepage.events.book')
                             : t('homepage.events.signup')}
@@ -244,6 +251,7 @@ export default function Events() {
                               fontWeight: '800',
                               color: '#FF5B21',
                               fontFamily: 'Manrope',
+                              whiteSpace: 'nowrap',
                             }}
                           >
                             {((ev.totalTickets - ev.remainingTickets) / ev.totalTickets) * 100}%
