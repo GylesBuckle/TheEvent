@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     ...theme.typography.button,
-    padding: '11px 50px',
+    padding: '11px 20px',
     borderRadius: 15,
   },
 }));
@@ -115,7 +115,67 @@ export default function opportunity() {
           {t('homepage.opportunity.text5')}
         </Typography>
       </Grid>
-
+      {/* get My tickets */}
+      <Grid item style={{ width: '100%', marginTop: matchesSM ? '40px' : '50px' }}>
+        <Paper
+          elevation={0}
+          style={{
+            borderRadius: '15px',
+            boxShadow: '0px 4px 44px rgba(0, 0, 0, 0.15)',
+            padding: '27px 35px',
+            position: 'relative',
+          }}
+        >
+          {!matchesSM && (
+            <div style={{ position: 'absolute', bottom: '-4.5px', left: '-35px', width: 'auto' }}>
+              <img src="/dev/opportunity-women.png" style={{ width: '60%', height: '60%' }} />
+            </div>
+          )}
+          <Grid container justifyContent="center" spacing={2}>
+            <Grid item sm={6} xs={12}>
+              <Grid container alignItems="center" direction="column">
+                <Typography
+                  variant="h5"
+                  align="center"
+                  style={{
+                    color: '#000',
+                    fontSize: '23px',
+                    zIndex: 1,
+                    lineHeight: '32px',
+                    fontWeight: 700,
+                    whiteSpace: 'pre-line',
+                    //textShadow: '0px 0px 20px #fff, 0px 0px 20px #fff',
+                  }}
+                >
+                  {t('homepage.opportunity.cardText')}
+                </Typography>
+                <Grid item>
+                  <Button
+                    className={classes.button}
+                    style={{ marginTop: '33px' }}
+                    endIcon={<ChevronRightIcon />}
+                  >
+                    {t('homepage.hero.button')}
+                  </Button>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Grid>
+          {!matchesSM && (
+            <div
+              style={{
+                position: 'absolute',
+                bottom: '0.5px',
+                right: 0,
+                display: 'flex',
+                justifyContent: 'flex-end',
+              }}
+            >
+              <img src="/dev/opportunity-men.png" style={{ width: '60%', height: '60%' }} />
+            </div>
+          )}
+        </Paper>
+      </Grid>
       {/* text6 7 8 */}
       <Grid item style={{ width: '100%', marginTop: '70px' }}>
         <Typography

@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
   container: {
     ...theme.typography.container,
     paddingTop: '90px',
+    paddingBottom: '90px',
     zIndex: 1,
   },
   card: {
