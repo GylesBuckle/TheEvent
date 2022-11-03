@@ -255,7 +255,7 @@ export default function Testnomials() {
             color: '#fff',
             fontWeight: '800',
             zIndex: 1,
-            lineHeight: '41px',
+            //lineHeight: matches '41px',
           }}
         >
           <Trans
@@ -321,7 +321,11 @@ export default function Testnomials() {
         </Grid>
       </Grid>
       {/* button */}
-      <Grid item style={{ marginBottom: '90px', marginTop: matchesSM ? '20px' : '30px' }}>
+      <Grid
+        item
+        className={classes.container}
+        style={{ marginBottom: '90px', marginTop: matchesSM ? '20px' : '30px' }}
+      >
         <Button
           className={classes.button}
           style={{ marginTop: '33px' }}

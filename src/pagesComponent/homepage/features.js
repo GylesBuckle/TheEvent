@@ -36,6 +36,7 @@ export default function features() {
   ];
   const theme = useTheme();
   const classes = useStyles();
+  const matchesXS = useMediaQuery(theme.breakpoints.down('xs'));
   const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
   const matchesMD = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -90,43 +91,57 @@ export default function features() {
         >
           <Grid container spacing={2}>
             {featuresArray.map((f, i) => (
-              <Grid item key={i} xs={6} style={{ marginTop: i > 1 ? '30px' : 0 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="47"
-                    height="47"
-                    fill="none"
-                    viewBox="0 0 47 47"
-                  >
-                    <circle
-                      cx="23.711"
-                      cy="23.616"
-                      r="21.614"
-                      stroke="url(#paint0_linear_50_1065)"
-                      strokeWidth="3"
-                    ></circle>
-                    <path
-                      stroke="#FB5A23"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="3"
-                      d="M12.711 23.617l6.806 7.012 14.584-15.026"
-                    ></path>
-                    <defs>
-                      <linearGradient
-                        id="paint0_linear_50_1065"
-                        x1="23.711"
-                        x2="23.711"
-                        y1="0.503"
-                        y2="46.73"
-                        gradientUnits="userSpaceOnUse"
-                      >
-                        <stop stopColor="#161B55"></stop>
-                        <stop offset="1" stopColor="#FF5B21"></stop>
-                      </linearGradient>
-                    </defs>
-                  </svg>
+              <Grid
+                item
+                key={i}
+                sm={6}
+                xs={12}
+                style={{ marginTop: i > 1 ? (matchesXS ? 0 : '30px') : 0 }}
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: matchesXS ? 'flex-start' : 'center',
+                    gap: '15px',
+                  }}
+                >
+                  <div>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="47"
+                      height="47"
+                      fill="none"
+                      viewBox="0 0 47 47"
+                    >
+                      <circle
+                        cx="23.711"
+                        cy="23.616"
+                        r="21.614"
+                        stroke="url(#paint0_linear_50_1065)"
+                        strokeWidth="3"
+                      ></circle>
+                      <path
+                        stroke="#FB5A23"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="3"
+                        d="M12.711 23.617l6.806 7.012 14.584-15.026"
+                      ></path>
+                      <defs>
+                        <linearGradient
+                          id="paint0_linear_50_1065"
+                          x1="23.711"
+                          x2="23.711"
+                          y1="0.503"
+                          y2="46.73"
+                          gradientUnits="userSpaceOnUse"
+                        >
+                          <stop stopColor="#161B55"></stop>
+                          <stop offset="1" stopColor="#FF5B21"></stop>
+                        </linearGradient>
+                      </defs>
+                    </svg>
+                  </div>
                   <Typography
                     variant="subtitle1"
                     style={{
@@ -211,6 +226,7 @@ export default function features() {
                     zIndex: 1,
                     lineHeight: '32px',
                     fontWeight: 700,
+                    wordBreak: 'break-word',
                     //textShadow: '0px 0px 20px #fff, 0px 0px 20px #fff',
                   }}
                 >

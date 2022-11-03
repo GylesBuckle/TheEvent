@@ -151,7 +151,7 @@ export default function Events() {
           </Grid>
           {/* images */}
           <Grid item>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} wrap="nowrap">
               <Grid item>
                 <div style={{ position: 'relative', zIndex: 2 }}>
                   <div
