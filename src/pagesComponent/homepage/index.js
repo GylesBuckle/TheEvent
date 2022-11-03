@@ -8,6 +8,7 @@ import About from './about';
 import Events from './events';
 import Features from './features';
 import Opportunity from './opportunity';
+import Testnomials from './testnomials';
 
 const useStyles = makeStyles((theme) => ({
   paddingContainer: {
@@ -48,6 +49,9 @@ export default function Homepage(props) {
       </Grid>
       <Grid item style={{ width: '100%' }}>
         <Opportunity />
+      </Grid>
+      <Grid item style={{ width: '100%' }}>
+        <Testnomials />
       </Grid>
     </Grid>
   );
