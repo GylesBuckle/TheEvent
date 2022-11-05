@@ -2,13 +2,27 @@ import React from 'react';
 import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
 import Link from 'next/link';
-import { Grid, useMediaQuery, Typography, Breadcrumbs, Paper, Button } from '@material-ui/core';
+import {
+  Grid,
+  useMediaQuery,
+  Typography,
+  Breadcrumbs,
+  Paper,
+  Button,
+  IconButton,
+  Divider,
+} from '@material-ui/core';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import StarOutlineIcon from '@material-ui/icons/StarOutline';
+import StarIcon from '@material-ui/icons/Star';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import html_Parser from 'html-react-parser';
-
+import * as moment from 'moment';
 import Header from '../../reusable/header';
+import { useState } from 'react';
 
 const useStyles = makeStyles((theme) => ({
   background: {
@@ -53,7 +67,40 @@ export default function index(props) {
   const classes = useStyles();
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
+  const [likeEvent, setLikeEvent] = useState(false);
+  const [starEvent, setStarEvent] = useState(false);
 
+  const renderDetail = (icon, label, value, url) => (
+    <Grid container alignItems="center" spacing={2}>
+      {/* for icon */}
+      <Grid item>{icon}</Grid>
+      {/* for label value */}
+      <Grid item>
+        <div style={{ borderLeft: '1px solid #DDDDDD', paddingLeft: '20px' }}>
+          <Typography variant="caption" style={{ color: '#2C2C2C', fontWeight: 700 }}>
+            {label}
+          </Typography>
+          {url ? (
+            <a href={url} target="_blank" style={{ textDecoration: 'none' }}>
+              <Typography
+                variant="subtitle2"
+                style={{ color: '#6D6D6D', fontWeight: 400, marginTop: '-2px' }}
+              >
+                {value}
+              </Typography>
+            </a>
+          ) : (
+            <Typography
+              variant="subtitle2"
+              style={{ color: '#6D6D6D', fontWeight: 400, marginTop: '-2px' }}
+            >
+              {value}
+            </Typography>
+          )}
+        </div>
+      </Grid>
+    </Grid>
+  );
   return (
     <Grid
       container
@@ -457,7 +504,148 @@ export default function index(props) {
               </Paper>
             </Grid>
             {/* event Details */}
-            <Grid item md={5} xs={12}></Grid>
+            <Grid item md={5} xs={12} style={{ display: 'flex' }}>
+              <Paper
+                elevation={0}
+                className={classes.paper}
+                style={{ width: '100%', height: '100%' }}
+              >
+                {/* event details */}
+                <Grid
+                  container
+                  spacing={1}
+                  justifyContent="space-between"
+                  alignItems="center"
+                  className={classes.paperPadding}
+                  style={{ marginTop: '15px' }}
+                >
+                  <Grid item>
+                    <Typography variant="caption" style={{ color: '#2C2C2C', fontWeight: 700 }}>
+                      {t('event.eventDetails')}
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    {/* like */}
+                    <div style={{ display: 'flex', gap: '10px' }}>
+                      {/* like */}
+                      <IconButton
+                        onClick={() => setLikeEvent((s) => !s)}
+                        size="small"
+                        style={{ border: '1px solid #D9D9D9' }}
+                      >
+                        {likeEvent ? <StarIcon /> : <StarOutlineIcon />}
+                      </IconButton>
+                      {/* star */}
+                      <IconButton
+                        onClick={() => setStarEvent((s) => !s)}
+                        size="small"
+                        style={{ border: '1px solid #D9D9D9' }}
+                      >
+                        {starEvent ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                      </IconButton>
+                    </div>
+                  </Grid>
+                </Grid>
+                {/* divider */}
+                <Divider style={{ marginTop: '18px' }} />
+                {/* startDate */}
+                <div style={{ marginTop: '18px' }} className={classes.paperPadding}>
+                  {renderDetail(
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="46"
+                      height="46"
+                      fill="none"
+                      viewBox="0 0 46 46"
+                    >
+                      <path
+                        stroke={theme.palette.primary.main}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="3"
+                        d="M8.386 15.772h30M36.51 8.272H10.26c-1.035 0-1.874.84-1.874 1.875v26.25c0 1.036.84 1.875 1.875 1.875h26.25c1.035 0 1.875-.84 1.875-1.875v-26.25c0-1.035-.84-1.875-1.875-1.875z"
+                      ></path>
+                      <path
+                        stroke={theme.palette.primary.main}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="3"
+                        d="M22.917 23.272h-6.563a.469.469 0 00-.468.47v6.562c0 .259.21.468.469.468h6.562c.259 0 .469-.21.469-.468V23.74a.469.469 0 00-.469-.469zM30.886 4.522v3.75M15.886 4.522v3.75"
+                      ></path>
+                    </svg>,
+                    t('event.startDate'),
+                    moment(props.event.startDate).format('MMMM DD ,yyyy')
+                  )}
+                </div>
+                {/* divider */}
+                <div style={{ marginTop: '18px' }} className={classes.paperPadding}>
+                  <Divider />
+                </div>
+                {/* endDate */}
+                <div style={{ marginTop: '18px' }} className={classes.paperPadding}>
+                  {renderDetail(
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="46"
+                      height="46"
+                      fill="none"
+                      viewBox="0 0 46 46"
+                    >
+                      <path
+                        stroke={theme.palette.primary.main}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="3"
+                        d="M8.386 15.772h30M36.51 8.272H10.26c-1.035 0-1.874.84-1.874 1.875v26.25c0 1.036.84 1.875 1.875 1.875h26.25c1.035 0 1.875-.84 1.875-1.875v-26.25c0-1.035-.84-1.875-1.875-1.875z"
+                      ></path>
+                      <path
+                        stroke={theme.palette.primary.main}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="3"
+                        d="M22.917 23.272h-6.563a.469.469 0 00-.468.47v6.562c0 .259.21.468.469.468h6.562c.259 0 .469-.21.469-.468V23.74a.469.469 0 00-.469-.469zM30.886 4.522v3.75M15.886 4.522v3.75"
+                      ></path>
+                    </svg>,
+                    t('event.endDate'),
+                    moment(props.event.endDate).format('MMMM DD ,yyyy')
+                  )}
+                </div>
+                {/* divider */}
+                <div style={{ marginTop: '18px' }} className={classes.paperPadding}>
+                  <Divider />
+                </div>
+                {/* endDate */}
+                <div style={{ marginTop: '18px' }} className={classes.paperPadding}>
+                  {renderDetail(
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="45"
+                      height="45"
+                      fill="none"
+                      viewBox="0 0 45 45"
+                    >
+                      <path
+                        stroke="#0D1358"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeMiterlimit="10"
+                        strokeWidth="3"
+                        d="M22.232 39.262c9.113 0 16.5-7.387 16.5-16.5 0-9.112-7.387-16.5-16.5-16.5-9.112 0-16.5 7.388-16.5 16.5 0 9.113 7.388 16.5 16.5 16.5z"
+                      ></path>
+                      <path
+                        stroke="#0D1358"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="3"
+                        d="M22.232 13.596v9.166H31.4"
+                      ></path>
+                    </svg>,
+                    t('event.time'),
+                    moment(props.event.startDate).format('hh:mm a')
+                  )}
+                </div>
+              </Paper>
+            </Grid>
           </Grid>
         </div>
       </Grid>
