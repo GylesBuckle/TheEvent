@@ -21,7 +21,7 @@ import 'flatpickr/dist/themes/dark.css';
 import 'cropperjs/dist/cropper.css';
 
 const publicPages = [];
-const allowedAuthPages = ['/'];
+const allowedAuthPages = ['/', '/event/[id]'];
 const Main = ({ Component, pageProps }) => {
   const router = useRouter();
   const muiTheme = useTheme();

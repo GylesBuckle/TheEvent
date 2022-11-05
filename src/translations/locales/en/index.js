@@ -5,4 +5,6 @@ import forgetPassword from './forgetPassword.json';
 import resetPassword from './resetPassword.json';
 import homepage from './homepage.json';
 import events from './events.json';
-export { common, signup, signin, resetPassword, forgetPassword, homepage, events };
+import event from './event.json';
+
+export { common, signup, signin, resetPassword, forgetPassword, homepage, events, event };

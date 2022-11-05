@@ -42,7 +42,7 @@ export default function Homepage(props) {
         <About />
       </Grid>
       <Grid item style={{ width: '100%' }}>
-        <Events />
+        <Events events={props.events} />
       </Grid>
       <Grid item style={{ width: '100%', backgroundColor: theme.palette.primary.main }}>
         <Features />

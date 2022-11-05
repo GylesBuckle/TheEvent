@@ -1,0 +1,21 @@
+{
+  "home": "Home",
+  "event": "Events",
+  "eventDetails": "Event Details",
+  "startDate": "START DATE",
+  "share": "SHARE THIS EVENT",
+  "sponsors": "Sponsors & Partners",
+  "endDate": "END DATE",
+  "time": "Time",
+  "location": "LOCATION",
+  "venue": "VENUE",
+  "price": "PRICE",
+  "adress": "ADDRESS",
+  "phone": "PHONE",
+  "email": "EMAIL",
+  "remainingTicket": "REMAINING TICKETS",
+  "network": "NETWORK",
+  "book": "Book Your Ticket",
+  "speaker": "Speakers",
+  "schedule": "Schedule"
+}
