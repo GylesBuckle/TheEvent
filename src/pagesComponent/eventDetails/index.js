@@ -71,6 +71,11 @@ const useStyles = makeStyles((theme) => ({
     ...theme.typography.button,
     padding: '4px 10px',
   },
+  accordianExpanded: {
+    '& .MuiAccordionSummary-content.Mui-expanded': {
+      margin: '5px 0px',
+    },
+  },
 }));
 export default function index(props) {
   const { t } = useTranslation();
@@ -1408,6 +1413,7 @@ export default function index(props) {
                     aria-controls={`panel${i}a-content`}
                     id={`panel${i}a-header`}
                     style={{ padding: 0 }}
+                    classes={{ root: classes.accordianExpanded }}
                   >
                     {/* for Collapse header */}
                     <Grid
@@ -1457,6 +1463,7 @@ export default function index(props) {
                   <AccordionDetails style={{ padding: 0 }}>
                     <div
                       style={{
+                        width: '100%',
                         display: 'flex',
                         flexDirection: 'column',
                         borderTop: '1px solid #E1E1E1',
