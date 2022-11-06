@@ -29,6 +29,7 @@ i18n
           homepage: enTran.homepage,
           events: enTran.events,
           event: enTran.event,
+          checkout: enTran.checkout,
           // here we will place our translations...
         },
       },

@@ -1,0 +1,23 @@
+{
+  "heading": "lorem ipsumelorem ipsumelorem ipsumelorem ipsumelorem",
+  "item": "Item",
+  "price": "Price",
+  "quantity": "Quantity",
+  "remove": "Remove",
+  "coupan": "Enter Coupan",
+  "apply": "Apply Coupon",
+  "information": "Payment Information",
+  "firstName": "First Name",
+  "lastName": "Last Name",
+  "email": "Email Address",
+  "address": "Address",
+  "state": "State",
+  "city": "City",
+  "country": "Country",
+  "phone": "Phone Number",
+  "paymentMethod": "Select Payment Method",
+  "card": "Credit Card Number",
+  "testimonials": "Testimonials",
+  "orderTotal": "Your Order Total:",
+  "place": "Place Your Order"
+}
