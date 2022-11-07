@@ -105,6 +105,9 @@ const useStyles = makeStyles((theme) => ({
   paperPadding: {
     padding: '0px 16px',
   },
+  extraSpace: {
+    paddingLeft: '35px',
+  },
 }));
 export default function index() {
   const { t } = useTranslation();
@@ -171,10 +174,11 @@ export default function index() {
                 <TableCell
                   style={{
                     width: '40%',
-                    paddingLeft: '35px',
+
                     paddingTop: '25px',
                     paddingBottom: '35px',
                   }}
+                  className={classes.extraSpace}
                 >
                   <Typography
                     variant="h5"
@@ -256,14 +260,30 @@ export default function index() {
                     paddingBottom: '35px',
                   }}
                 >
-                  <Typography variant="h5" style={{ color: '#FF0000', fontWeight: 600 }}>
+                  {/* <Typography variant="h5" style={{ color: '#FF0000', fontWeight: 600 }}>
                     {t('checkout.remove')}
-                  </Typography>
+                  </Typography> */}
                 </TableCell>
               </TableRow>
             </TableBody>
           </Table>
         </TableContainer>
+      </Grid>
+      {/* payment info and testnomail */}
+      <Grid item style={{ width: '100%', marginTop: '30px' }}>
+        <Grid container component={Paper} elevation={0} className={[classes.paper].join(' ')}>
+          {/* payment info  */}
+          <Grid item md={6} xs={12}>
+            <Typography
+              variant="h4"
+              className={classes.extraSpace}
+              style={{ lineHeight: '41px', marginTop: '25px' }}
+            >
+              {t('checkout.information')}
+            </Typography>
+          </Grid>
+          <Grid item md={6} xs={12}></Grid>
+        </Grid>
       </Grid>
     </Grid>
   );
