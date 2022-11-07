@@ -23,7 +23,7 @@ import RemoveIcon from '@material-ui/icons/Remove';
 import { useTranslation } from 'react-i18next';
 import * as moment from 'moment';
 import Header from '../../reusable/header';
-
+import { testimonials } from '../../data/testimonials.json';
 const eventData = {
   tags: ['bonus'],
   locationCoordinates: [67.114544, 24.870862],
@@ -738,6 +738,31 @@ export default function index() {
             >
               {t('checkout.testimonials')}
             </Typography>
+            {testimonials.map((item, i) => (
+              <div
+                key={i}
+                className={matchesSM ? classes.extraSpace : ''}
+                style={{ marginTop: i === 0 ? '25px' : '25px' }}
+              >
+                <Paper
+                  elevation={0}
+                  className={classes.paperPadding}
+                  style={{
+                    backgroundColor: '#F1F1F1',
+                    borderRadius: '12px',
+                    paddingTop: '13px',
+                    paddingBottom: '13px',
+                  }}
+                >
+                  <Typography
+                    variant="subtitle2"
+                    style={{ lineHeight: '20px', textAlign: 'justify' }}
+                  >
+                    {item.description}
+                  </Typography>
+                </Paper>
+              </div>
+            ))}
           </Grid>
         </Grid>
       </Grid>
