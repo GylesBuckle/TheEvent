@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
 import {
   Grid,
   useMediaQuery,
@@ -16,12 +17,19 @@ import {
   TextField,
   InputAdornment,
   Divider,
+  Radio,
 } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import { useTranslation } from 'react-i18next';
 import * as moment from 'moment';
+import CheckoutForm from './checkoutForm';
+import { Elements, ElementsConsumer } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+
+const promise = loadStripe(publicRuntimeConfig.REACT_APP_STRIPE);
+
 import Header from '../../reusable/header';
 import { testimonials } from '../../data/testimonials.json';
 const eventData = {
@@ -109,6 +117,7 @@ const useStyles = makeStyles((theme) => ({
   },
   extraSpace: {
     paddingLeft: '35px',
+    paddingRight: '35px',
   },
   input: {
     ...theme.typography.input,
@@ -132,14 +141,6 @@ const useStyles = makeStyles((theme) => ({
   flexContainer: {
     display: 'flex',
     gap: '20px',
-  },
-  button: {
-    ...theme.typography.button,
-    borderRadius: 0,
-
-    fontSize: '24px',
-    fontFamily: 'Manrope',
-    fontWeight: 800,
   },
 }));
 export default function index() {
@@ -323,7 +324,7 @@ export default function index() {
           className={[classes.paper].join(' ')}
         >
           {/* payment info  */}
-          <Grid item md={5} xs={12}>
+          <Grid item md={6} xs={12}>
             <Typography
               variant="h4"
               className={classes.extraSpace}
@@ -702,38 +703,56 @@ export default function index() {
                 }}
               />
             </div>
-
-            {/* order total */}
             <div className={[classes.extraSpace].join(' ')} style={{ marginTop: '25px' }}>
-              <Divider />
-              <div className={classes.flexContainer} style={{ justifyContent: 'space-between' }}>
-                <Typography
-                  variant="h4"
-                  style={{ lineHeight: '41px', marginTop: '20px', color: '#767676' }}
-                >
-                  {t('checkout.orderTotal')}
-                </Typography>
-                <Typography
-                  variant="h4"
-                  style={{ lineHeight: '41px', marginTop: '20px', color: '#767676' }}
-                >
-                  ${(event.price * quantity).toFixed(2)}
-                </Typography>
+              <Typography variant="h5" style={{ color: '#5E5E5E' }}>
+                {t('checkout.paymentMethod')}
+              </Typography>
+              <Paper
+                elevation={0}
+                className={classes.paperPadding}
+                style={{
+                  marginTop: '13px',
+                  backgroundColor: '#F1F1F1',
+                  borderRadius: '12px',
+                  paddingTop: '13px',
+                  paddingBottom: '13px',
+                }}
+              >
+                <Grid container alignItems="center" style={{ marginTop: '0.5em' }}>
+                  <Radio checked={true} color="primary" />{' '}
+                  <img src="/dev/Stripe.png" style={{ width: '8em', height: '3.5em' }} />
+                </Grid>
+              </Paper>
+
+              <div style={{ marginTop: '25px' }}>
+                <Elements stripe={promise}>
+                  <ElementsConsumer>
+                    {({ elements, stripe }) => (
+                      <CheckoutForm
+                        //checkoutHandler={props.checkoutHandler}
+                        quantity={quantity}
+                        data={data}
+                        event={event}
+                        elements={elements}
+                        stripe={stripe}
+                      />
+                    )}
+                  </ElementsConsumer>
+                </Elements>
               </div>
-              <Divider style={{ marginTop: '20px' }} />
             </div>
 
             {/* place your order */}
-            <div className={[classes.extraSpace].join(' ')} style={{ marginTop: '25px' }}>
+            {/* <div className={[classes.extraSpace].join(' ')} style={{ marginTop: '25px' }}>
               <Button fullWidth variant="contained" className={classes.button}>
                 {t('checkout.place')}
               </Button>
-            </div>
+            </div> */}
           </Grid>
-          <Grid item md={5} xs={12}>
+          <Grid item md={6} xs={12}>
             <Typography
               variant="h4"
-              className={matchesSM ? classes.extraSpace : ''}
+              className={classes.extraSpace}
               style={{ lineHeight: '41px', marginTop: '25px' }}
             >
               {t('checkout.testimonials')}
@@ -741,7 +760,7 @@ export default function index() {
             {testimonials.map((item, i) => (
               <div
                 key={i}
-                className={matchesSM ? classes.extraSpace : ''}
+                className={classes.extraSpace}
                 style={{ marginTop: i === 0 ? '25px' : '25px' }}
               >
                 <Paper
@@ -760,6 +779,26 @@ export default function index() {
                   >
                     {item.description}
                   </Typography>
+                  <div style={{ marginTop: '15px', display: 'flex', gap: '10px' }}>
+                    <img
+                      src={item.profile}
+                      style={{ width: '33px', height: '33px', borderRadius: '50%' }}
+                    />
+                    <div>
+                      <Typography
+                        variant="subtitle2"
+                        style={{ lineHeight: '18px', fontWeight: 700 }}
+                      >
+                        {item.name}
+                      </Typography>
+                      <Typography
+                        variant="subtitle2"
+                        style={{ fontSize: '10px', fontWeight: 400, color: '#9E9E9E' }}
+                      >
+                        {item.occupation}
+                      </Typography>
+                    </div>
+                  </div>
                 </Paper>
               </div>
             ))}
