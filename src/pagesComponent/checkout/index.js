@@ -15,6 +15,7 @@ import {
   IconButton,
   TextField,
   InputAdornment,
+  Divider,
 } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
@@ -131,6 +132,14 @@ const useStyles = makeStyles((theme) => ({
   flexContainer: {
     display: 'flex',
     gap: '20px',
+  },
+  button: {
+    ...theme.typography.button,
+    borderRadius: 0,
+
+    fontSize: '24px',
+    fontFamily: 'Manrope',
+    fontWeight: 800,
   },
 }));
 export default function index() {
@@ -692,6 +701,33 @@ export default function index() {
                   });
                 }}
               />
+            </div>
+
+            {/* order total */}
+            <div className={[classes.extraSpace].join(' ')} style={{ marginTop: '25px' }}>
+              <Divider />
+              <div className={classes.flexContainer} style={{ justifyContent: 'space-between' }}>
+                <Typography
+                  variant="h4"
+                  style={{ lineHeight: '41px', marginTop: '20px', color: '#767676' }}
+                >
+                  {t('checkout.orderTotal')}
+                </Typography>
+                <Typography
+                  variant="h4"
+                  style={{ lineHeight: '41px', marginTop: '20px', color: '#767676' }}
+                >
+                  ${(event.price * quantity).toFixed(2)}
+                </Typography>
+              </div>
+              <Divider style={{ marginTop: '20px' }} />
+            </div>
+
+            {/* place your order */}
+            <div className={[classes.extraSpace].join(' ')} style={{ marginTop: '25px' }}>
+              <Button fullWidth variant="contained" className={classes.button}>
+                {t('checkout.place')}
+              </Button>
             </div>
           </Grid>
           <Grid item md={5} xs={12}>
