@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useRouter } from 'next/router';
 import { Button, useTheme, CircularProgress, Divider, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { CardElement } from '@stripe/react-stripe-js';
 import { useTranslation } from 'react-i18next';
-import { useEffect } from 'react';
+import axios from '../../utils/axios';
+import { GlobalContext } from '../../context/GlobalContext';
 
 const useStyles = makeStyles((theme) => ({
   input: {
@@ -41,6 +42,7 @@ export default function CheckoutForm(props) {
   const theme = useTheme();
   const classes = useStyles();
   const { stripe, elements } = props;
+  const { user: globaluser } = useContext(GlobalContext);
 
   const [succeeded, setSucceeded] = useState(false);
   const [error, setError] = useState(null);
@@ -59,40 +61,46 @@ export default function CheckoutForm(props) {
     try {
       e.preventDefault();
       setProcessing(true);
-      props.stripe.createToken(props.elements.getElement(CardElement)).then(async (res) => {
+      stripe.createToken(elements.getElement(CardElement)).then(async (res) => {
         if (res.error) {
           setError(res.error.message);
         } else {
-          const response = await checkout(props.userToken, res?.token, props.products);
-          const result = await response.json();
-          if (result.status === 'success') {
-            props.elements.getElement(CardElement).clear();
-            router.push('/purchase');
-          } else {
-            setError('Something went wrong');
+          try {
+            const response = await axios.post(
+              '/events/bookEvent',
+              {
+                eventId: router.query.id,
+                stripeToken: res?.token,
+                customerData: props.data,
+                quantity: props.quantity,
+              },
+              {
+                headers: {
+                  authorization: 'Bearer ' + globaluser?.token,
+                },
+              }
+            );
+
+            if (response.data.success === true) {
+              elements.getElement(CardElement).clear();
+              router.push('/purchase');
+            } else {
+              setError(response.data.message);
+            }
+          } catch (err) {
+            console.log(err, '--------');
+            setProcessing(false);
+            setError(err.response?.data?.message || 'Fail to proceed booking');
           }
         }
         setProcessing(false);
       });
 
       // if (result.status === 'success') {
-
-      // setShowToast({
-      //   active: true,
-      //   message: t['Shop data Updated Successfully'],
-      //   severity: 'success',
-      // });
-      // } else {
-      // setShowToast({
-      //   active: true,
-      //   message: 'Something went wrong',
-      //   severity: 'error',
-      // });
-      // }
     } catch (err) {
-      console.log(err);
+      console.log(err, '--------');
       setProcessing(false);
-      setError(err.message);
+      setError(err.response?.data?.message || 'Fail to proceed booking');
     }
   };
   const cardStyle = {
@@ -184,14 +192,19 @@ export default function CheckoutForm(props) {
           className={classes.button}
           disabled={processing || disabled || succeeded}
         >
-          {processing ? <CircularProgress size={20} color="primary" /> : t('checkout.place')}
+          {processing ? <CircularProgress size={35} color="primary" /> : t('checkout.place')}
         </Button>
       </div>
       {/* Show any error that happens when processing the payment */}
       {error && (
-        <div className="card-error" role="alert" style={{ color: 'red', textAlign: 'center' }}>
+        <Typography
+          variant="h5"
+          className="card-error"
+          role="alert"
+          style={{ color: 'red', textAlign: 'center', marginTop: '10px' }}
+        >
           {error}
-        </div>
+        </Typography>
       )}
       <style>{`
      
