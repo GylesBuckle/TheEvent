@@ -1054,17 +1054,19 @@ export default function index(props) {
                   )}
                   {/* Button */}
                   <div style={{ marginTop: '28px' }} className={classes.paperPadding}>
-                    <Button
-                      fullWidth
-                      style={{
-                        paddingTop: '10px',
-                        paddingBottom: '10px',
-                        fontSize: '22px',
-                      }}
-                      className={classes.button}
-                    >
-                      {t('event.book')}
-                    </Button>
+                    <Link href={`/checkout/${props.event._id}`}>
+                      <Button
+                        fullWidth
+                        style={{
+                          paddingTop: '10px',
+                          paddingBottom: '10px',
+                          fontSize: '22px',
+                        }}
+                        className={classes.button}
+                      >
+                        {t('event.book')}
+                      </Button>
+                    </Link>
                   </div>
                   <div style={{ marginTop: '18px' }} />
                 </Grid>
@@ -1086,11 +1088,11 @@ export default function index(props) {
                       style={{ marginTop: '18px' }}
                     >
                       {props.event.sponsors.map((s, i) => (
-                        <Grid item key={i}>
+                        <Grid item xs={4} key={i}>
                           <img
                             src={`${publicRuntimeConfig.REACT_APP_API_URL}/files/sponsors/${s}`}
                             style={{
-                              width: '228px',
+                              width: '100%',
                               height: 'auto',
                               borderRadius: '9px',
                               border: '1px solid #D9D9D9',
@@ -1164,7 +1166,9 @@ export default function index(props) {
                           marginTop: '5px',
                         }}
                       >
-                        {s.description}
+                        {s.description.length > 50
+                          ? s.description.slice(1, 50) + '....'
+                          : s.description}
                       </Typography>
                     )}
                     {(s.facebook ||
