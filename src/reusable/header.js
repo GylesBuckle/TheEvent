@@ -284,7 +284,9 @@ export default function PrimarySearchAppBar(props) {
                   )} */}
                   {/* {!matchesSM && ( */}
                   <Grid item>
-                    <Button className={classes.button}>{t('common.header.buy')}</Button>
+                    <Link href="/#events">
+                      <Button className={classes.button}>{t('common.header.buy')}</Button>
+                    </Link>
                   </Grid>
                   {globaluser && globaluser.token && (
                     <Grid item>

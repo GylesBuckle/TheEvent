@@ -1,47 +1,58 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+
 import CreateorUpdateEvent from '../../src/pagesComponent/createorUpdateEvent';
 import Loading from '../../src/reusable/loading';
 import Error from '../../src/reusable/error';
 import axios from '../../src/utils/axios';
 import CheckAuth from '../../src/reusable/checkAuth';
-function Update(props) {
-  if (!props.error && !props.event) {
+function Update() {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState({
+    status: false,
+    message: '',
+  });
+  const [event, setEvent] = useState();
+
+  const fetchEvent = async () => {
+    try {
+      setLoading(true);
+      const result = await axios.get(`/events/${router.query.id}`);
+      if (result.data.success === true) {
+        setEvent(result.data.data.doc);
+      } else {
+        setError({
+          status: true,
+          message: result.data.message,
+        });
+      }
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+      setError({
+        status: true,
+        message: err.response?.data?.message || 'Fail to fetch Event',
+      });
+    }
+  };
+
+  useEffect(() => {
+    fetchEvent();
+  }, []);
+
+  if (loading) {
     return <Loading />;
   }
-  if (props.error) {
-    return <Error message={props.error} />;
+  if (error.status) {
+    return <Error message={error.message} />;
   }
   return (
     <CheckAuth adminSuperAdmin>
-      <CreateorUpdateEvent edit={true} event={props.event} />
+      <CreateorUpdateEvent edit={true} event={event} />
     </CheckAuth>
   );
-}
-
-export async function getServerSideProps({ params }) {
-  try {
-    const result = await axios.get(`/events/${params.id}`);
-    if (result.data.success === true) {
-      return {
-        props: {
-          event: result.data.data.doc,
-        },
-      };
-    } else {
-      return {
-        props: {
-          error: result.data.message,
-        },
-      };
-    }
-  } catch (err) {
-    console.log(err);
-    return {
-      props: {
-        error: err.response?.data?.message ? err.response?.data?.message : err.message,
-      },
-    };
-  }
 }
 
 export default Update;

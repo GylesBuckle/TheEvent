@@ -143,13 +143,13 @@ const useStyles = makeStyles((theme) => ({
     gap: '20px',
   },
 }));
-export default function index() {
+export default function index(props) {
   const { t } = useTranslation();
   const classes = useStyles();
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const [event, setEvent] = useState(eventData);
+  const [event, setEvent] = useState(props.event);
   const [quantity, setQuantity] = useState(1);
   const [data, setData] = useState({
     firstName: '',
