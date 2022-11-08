@@ -12,7 +12,8 @@
   "events": {
     "heading": "Julien and Owen Events",
     "signup": "SIGN UP NOW",
-    "book": "Book Your Ticket"
+    "book": "Book Your Ticket",
+    "noEvent": "No Events has been Registered Yet!"
   },
   "features": {
     "text1": "Lorem Ipsum is simply dummy text",

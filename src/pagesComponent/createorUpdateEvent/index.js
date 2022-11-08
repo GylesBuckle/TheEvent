@@ -522,7 +522,7 @@ export default function Index(props) {
       });
 
       if (response.data.success === true) {
-        //router.push('/admin-dashboard');
+        router.push('/admin-dashboard');
       } else {
         setError([response.data.message]);
       }
