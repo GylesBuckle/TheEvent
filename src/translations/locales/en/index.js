@@ -7,5 +7,16 @@ import homepage from './homepage.json';
 import events from './events.json';
 import event from './event.json';
 import checkout from './checkout.json';
-
-export { common, signup, signin, resetPassword, forgetPassword, homepage, events, event, checkout };
+import thankyou from './thank-you.json';
+export {
+  common,
+  signup,
+  signin,
+  resetPassword,
+  forgetPassword,
+  homepage,
+  events,
+  event,
+  checkout,
+  thankyou,
+};

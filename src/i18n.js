@@ -30,6 +30,7 @@ i18n
           events: enTran.events,
           event: enTran.event,
           checkout: enTran.checkout,
+          thankyou: enTran.thankyou,
           // here we will place our translations...
         },
       },
