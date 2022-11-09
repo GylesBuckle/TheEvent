@@ -4,5 +4,9 @@
   "noRecord": "NO PURCHASE FOUND",
   "moreEvent": "More Events You'll Love",
   "notFound": "Didn't find what you are looking for?",
-  "popular": "Check out these popular products."
+  "popular": "Check out these popular products.",
+  "date": "Date",
+  "quantity": "Quantity",
+  "price": "Price",
+  "payment": "Payment Method"
 }
