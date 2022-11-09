@@ -1,5 +1,10 @@
 import React from 'react';
-
+import CheckAuth from '../src/reusable/checkAuth';
+import Purchasing from '../src/pagesComponent/purchasing';
 export default function Purchase() {
-  return <div>P</div>;
+  return (
+    <CheckAuth>
+      <Purchasing />
+    </CheckAuth>
+  );
 }
