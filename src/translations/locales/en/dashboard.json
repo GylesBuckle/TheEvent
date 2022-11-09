@@ -1,4 +1,15 @@
 {
   "heading": "Admin Dashboard",
-  "newEvent": "Add new events"
+  "newEvent": "Add new events",
+  "sales": "Ticket sales",
+  "today": "{{tickets}} Ticket sold out today",
+  "buyer": "Ticket buyer",
+  "events": "Events",
+  "update": "Edit",
+  "delete": "Delete",
+  "deleteEventDialog": {
+    "title": "Are you sure you want to delete Event",
+    "cancel": "Cancel",
+    "yes": "Yes"
+  }
 }
