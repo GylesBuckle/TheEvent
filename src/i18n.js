@@ -31,6 +31,7 @@ i18n
           event: enTran.event,
           checkout: enTran.checkout,
           thankyou: enTran.thankyou,
+          purchasing: enTran.purchasing,
           // here we will place our translations...
         },
       },

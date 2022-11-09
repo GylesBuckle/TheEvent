@@ -8,6 +8,8 @@ import events from './events.json';
 import event from './event.json';
 import checkout from './checkout.json';
 import thankyou from './thank-you.json';
+import purchasing from './purchasing.json';
+
 export {
   common,
   signup,
@@ -19,4 +21,5 @@ export {
   event,
   checkout,
   thankyou,
+  purchasing,
 };
