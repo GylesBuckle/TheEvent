@@ -20,7 +20,7 @@ import { useTranslation } from 'react-i18next';
 
 import SettingsIcon from '@material-ui/icons/Settings';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-
+import ShopIcon from '@material-ui/icons/Shop';
 import { GlobalContext } from '../context/GlobalContext';
 import * as websiteInfo from '../data/websiteInfo';
 const useStyles = makeStyles((theme) => ({
@@ -133,7 +133,21 @@ export default function PrimarySearchAppBar(props) {
           </Link>
         </MenuItem>
       )}
-
+      <MenuItem style={{ background: 'transparent' }} divider onClick={() => setProfileMenu(null)}>
+        <Link href="/purchase" style={{ textDecoration: 'none' }}>
+          <Grid container alignItems="center" spacing={2}>
+            <Grid item>
+              <ShopIcon fontSize="small" style={{ fill: 'rgba(0, 0, 0, 0.87)' }} />
+            </Grid>
+            <Grid item>
+              <Typography className={classes.listItem}>
+                {' '}
+                {t('common.header.submenu.settingSubmenu.3')}
+              </Typography>
+            </Grid>
+          </Grid>
+        </Link>
+      </MenuItem>
       <MenuItem style={{ background: 'transparent' }} onClick={logoutHandler}>
         <Grid container alignItems="center" spacing={2}>
           <Grid item>

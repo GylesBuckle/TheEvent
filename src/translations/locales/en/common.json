@@ -3,7 +3,8 @@
     "submenu": {
       "settingSubmenu": {
         "1": "Dashboard",
-        "2": "Logout"
+        "2": "Logout",
+        "3": "Purchasings"
       }
     },
     "buy": "Buy Your Ticket",

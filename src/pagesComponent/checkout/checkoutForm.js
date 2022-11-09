@@ -57,9 +57,33 @@ export default function CheckoutForm(props) {
     setError(event.error ? event.error.message : '');
   };
 
+  const validate = () => {
+    if (props.data.firstName === '') {
+      setError('First Name field cannot be empty');
+      return false;
+    }
+    if (props.data.email === '') {
+      setError('Email field cannot be empty');
+      return false;
+    }
+    if (props.data.email === '') {
+      setError('Email field cannot be empty');
+      return false;
+    }
+    if (
+      !/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+        props.data.email
+      )
+    ) {
+      setError('Invalid Email');
+      return false;
+    }
+    return true;
+  };
   const checkoutHandler = async (e) => {
+    e.preventDefault();
+    if (!validate()) return;
     try {
-      e.preventDefault();
       setProcessing(true);
       stripe.createToken(elements.getElement(CardElement)).then(async (res) => {
         if (res.error) {
@@ -83,7 +107,7 @@ export default function CheckoutForm(props) {
 
             if (response.data.success === true) {
               elements.getElement(CardElement).clear();
-              router.push('/purchase');
+              router.push('/thank-you');
             } else {
               setError(response.data.message);
             }
