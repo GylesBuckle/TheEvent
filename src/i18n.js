@@ -32,6 +32,7 @@ i18n
           checkout: enTran.checkout,
           thankyou: enTran.thankyou,
           purchasing: enTran.purchasing,
+          dashboard: enTran.dashboard,
           // here we will place our translations...
         },
       },

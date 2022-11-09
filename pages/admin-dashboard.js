@@ -1,10 +1,11 @@
-import Link from 'next/link';
 import React from 'react';
+import Dashboard from '../src/pagesComponent/dashboard';
+import CheckAuth from '../src/reusable/checkAuth';
 
 export default function adminDashboard() {
   return (
-    <div>
-      <Link href="/create-event">Create Event</Link>
-    </div>
+    <CheckAuth adminSuperAdmin>
+      <Dashboard />
+    </CheckAuth>
   );
 }

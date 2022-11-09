@@ -9,6 +9,7 @@ import event from './event.json';
 import checkout from './checkout.json';
 import thankyou from './thank-you.json';
 import purchasing from './purchasing.json';
+import dashboard from './dashboard.json';
 
 export {
   common,
@@ -22,4 +23,5 @@ export {
   checkout,
   thankyou,
   purchasing,
+  dashboard,
 };
