@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useRouter } from 'next/router';
 
 import CreateorUpdateEvent from '../../src/pagesComponent/createorUpdateEvent';
@@ -6,8 +6,12 @@ import Loading from '../../src/reusable/loading';
 import Error from '../../src/reusable/error';
 import axios from '../../src/utils/axios';
 import CheckAuth from '../../src/reusable/checkAuth';
+import { GlobalContext } from '../../src/context/GlobalContext';
+
 function Update() {
   const router = useRouter();
+  const { user: globaluser } = useContext(GlobalContext);
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({
     status: false,
@@ -18,7 +22,11 @@ function Update() {
   const fetchEvent = async () => {
     try {
       setLoading(true);
-      const result = await axios.get(`/events/${router.query.id}`);
+      const result = await axios.get(`/events/${router.query.id}`, {
+        headers: {
+          authorization: 'Bearer ' + globaluser?.token,
+        },
+      });
       if (result.data.success === true) {
         setEvent(result.data.data.doc);
       } else {

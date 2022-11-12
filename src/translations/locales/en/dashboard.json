@@ -7,6 +7,7 @@
   "events": "Events",
   "update": "Edit",
   "delete": "Delete",
+  "paid": "Amount Paid:",
   "deleteEventDialog": {
     "title": "Are you sure you want to delete Event",
     "cancel": "Cancel",
