@@ -92,7 +92,7 @@ export default function Google() {
   const login = useGoogleLogin({
     onSuccess: (codeResponse) => handleLogin(codeResponse),
     onError: (err) => onFailure(err),
-    scope: 'https://www.googleapis.com/auth/calendar',
+    //scope: 'https://www.googleapis.com/auth/calendar',
     flow: 'auth-code',
   });
 
