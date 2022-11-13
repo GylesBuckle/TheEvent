@@ -1,4 +1,5 @@
 module.exports = {
+  distDir: 'build',
   publicRuntimeConfig: {
     REACT_APP_NODE_ENV: process.env.REACT_APP_NODE_ENV,
     REACT_APP_API_URL: process.env.REACT_APP_API_URL,
