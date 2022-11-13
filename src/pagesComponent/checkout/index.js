@@ -31,7 +31,7 @@ import { loadStripe } from '@stripe/stripe-js';
 const promise = loadStripe(publicRuntimeConfig.REACT_APP_STRIPE);
 
 import Header from '../../reusable/header';
-import { testimonials } from '../../data/testimonials.json';
+import testimonials from '../../data/testimonials.json';
 const eventData = {
   tags: ['bonus'],
   locationCoordinates: [67.114544, 24.870862],
