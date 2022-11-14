@@ -1,4 +1,6 @@
 import React from 'react';
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
 import { Typography, Grid, useMediaQuery, Button, CardMedia } from '@material-ui/core';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -10,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     ...theme.typography.container,
   },
   background: {
-    backgroundImage: 'url(/dev/homeHero.png)',
+    backgroundImage: `url(${publicRuntimeConfig.REACT_APP_ASSET_PREFIX}dev/homeHero.png)`,
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     minHeight: '87vh',
@@ -101,7 +103,10 @@ export default function Hero() {
           {/* left man */}
           {!matchesSM && (
             <Grid item>
-              <img style={{ width: '100%', height: '100%' }} src="/dev/heroMan.png" />
+              <img
+                style={{ width: '100%', height: '100%' }}
+                src={`${publicRuntimeConfig.REACT_APP_ASSET_PREFIX}dev/heroMan.png`}
+              />
             </Grid>
           )}
           <Grid item style={{ flex: 1, zIndex: 2, marginRight: matchesSM ? 0 : '-30px' }}>
@@ -151,7 +156,10 @@ export default function Hero() {
           {/* right woman */}
           {!matchesSM && (
             <Grid item>
-              <img style={{ width: '100%', height: '100%', zIndex: 1 }} src="/dev/heroWomen.png" />
+              <img
+                style={{ width: '100%', height: '100%', zIndex: 1 }}
+                src={`${publicRuntimeConfig.REACT_APP_ASSET_PREFIX}dev/heroWomen.png`}
+              />
             </Grid>
           )}
         </Grid>

@@ -172,7 +172,7 @@ export default function index(props) {
       {/* logo */}
       <Grid item style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
         <img
-          src="/dev/logo.png"
+          src={`${publicRuntimeConfig.REACT_APP_ASSET_PREFIX}dev/logo.png`}
           style={{
             width: '330px',
             height: '136px',
@@ -720,7 +720,10 @@ export default function index(props) {
               >
                 <Grid container alignItems="center" style={{ marginTop: '0.5em' }}>
                   <Radio checked={true} color="primary" />{' '}
-                  <img src="/dev/Stripe.png" style={{ width: '8em', height: '3.5em' }} />
+                  <img
+                    src={`${publicRuntimeConfig.REACT_APP_ASSET_PREFIX}dev/Stripe.png`}
+                    style={{ width: '8em', height: '3.5em' }}
+                  />
                 </Grid>
               </Paper>
 
@@ -781,7 +784,7 @@ export default function index(props) {
                   </Typography>
                   <div style={{ marginTop: '15px', display: 'flex', gap: '10px' }}>
                     <img
-                      src={item.profile}
+                      src={publicRuntimeConfig.REACT_APP_ASSET_PREFIX + item.profile}
                       style={{ width: '33px', height: '33px', borderRadius: '50%' }}
                     />
                     <div>

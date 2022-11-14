@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   background: {
     backgroundColor: 'rgba(0, 0, 0, 0.4)',
     backgroundFilter: 'blur(3.5px)',
-    backgroundImage: 'url(/dev/eventHero.png)',
+    backgroundImage: `url(${publicRuntimeConfig.REACT_APP_ASSET_PREFIX}dev/eventHero.png)`,
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     position: 'relative',

@@ -1,4 +1,6 @@
 import React from 'react';
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
 import { Typography, Grid, useMediaQuery, Button, Paper, CardMedia } from '@material-ui/core';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
@@ -9,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
     ...theme.typography.container,
   },
   background: {
-    backgroundImage: 'url(/dev/homeHero.png)',
+    backgroundImage: `url(${publicRuntimeConfig.REACT_APP_ASSET_PREFIX}dev/homeHero.png)`,
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     position: 'relative',
@@ -53,17 +55,17 @@ export default function Testnomials() {
   const { t } = useTranslation();
   const cards = [
     {
-      img: '/dev/card1.png',
+      img: `${publicRuntimeConfig.REACT_APP_ASSET_PREFIX}dev/card1.png`,
       heading: t('homepage.testnomials.card1Heading'),
       text: t('homepage.testnomials.card1Text'),
     },
     {
-      img: '/dev/card2.png',
+      img: `${publicRuntimeConfig.REACT_APP_ASSET_PREFIX}dev/card2.png`,
       heading: t('homepage.testnomials.card2Heading'),
       text: t('homepage.testnomials.card2Text'),
     },
     {
-      img: '/dev/card3.png',
+      img: `${publicRuntimeConfig.REACT_APP_ASSET_PREFIX}dev/card3.png`,
       heading: t('homepage.testnomials.card3Heading'),
       text: t('homepage.testnomials.card3Text'),
     },
@@ -135,7 +137,7 @@ export default function Testnomials() {
                   }}
                 >
                   <img
-                    src="/dev/testnomials.png"
+                    src={`${publicRuntimeConfig.REACT_APP_ASSET_PREFIX}dev/testnomials.png`}
                     style={{ width: '100%', height: '100%', maxWidth: '270px', maxHeight: '320px' }}
                   />
                 </div>

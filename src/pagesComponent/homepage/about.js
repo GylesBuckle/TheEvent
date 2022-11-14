@@ -1,4 +1,6 @@
 import React from 'react';
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
 import { Typography, Grid, useMediaQuery } from '@material-ui/core';
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -77,7 +79,7 @@ export default function about() {
                 }}
               >
                 <img
-                  src="/dev/homepageAbout.png"
+                  src={`${publicRuntimeConfig.REACT_APP_ASSET_PREFIX}dev/homepageAbout.png`}
                   style={{ width: '100%', height: '100%', maxWidth: '270px', maxHeight: '320px' }}
                 />
               </div>

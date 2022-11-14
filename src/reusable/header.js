@@ -1,4 +1,6 @@
 import React, { useState, useContext } from 'react';
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import {
@@ -213,7 +215,7 @@ export default function PrimarySearchAppBar(props) {
       <Grid item component={Link} href="/" style={{ cursor: 'pointer' }}>
         <Typography variant="h6" noWrap>
           <img
-            src="/dev/logo.png"
+            src={`${publicRuntimeConfig.REACT_APP_ASSET_PREFIX}dev/logo.png`}
             style={{
               width: '208px',
               height: '106px',

@@ -1,4 +1,6 @@
 import React from 'react';
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
 import { Typography, Grid, useMediaQuery, Button, Paper } from '@material-ui/core';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
@@ -258,7 +260,10 @@ export default function features() {
           </Grid>
           {!matchesSM && (
             <div style={{ position: 'absolute', bottom: '-4.5px', right: '-35px' }}>
-              <img src="/dev/featureSection.png" style={{ width: '100%', height: '100%' }} />
+              <img
+                src={`${publicRuntimeConfig.REACT_APP_ASSET_PREFIX}dev/featureSection.png`}
+                style={{ width: '100%', height: '100%' }}
+              />
             </div>
           )}
         </Paper>
@@ -549,7 +554,7 @@ export default function features() {
             <Grid item md={6} style={{ marginTop: matchesSM ? '25px' : 0 }}>
               <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <img
-                  src="/dev/Group.png"
+                  src={`${publicRuntimeConfig.REACT_APP_ASSET_PREFIX}dev/Group.png`}
                   style={{ width: matchesSM ? '80%' : '60%', height: matchesSM ? '80%' : '60%' }}
                 />
               </div>

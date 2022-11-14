@@ -1,4 +1,6 @@
 import React from 'react';
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
 import { Typography, Grid, useMediaQuery, Button, Paper } from '@material-ui/core';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
@@ -128,7 +130,10 @@ export default function opportunity() {
         >
           {!matchesSM && (
             <div style={{ position: 'absolute', bottom: '-4.5px', left: '-35px', width: 'auto' }}>
-              <img src="/dev/opportunity-women.png" style={{ width: '60%', height: '60%' }} />
+              <img
+                src={`${publicRuntimeConfig.REACT_APP_ASSET_PREFIX}dev/opportunity-women.png`}
+                style={{ width: '60%', height: '60%' }}
+              />
             </div>
           )}
           <Grid container justifyContent="center" spacing={2}>
@@ -171,7 +176,10 @@ export default function opportunity() {
                 justifyContent: 'flex-end',
               }}
             >
-              <img src="/dev/opportunity-men.png" style={{ width: '60%', height: '60%' }} />
+              <img
+                src={`${publicRuntimeConfig.REACT_APP_ASSET_PREFIX}dev/opportunity-men.png`}
+                style={{ width: '60%', height: '60%' }}
+              />
             </div>
           )}
         </Paper>

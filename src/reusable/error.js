@@ -1,4 +1,6 @@
 import React from 'react';
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
 import Link from 'next/link';
 import { useMediaQuery, useTheme } from '@material-ui/core';
 export default function Error(props) {
@@ -20,7 +22,7 @@ export default function Error(props) {
           <h1
             style={{
               fontWeight: '900',
-              backgroundImage: `url(/dev/error.jpg)`,
+              backgroundImage: `url(${publicRuntimeConfig.REACT_APP_ASSET_PREFIX}dev/error.jpg)`,
               backgroundRepeat: 'repeat',
               WebkitTextFillColor: 'transparent',
               WebkitBackgroundClip: 'text',

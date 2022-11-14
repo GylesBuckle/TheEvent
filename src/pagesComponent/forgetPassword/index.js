@@ -1,5 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { useRouter } from 'next/router';
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
 import {
   Grid,
   useMediaQuery,
@@ -146,7 +148,11 @@ export default function Login() {
       <Grid item md={5} xs={12} className={classes.card}>
         <Grid container direction="column" alignItems={'center'}>
           <Grid item>
-            <img style={{ width: '100%', height: '100%' }} alt="logo" src="/dev/logo.png" />
+            <img
+              style={{ width: '100%', height: '100%' }}
+              alt="logo"
+              src={`${publicRuntimeConfig.REACT_APP_ASSET_PREFIX}dev/logo.png`}
+            />
           </Grid>
 
           <Grid item>

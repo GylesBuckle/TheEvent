@@ -1,4 +1,6 @@
 import React, { useContext } from 'react';
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
 import Link from 'next/link';
 import {
   Typography,
@@ -95,7 +97,10 @@ export default function Events(props) {
                       zIndex: '-1',
                     }}
                   />
-                  <img src="/dev/event1.png" style={{ width: '100%', height: '100%' }} />
+                  <img
+                    src={`${publicRuntimeConfig.REACT_APP_ASSET_PREFIX}dev/event1.png`}
+                    style={{ width: '100%', height: '100%' }}
+                  />
                 </div>
               </Grid>
               <Grid item>
@@ -112,7 +117,10 @@ export default function Events(props) {
                       zIndex: '-1',
                     }}
                   />
-                  <img src="/dev/event2.png" style={{ width: '100%', height: '100%' }} />
+                  <img
+                    src={`${publicRuntimeConfig.REACT_APP_ASSET_PREFIX}dev/event2.png`}
+                    style={{ width: '100%', height: '100%' }}
+                  />
                 </div>
               </Grid>
               <Grid item>
@@ -128,7 +136,10 @@ export default function Events(props) {
                       zIndex: '-1',
                     }}
                   />
-                  <img src="/dev/event3.png" style={{ width: '100%', height: '100%' }} />
+                  <img
+                    src={`${publicRuntimeConfig.REACT_APP_ASSET_PREFIX}dev/event3.png`}
+                    style={{ width: '100%', height: '100%' }}
+                  />
                 </div>
               </Grid>
             </Grid>

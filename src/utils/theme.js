@@ -1,5 +1,6 @@
 import { createTheme } from '@material-ui/core/styles';
-
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
 const primary = '#0D1358';
 const secondary = '#fff';
 const arcGrey = '#848199';
@@ -117,7 +118,7 @@ export default createTheme({
     authBackground: {
       minHeight: '100vh',
       backgroundColor: primary,
-      backgroundImage: 'url(/dev/authBackground.png)',
+      backgroundImage: `url(${publicRuntimeConfig.REACT_APP_ASSET_PREFIX}dev/authBackground.png)`,
       backgroundRepeat: 'no-repeat',
       backgroundPosition: 'bottom',
       backgroundSize: '100vw 50vh',
