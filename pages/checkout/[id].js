@@ -55,9 +55,5 @@ export default function CheckoutPage() {
   if (error.status) {
     return <Error message={error.message} />;
   }
-  return (
-    <CheckAuth>
-      <Checkout event={event} />
-    </CheckAuth>
-  );
+  return <Checkout event={event} />;
 }

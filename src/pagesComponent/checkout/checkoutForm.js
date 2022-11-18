@@ -100,7 +100,7 @@ export default function CheckoutForm(props) {
               },
               {
                 headers: {
-                  authorization: 'Bearer ' + globaluser?.token,
+                  authorization: globaluser ? 'Bearer ' + globaluser.token : undefined,
                 },
               }
             );
