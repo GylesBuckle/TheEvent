@@ -1,59 +1,41 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { useRouter } from 'next/router';
-import CheckAuth from '../../src/reusable/checkAuth';
+import React from 'react';
 import Checkout from '../../src/pagesComponent/checkout/';
 import Loading from '../../src/reusable/loading';
 import Error from '../../src/reusable/error';
 import axios from '../../src/utils/axios';
-import { GlobalContext } from '../../src/context/GlobalContext';
 
-export default function CheckoutPage() {
-  const router = useRouter();
-  const { user: globaluser } = useContext(GlobalContext);
-
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState({
-    status: false,
-    message: '',
-  });
-  const [event, setEvent] = useState();
-
-  const fetchEvent = async () => {
-    try {
-      setLoading(true);
-      const result = await axios.get(`/events/${router.query.id}`, {
-        headers: {
-          authorization: 'Bearer ' + globaluser?.token,
-        },
-      });
-      if (result.data.success === true) {
-        setEvent(result.data.data.doc);
-      } else {
-        setError({
-          status: true,
-          message: result.data.message,
-        });
-      }
-      setLoading(false);
-    } catch (err) {
-      console.log(err);
-      setLoading(false);
-      setError({
-        status: true,
-        message: err.response?.data?.message || 'Fail to fetch Event',
-      });
-    }
-  };
-
-  useEffect(() => {
-    fetchEvent();
-  }, []);
-
-  if (loading) {
+export default function CheckoutPage(props) {
+  if (!props.error && !props.event) {
     return <Loading />;
   }
-  if (error.status) {
-    return <Error message={error.message} />;
+  if (props.error) {
+    return <Error message={props.error} />;
   }
-  return <Checkout event={event} />;
+  return <Checkout event={props.event} />;
+}
+
+export async function getServerSideProps({ params }) {
+  try {
+    const result = await axios.get(`/events/${params.id}`);
+    if (result.data.success === true) {
+      return {
+        props: {
+          event: result.data.data.doc,
+        },
+      };
+    } else {
+      return {
+        props: {
+          error: result.data.message,
+        },
+      };
+    }
+  } catch (err) {
+    console.log(err);
+    return {
+      props: {
+        error: err.response?.data?.message ? err.response?.data?.message : err.message,
+      },
+    };
+  }
 }

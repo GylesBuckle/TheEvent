@@ -170,12 +170,15 @@ export default function index(props) {
       style={{ backgroundColor: '#FAFAFA' }}
     >
       {/* logo */}
-      <Grid item style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+      <Grid
+        item
+        style={{ width: '100%', display: 'flex', justifyContent: 'center', marginTop: '30px' }}
+      >
         <img
           src={`${publicRuntimeConfig.REACT_APP_ASSET_PREFIX}dev/logo.png`}
           style={{
-            width: '330px',
-            height: '136px',
+            width: '270px',
+            height: '96px',
           }}
           alt="logo"
         />
@@ -183,7 +186,7 @@ export default function index(props) {
       {/* heading */}
       <Grid
         item
-        style={{ width: '100%', display: 'flex', justifyContent: 'center', marginTop: '10px' }}
+        style={{ width: '100%', display: 'flex', justifyContent: 'center', marginTop: '30px' }}
       >
         <Typography variant="h5" style={{ lineHeight: '29px' }}>
           {t('checkout.heading')}

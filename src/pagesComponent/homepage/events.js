@@ -284,9 +284,7 @@ export default function Events(props) {
                         >
                           <Link href={`/checkout/${ev._id}`}>
                             <Button style={{ wrap: false }} className={classes.button}>
-                              {globaluser?.token
-                                ? t('homepage.events.book')
-                                : t('homepage.events.signup')}
+                              {t('homepage.events.book')}
                             </Button>
                           </Link>
                           {((ev.totalTickets - ev.remainingTickets) / ev.totalTickets) * 100 >

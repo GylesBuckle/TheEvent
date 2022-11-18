@@ -229,9 +229,9 @@ export default function Login() {
     <Grid container className={classes.pageHeight} justifyContent="center" alignItems="center">
       <Grid item md={5} xs={12} className={classes.card}>
         <Grid container direction="column" alignItems={'center'}>
-          <Grid item>
+          <Grid item style={{ display: 'flex', justifyContent: 'center' }}>
             <img
-              style={{ width: '100%', height: '100%' }}
+              style={{ width: '50%', height: '50%' }}
               alt="logo"
               src={`${publicRuntimeConfig.REACT_APP_ASSET_PREFIX}dev/logo.png`}
             />

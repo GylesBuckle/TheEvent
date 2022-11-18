@@ -217,8 +217,8 @@ export default function PrimarySearchAppBar(props) {
           <img
             src={`${publicRuntimeConfig.REACT_APP_ASSET_PREFIX}dev/logo.png`}
             style={{
-              width: '208px',
-              height: '106px',
+              width: '200px',
+              height: '70px',
               marginTop: matchesSM ? '5px' : 0,
             }}
             alt="logo"
@@ -244,6 +244,8 @@ export default function PrimarySearchAppBar(props) {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
+              paddingTop: '10px',
+              paddingBottom: '5px',
             }}
           >
             <Grid
