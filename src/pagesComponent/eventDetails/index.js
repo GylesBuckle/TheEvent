@@ -683,7 +683,7 @@ export default function index(props) {
                         ></path>
                       </svg>,
                       t('event.price'),
-                      `$${props.event.price}`
+                      `£${props.event.price}`
                     )}
                   </div>
                   {/* divider */}

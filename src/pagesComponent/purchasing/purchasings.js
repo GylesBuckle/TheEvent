@@ -305,7 +305,7 @@ export default function purchasings(props) {
                 className={classes.tableCell}
               >
                 <Typography variant="subtitle1" style={{ fontWeight: 800 }}>
-                  ${p.totalAmount}
+                  £{p.totalAmount}
                 </Typography>
               </TableCell>
               <TableCell

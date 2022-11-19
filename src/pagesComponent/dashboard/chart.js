@@ -51,13 +51,13 @@ const Chart = (props) => {
       },
       axisY: {
         title: 'Sales (in USD)',
-        prefix: '$',
+        prefix: '£',
         includeZero: false,
         gridColor: theme.palette.primary.main,
       },
       data: [
         {
-          yValueFormatString: '$#,###',
+          yValueFormatString: '£#,###',
           xValueFormatString: 'MMMM',
           color: theme.palette.primary.main,
 
@@ -105,7 +105,7 @@ const Chart = (props) => {
                   fontWeight: 'bold',
                 }}
               >
-                $ {props[salesOption].reduce((sum, row) => row.y + sum, 0)} USD
+                £ {props[salesOption].reduce((sum, row) => row.y + sum, 0)} GBP
               </Typography>
             </Grid>
           </Grid>

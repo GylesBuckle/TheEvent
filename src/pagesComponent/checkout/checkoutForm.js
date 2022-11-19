@@ -189,7 +189,7 @@ export default function CheckoutForm(props) {
             variant="h4"
             style={{ lineHeight: '41px', marginTop: '20px', color: theme.palette.primary.main }}
           >
-            ${(props.event.price * props.quantity).toFixed(2)}
+            £{(props.event.price * props.quantity).toFixed(2)}
           </Typography>
         </div>
         <Divider style={{ marginTop: '20px' }} />

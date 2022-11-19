@@ -1,6 +1,7 @@
 import React from 'react';
 import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
+import Link from 'next/link';
 import { Typography, Grid, useMediaQuery, Button, Paper } from '@material-ui/core';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
@@ -155,13 +156,15 @@ export default function opportunity() {
                   {t('homepage.opportunity.cardText')}
                 </Typography>
                 <Grid item>
-                  <Button
-                    className={classes.button}
-                    style={{ marginTop: '33px' }}
-                    endIcon={<ChevronRightIcon />}
-                  >
-                    {t('homepage.hero.button')}
-                  </Button>
+                  <Link href="/#events">
+                    <Button
+                      className={classes.button}
+                      style={{ marginTop: '33px' }}
+                      endIcon={<ChevronRightIcon />}
+                    >
+                      {t('homepage.hero.button')}
+                    </Button>
+                  </Link>
                 </Grid>
               </Grid>
             </Grid>

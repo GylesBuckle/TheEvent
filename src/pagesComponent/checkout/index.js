@@ -247,7 +247,7 @@ export default function index(props) {
                   }}
                 >
                   <Typography variant="h5" style={{ color: '#000', fontWeight: 600 }}>
-                    ${event.price}
+                    £{event.price}
                   </Typography>
                 </TableCell>
 

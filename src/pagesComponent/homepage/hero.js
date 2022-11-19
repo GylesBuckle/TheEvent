@@ -1,6 +1,7 @@
 import React from 'react';
 import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
+import Link from 'next/link';
 import { Typography, Grid, useMediaQuery, Button, CardMedia } from '@material-ui/core';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -147,9 +148,11 @@ export default function Hero() {
               </Grid>
               {/* button */}
               <Grid item style={{ marginTop: '27px', marginBottom: '8px' }}>
-                <Button className={classes.button} endIcon={<ChevronRightIcon />}>
-                  {t('homepage.hero.button')}
-                </Button>
+                <Link href="/#events">
+                  <Button className={classes.button} endIcon={<ChevronRightIcon />}>
+                    {t('homepage.hero.button')}
+                  </Button>
+                </Link>
               </Grid>
             </Grid>
           </Grid>

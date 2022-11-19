@@ -1,6 +1,7 @@
 import React from 'react';
 import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
+import Link from 'next/link';
 import { Typography, Grid, useMediaQuery, Button, Paper, CardMedia } from '@material-ui/core';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
@@ -328,13 +329,15 @@ export default function Testnomials() {
         className={classes.container}
         style={{ marginBottom: '90px', marginTop: matchesSM ? '20px' : '30px' }}
       >
-        <Button
-          className={classes.button}
-          style={{ marginTop: '33px' }}
-          endIcon={<ChevronRightIcon />}
-        >
-          {t('homepage.hero.button')}
-        </Button>
+        <Link href="/#events">
+          <Button
+            className={classes.button}
+            style={{ marginTop: '33px' }}
+            endIcon={<ChevronRightIcon />}
+          >
+            {t('homepage.hero.button')}
+          </Button>
+        </Link>
       </Grid>
     </Grid>
   );
