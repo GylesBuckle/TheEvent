@@ -1,4 +1,4 @@
-export const websiteTitle = 'Driven: The-Seminar';
+export const websiteTitle = 'The Idea Pod: Live';
 export const websiteDescription =
   'Grab Your FREE Ticket to the Higher Purpose Tour Before Our Limited Seating Books Out!';
 export const websiteKeywords =
