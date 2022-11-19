@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundImage: `url(${publicRuntimeConfig.REACT_APP_ASSET_PREFIX}dev/homeHero.png)`,
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
-    minHeight: '87vh',
+    minHeight: '90vh',
     position: 'relative',
   },
   button: {
@@ -37,7 +37,7 @@ export default function Hero() {
       container
       direction="column"
       alignItems="center"
-      justifyContent="flex-end"
+      justifyContent="center"
       className={classes.background}
     >
       <div
@@ -100,18 +100,30 @@ export default function Hero() {
         style={{ width: '100%', zIndex: 2 }}
         className={matchesSM ? classes.container : ''}
       >
-        <Grid container justifyContent="space-between">
+        <Grid container justifyContent="center">
           {/* left man */}
-          {!matchesSM && (
+          {/* {!matchesSM && (
             <Grid item>
               <img
                 style={{ width: '100%', height: '100%' }}
                 src={`${publicRuntimeConfig.REACT_APP_ASSET_PREFIX}dev/heroMan.png`}
               />
             </Grid>
-          )}
-          <Grid item style={{ flex: 1, zIndex: 2, marginRight: matchesSM ? 0 : '-30px' }}>
-            <Grid container direction="column" alignItems="center" style={{ paddingTop: '55px' }}>
+          )} */}
+          <Grid
+            item
+            xl={4}
+            lg={5}
+            md={6}
+            sm={8}
+            xs={10}
+            style={{
+              //flex: 1,
+              zIndex: 2,
+              //marginRight: matchesSM ? 0 : '-30px'
+            }}
+          >
+            <Grid container direction="column" alignItems="center" style={{ paddingTop: '35px' }}>
               {/* for video */}
               <Grid item style={{ width: '100%' }}>
                 <CardMedia
@@ -129,7 +141,10 @@ export default function Hero() {
               {/* text3 */}
               <Grid
                 item
-                style={{ width: matchesSM ? '100%' : matchesMD ? '90%' : '58%', marginTop: '22px' }}
+                style={{
+                  width: '100%',
+                  marginTop: '22px',
+                }}
               >
                 <Typography
                   variant="h5"
@@ -154,17 +169,18 @@ export default function Hero() {
                   </Button>
                 </Link>
               </Grid>
+              <Grid item style={{ marginTop: '22px' }} />
             </Grid>
           </Grid>
           {/* right woman */}
-          {!matchesSM && (
+          {/* {!matchesSM && (
             <Grid item>
               <img
                 style={{ width: '100%', height: '100%', zIndex: 1 }}
                 src={`${publicRuntimeConfig.REACT_APP_ASSET_PREFIX}dev/heroWomen.png`}
               />
             </Grid>
-          )}
+          )} */}
         </Grid>
       </Grid>
     </Grid>
