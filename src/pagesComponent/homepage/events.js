@@ -103,7 +103,7 @@ export default function Events(props) {
                   />
                 </div>
               </Grid>
-              <Grid item>
+              {/* <Grid item>
                 <div style={{ position: 'relative', zIndex: 2 }}>
                   <div
                     style={{
@@ -122,7 +122,7 @@ export default function Events(props) {
                     style={{ width: '100%', height: '100%' }}
                   />
                 </div>
-              </Grid>
+              </Grid> */}
               <Grid item>
                 <div style={{ position: 'relative', zIndex: 2 }}>
                   <div

@@ -129,14 +129,14 @@ export default function opportunity() {
             position: 'relative',
           }}
         >
-          {!matchesSM && (
+          {/* {!matchesSM && (
             <div style={{ position: 'absolute', bottom: '-4.5px', left: '-35px', width: 'auto' }}>
               <img
                 src={`${publicRuntimeConfig.REACT_APP_ASSET_PREFIX}dev/opportunity-women.png`}
                 style={{ width: '60%', height: '60%' }}
               />
             </div>
-          )}
+          )} */}
           <Grid container justifyContent="center" spacing={2}>
             <Grid item sm={6} xs={12}>
               <Grid container alignItems="center" direction="column">
