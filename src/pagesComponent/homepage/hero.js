@@ -42,7 +42,7 @@ export default function Hero() {
     >
       <div
         style={{
-          backgroundColor: 'rgba(93,93,93,.7)',
+          backgroundColor: 'rgba(93,93,93,.6)',
           width: '100%',
           zIndex: 0,
           position: 'absolute',
@@ -53,13 +53,14 @@ export default function Hero() {
       <Grid
         item
         className={classes.container}
-        style={{ width: '100%', marginTop: matchesSM ? '30px' : '50px' }}
+        style={{ width: matchesSM ? '100%' : '60%', marginTop: matchesSM ? '30px' : '50px' }}
       >
         <Typography
           variant="h4"
           align="center"
           style={{
             color: '#fff',
+            //fontSize: '24px',
             fontWeight: '800',
             zIndex: 1,
             lineHeight: '36px',
@@ -76,21 +77,22 @@ export default function Hero() {
         style={{ width: matchesSM ? '100%' : '70%', marginTop: '32px' }}
       >
         <Typography
-          variant="h2"
+          variant="h4"
           align="center"
           style={{
             color: '#fff',
-            fontWeight: '800',
+            fontSize: '26px',
+            fontWeight: '900',
             zIndex: 1,
-            lineHeight: '47px',
+            lineHeight: '36px',
             //textShadow: '0px 0px 20px #fff, 0px 0px 20px #fff',
           }}
         >
           <Trans
             i18nKey="homepage.hero.text2"
-            components={{
-              span: <span style={{ color: '#7B86FF' }}></span>,
-            }}
+            // components={{
+            //   span: <span style={{ color: '#7B86FF' }}></span>,
+            // }}
           />
         </Typography>
       </Grid>
@@ -102,18 +104,16 @@ export default function Hero() {
       >
         <Grid container justifyContent="center">
           {/* left man */}
-          {/* {!matchesSM && (
+          {!matchesSM && (
             <Grid item>
               <img
                 style={{ width: '100%', height: '100%' }}
                 src={`${publicRuntimeConfig.REACT_APP_ASSET_PREFIX}dev/heroMan.png`}
               />
             </Grid>
-          )} */}
+          )}
           <Grid
             item
-            xl={4}
-            lg={5}
             md={6}
             sm={8}
             xs={10}
@@ -125,7 +125,7 @@ export default function Hero() {
           >
             <Grid container direction="column" alignItems="center" style={{ paddingTop: '35px' }}>
               {/* for video */}
-              <Grid item style={{ width: '100%' }}>
+              <Grid item style={{ width: matchesSM ? '100%' : '70%' }}>
                 <CardMedia
                   component="iframe"
                   src={websiteInfo.heroPageVideo}

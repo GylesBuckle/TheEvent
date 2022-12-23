@@ -1,7 +1,8 @@
 import React from 'react';
+import Link from 'next/link';
 import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
-import { Typography, Grid, useMediaQuery } from '@material-ui/core';
+import { Typography, Grid, useMediaQuery, Button } from '@material-ui/core';
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
@@ -16,7 +17,15 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: '0px 4px 44px rgba(0, 0, 0, 0.1)',
     borderRadius: '15px',
     background: '#fff',
-    padding: '30px 23px',
+    padding: '16px 30px 16px 30px',
+    fontSize: '30px',
+    fontWeight: 800,
+  },
+  button: {
+    ...theme.typography.button,
+    padding: '11px 20px',
+    borderRadius: 10,
+    backgroundColor: '#FF5B21',
   },
 }));
 export default function about() {
@@ -34,7 +43,22 @@ export default function about() {
       justifyContent="flex-end"
       className={classes.container}
     >
-      <Grid item style={{ width: '100%' }} className={classes.card}>
+      <Grid item style={{ width: matchesSM ? '100%' : '55%' }}>
+        <Typography
+          variant="h3"
+          align="center"
+          style={{
+            //fontSize: '24px',
+            fontWeight: '900',
+            zIndex: 1,
+            lineHeight: '54px',
+            //textShadow: '0px 0px 20px #fff, 0px 0px 20px #fff',
+          }}
+        >
+          {t('homepage.about.heading')}
+        </Typography>
+      </Grid>
+      <Grid item style={{ width: '100%', marginTop: '30px' }} className={classes.card}>
         <Grid container direction={matchesSM ? 'column' : 'row'} alignItems="center" spacing={3}>
           {/* profile */}
           <Grid item>
@@ -150,34 +174,77 @@ export default function about() {
               ></path>
             </svg>
             <Typography
-              variant="h6"
+              variant="h5"
               style={{
                 display: 'block',
                 color: '#1B1C31',
                 fontSize: '25px',
                 lineHeight: '41px',
                 letterSpacing: '-2%',
-                width: matchesSM ? '100%' : matchesMD ? '90%' : '80%',
+                width: matchesSM ? '100%' : matchesMD ? '90%' : '70%',
+              }}
+            >
+              {t('homepage.about.text')}
+            </Typography>
+            <Typography
+              variant="h5"
+              style={{
+                display: 'block',
+                color: '#1B1C31',
+                fontSize: '25px',
+                lineHeight: '41px',
+                letterSpacing: '-2%',
+                width: matchesSM ? '100%' : matchesMD ? '90%' : '68%',
               }}
             >
               {t('homepage.about.text1')}
             </Typography>
             <Typography
-              variant="h6"
+              variant="h5"
               style={{
                 display: 'block',
                 color: '#1B1C31',
                 fontSize: '25px',
                 lineHeight: '41px',
                 letterSpacing: '-2%',
-                marginTop: '40px',
-                width: matchesSM ? '100%' : matchesMD ? '90%' : '80%',
+                width: matchesSM ? '100%' : matchesMD ? '90%' : '68%',
               }}
             >
               {t('homepage.about.text2')}
             </Typography>
+            <Typography
+              variant="h5"
+              style={{
+                display: 'block',
+                color: '#1B1C31',
+                fontSize: '25px',
+                lineHeight: '41px',
+                letterSpacing: '-2%',
+                width: matchesSM ? '100%' : matchesMD ? '90%' : '68%',
+              }}
+            >
+              {t('homepage.about.text3')}
+            </Typography>
+            <Typography
+              variant="h5"
+              style={{
+                display: 'block',
+                color: '#1B1C31',
+                fontSize: '25px',
+                lineHeight: '41px',
+                letterSpacing: '-2%',
+                width: matchesSM ? '100%' : matchesMD ? '90%' : '68%',
+              }}
+            >
+              {t('homepage.about.text4')}
+            </Typography>
           </Grid>
         </Grid>
+      </Grid>
+      <Grid item style={{ marginTop: matchesSM ? '20px' : '30px' }}>
+        <Link href="/#events">
+          <Button className={classes.button}>{t('homepage.about.button')}</Button>
+        </Link>
       </Grid>
     </Grid>
   );

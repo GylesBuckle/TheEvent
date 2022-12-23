@@ -84,7 +84,7 @@ export default function Events(props) {
           {/* images */}
           <Grid item>
             <Grid container spacing={2} wrap="nowrap">
-              <Grid item>
+              {/* <Grid item>
                 <div style={{ position: 'relative', zIndex: 2 }}>
                   <div
                     style={{
@@ -102,7 +102,7 @@ export default function Events(props) {
                     style={{ width: '100%', height: '100%' }}
                   />
                 </div>
-              </Grid>
+              </Grid> */}
               {/* <Grid item>
                 <div style={{ position: 'relative', zIndex: 2 }}>
                   <div

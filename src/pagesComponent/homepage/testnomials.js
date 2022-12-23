@@ -211,7 +211,7 @@ export default function Testnomials() {
                 ></path>
               </svg>
               <Typography
-                variant="h6"
+                variant="h5"
                 style={{
                   display: 'block',
                   color: '#1B1C31',
@@ -224,7 +224,7 @@ export default function Testnomials() {
                 {t('homepage.testnomials.testnomialsText1')}
               </Typography>
               <Typography
-                variant="h6"
+                variant="h5"
                 style={{
                   display: 'block',
                   color: '#1B1C31',
@@ -247,7 +247,7 @@ export default function Testnomials() {
         className={classes.container}
         style={{
           zIndex: 2,
-          width: '100%',
+          width: matchesMD ? '100%' : '90%',
           marginTop: matchesSM ? '40px' : '50px',
         }}
       >

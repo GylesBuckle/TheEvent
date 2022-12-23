@@ -48,10 +48,11 @@ export default function features() {
       {/* text1 */}
       <Grid item style={{ width: '100%' }}>
         <Typography
-          variant="h4"
+          variant="h2"
           align="center"
           style={{
-            color: '#fff',
+            color: '#FF5B21',
+
             fontWeight: '800',
             zIndex: 1,
             lineHeight: '36px',
@@ -65,23 +66,24 @@ export default function features() {
       <Grid
         item
         style={{
-          width: matchesSM ? '100%' : matchesMD ? '70%' : '43%',
+          width: '100%',
           marginTop: matchesSM ? '40px' : '50px',
         }}
       >
         <Typography
-          variant="h2"
+          variant="h5"
           align="center"
           style={{
-            color: '#FF5B21',
-            fontWeight: '800',
+            color: '#fff',
+            fontWeight: '700',
             zIndex: 1,
-            lineHeight: '53px',
+            lineHeight: '33px',
           }}
         >
           {t('homepage.features.text2')}
         </Typography>
       </Grid>
+
       {/* features */}
       <Grid item style={{ width: '100%', marginTop: matchesSM ? '40px' : '50px' }}>
         <Paper
@@ -206,7 +208,41 @@ export default function features() {
           {t('homepage.features.text4')}
         </Typography>
       </Grid>
+      <Grid item style={{ width: '100%', marginTop: matchesSM ? '40px' : '50px' }}>
+        <Typography
+          variant="h2"
+          align="center"
+          style={{
+            color: '#fff',
 
+            fontWeight: '800',
+            zIndex: 1,
+            lineHeight: '36px',
+            //textShadow: '0px 0px 20px #fff, 0px 0px 20px #fff',
+          }}
+        >
+          {t('homepage.features.text5')}
+        </Typography>
+      </Grid>
+      <Grid
+        item
+        style={{
+          width: '100%',
+          marginTop: matchesSM ? '40px' : '50px',
+        }}
+      >
+        <Typography
+          variant="h4"
+          style={{
+            color: '#fff',
+            fontWeight: '600',
+            zIndex: 1,
+            lineHeight: '42px',
+          }}
+        >
+          {t('homepage.features.text6')}
+        </Typography>
+      </Grid>
       {/* get My tickets */}
       <Grid item style={{ width: '100%', marginTop: matchesSM ? '40px' : '50px' }}>
         <Paper
@@ -219,7 +255,7 @@ export default function features() {
           }}
         >
           <Grid container spacing={2}>
-            <Grid item lg={7} sm={8} xs={12}>
+            <Grid item lg={4} md={5} sm={8} xs={12}>
               <Grid container direction="column">
                 <Typography
                   variant="h5"
@@ -235,15 +271,15 @@ export default function features() {
                 >
                   <Trans
                     i18nKey="homepage.features.higherPurposeText"
-                    values={{ email: websiteInfo.hightPurposeSupportEmail }}
-                    components={{
-                      a: (
-                        <a
-                          href={`mailto:${websiteInfo.hightPurposeSupportEmail}`}
-                          style={{ color: '#FF5B21', textDecoration: 'none' }}
-                        ></a>
-                      ),
-                    }}
+                    //values={{ email: websiteInfo.hightPurposeSupportEmail }}
+                    // components={{
+                    //   a: (
+                    //     <a
+                    //       href={`mailto:${websiteInfo.hightPurposeSupportEmail}`}
+                    //       style={{ color: '#FF5B21', textDecoration: 'none' }}
+                    //     ></a>
+                    //   ),
+                    // }}
                   />
                 </Typography>
                 <Grid item>
@@ -322,7 +358,6 @@ export default function features() {
                 variant="h5"
                 align={matchesSM ? 'center' : 'left'}
                 style={{
-                  marginTop: '28px',
                   fontFamily: 'Manrope',
                   color: '#000',
                   fontWeight: '800',
@@ -336,7 +371,6 @@ export default function features() {
                 variant="h5"
                 align={matchesSM ? 'center' : 'left'}
                 style={{
-                  marginTop: '28px',
                   fontFamily: 'Manrope',
                   color: '#000',
                   fontWeight: '800',
@@ -350,7 +384,6 @@ export default function features() {
                 variant="h5"
                 align={matchesSM ? 'center' : 'left'}
                 style={{
-                  marginTop: '28px',
                   fontFamily: 'Manrope',
                   color: '#000',
                   fontWeight: '800',
@@ -364,7 +397,6 @@ export default function features() {
                 variant="h5"
                 align={matchesSM ? 'center' : 'left'}
                 style={{
-                  marginTop: '28px',
                   fontFamily: 'Manrope',
                   color: '#000',
                   fontWeight: '800',

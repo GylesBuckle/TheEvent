@@ -1,37 +1,44 @@
 {
   "hero": {
-    "text1": "Lorem Ipsum is simply dummy text",
-    "text2": "Lorem Ipsum is simply dummy text of <span>the printing</span> and typesetting industry.",
-    "text3": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
-    "button": "Get My Ticket to the Higher Purpose Tour "
+    "text1": "ATTENTION: BURNT OUT COACHES, CONSULTANTS, ENTREPRENEURS & MARKETERS!",
+    "text2": "Discover The MOST Effective Method for Using Sales Funnels That the Top 7 Figure Online Businesses are using TODAY, Without Having to Learn Complicated Tech or Code, Ultimately Scaling Up Your Business and Reclaiming Your Time!",
+    "text3": "Even If You've Tried Every Other Course, Mastermind, Or Outdated Program. This Indisputable New Formula will be all you need To Create & Launch Your Own Wildly Profitably Online Business With High Paying Clients That Keep Coming Back…..",
+    "button": "Yes, claim my ticket to The Idea Pod Live"
   },
   "about": {
-    "text1": "I'd say the main thing I learned is just being present and being in the moment, to really not caring, just being self amused. It's part of being purposeful, there's other things that I'm excited about, and this is just one of those aspects.",
-    "text2": "I'm excited to just apply being in the present and be this new age like there's a huge movement going on. I can feel it. I'm just excited to be a part of it and yeah I love Owen, he's awesome."
+    "heading": "THE PATH TO YOUR MOST PROFITABLE YEAR EVER MUST START NOW…",
+    "text": "THIS IS FOR YOU IF>>>",
+    "text1": ">>  You're willing and eager to learn and implement, but you just don't know what to do next or where to start",
+    "text2": ">>  You've had a tough start to date, growth in your business hasn’t been as quick as you anticipated but despite that, you believe in your business and know it has the potential to scale.",
+    "text3": ">>  You're ready for a change in your digital marketing systems",
+    "text4": ">>  You've seen and heard of other people making good money through funnels you want someone to show you how to make money too.",
+    "button": "COUNT ME IN"
   },
   "events": {
-    "heading": "Julien and Owen Events",
+    "heading": "The Idea Pod Events",
     "signup": "SIGN UP NOW",
     "book": "Book Your Ticket",
     "noEvent": "No Events has been Registered Yet!"
   },
   "features": {
-    "text1": "Lorem Ipsum is simply dummy text",
-    "text2": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
+    "text1": "WHO IS THE IDEA POD PROGRAM FOR??",
+    "text2": "YOU are probably fully aware that scaling your business online isn’t an easy task. There seem to be quite a few things you’re missing, since you’ve yet to repeatedly make sales through your existing funnels. There are A LOT of questions you want answers. That’s why we're giving you a chance to join the Idea Pod program. This event will give you a chance to connect with other innovators, and trail-blazing business owners like you, learn from the best, most relatable educators, and FINALLY develop the most effective digital marketing methods to scale your business for an affordable price! When you enroll in the program, you’ll be joined by a moderately small group of people from all walks of life: entrepreneurs, executives, creatives, coaches, leaders, dreamers, visionaries, students, seekers, athletes… the list goes on. But there is ONE characteristic that defines every single person who takes the action to sign up: AMBITION. If you have a huge vision paired with a daily hunger to scale your business and impact the lives of each one of your customers... and maximize your profitability... YOU BELONG HERE IN THIS PROGRAM",
     "feature1": "Will you continue to let procrastination take over?",
     "feature2": "Allow a lack of confidence riddle you with anxiety for the rest of your life?",
     "feature3": "Continue to follow advice that hasn't worked?",
     "feature4": "Continue to blame others for your lack of success?",
     "text3": "If you've had ENOUGH and are ready to BREAK FREE from Group Think and Social Conditioning that keeps you in the Self Actualization Rat Race…",
     "text4": "Grab Your FREE Ticket to the Higher Purpose Tour Before Our Limited Seating Books Out!",
-    "higherPurposeText": "The Higher Purpose Tour has a £25 deposit that's refunded when you attend, in an effort to book the most comfortable sized room for everyone. Email <a>{{email}}</a> (if you attended) to receive your refund, or simply donate it if you enjoyed the talk!",
-    "featuresImageHeadline": "Are you as far in life as you thought you'd be by now?",
-    "featuresImageText1": "You're not alone. We've been taught to listen to what our teachers, our government and even our parents tell us to do to get ahead in life…",
-    "featuresImageText2": "But WHY hasn't it worked then?",
-    "featuresImageText3": "We continue to follow advice from people and places that mean well, but in no shape or form have bred the type of person everyone hopes, or thinks should become",
-    "featuresImageText4": "Instead of waiting around for the right thing to come along, or for the answer to just present itself…",
-    "featuresImageText5": "You gotta think outside the massive box you've been kept in your whole life.",
-    "featuresImageText6": "How?",
+    "text5": "<<<<<<< Testimonials section >>>>>",
+    "text6": "Every day the news talks about how high inflation is, and you can see things like food and gas getting more expensive. So, you need to find a way to take control of your money. X years ago, I started out from my bedroom in my Mum’s house. I found a way to grow my company, Brussel Lake Paragon with the information I learned from online training programs. People didn’t really believe that it was possible, and they insisted I must have had some in-person guidance. I said that online learning was the next big thing. And, I created a test group, showed them how I learned, how I implemented, and how they could grow their own business... Step by step. Many who joined me, now have an insanely profitable business that they started from scratch! With no prior business knowledge or formal degree in business education offline. Right now, there's an even bigger opportunity for you to achieve the same level of success and MORE! In The idea Pod, I'll teach you exactly how to build and scale your business using digital marketing and sales funnels, starting from scratch. There's a catch though. The window for this opportunity is closing FAST! As you read this, more and more people are learning the formula and achieving their success... fortunately for you, you’re reading this right now and the opportunity is right in front of you. Claim your spot in the program and learn all my secrets and strategies I would use to build a profitable business that makes a huge impact. Stop trying to figure this out on your own. Just copy me.",
+    "higherPurposeText": "This is NOT going to be a 'ONE-SIZE-FITS-ALL' Approach like every other GuRu out there promising you success...",
+    "featuresImageHeadline": "Instead, we're going to leverage on my #1 secret formula (that took me years to figure out)",
+    "featuresImageText1": "Clarity First",
+    "featuresImageText2": "So we are 100% clear on what ‘scaling’ and ‘profitable’ means for your business",
+    "featuresImageText3": "And what precisely is standing in your way from getting SALES The Funnel Accelerator Strategy Learn how to build and implement profitable sales funnels in your business and how to use updated digital marketing strategies to gain a steady flow of traffic to your funnel. We identify the right steps and a real game plan for how to get it done.",
+    "featuresImageText4": "Not So Sweet Accountability This is the big one where most people who try to scale their business alone really fall short. If no one’s watching you, it’s easy to just quit when things get tough – but not on my watch.",
+    "featuresImageText5": "I'll challenge you to push past your limits, which ultimately leads to your success",
+    "featuresImageText6": "What People Just Like You Have Experienced With Us",
     "featuresImageFeature1": "Get enough clarity and awareness to tell the difference between the truth and what they want you to believe",
     "featuresImageFeature2": "Realize your own (very often) self-imposed limitations and hindering self-dialogue",
     "featuresImageFeature3": "Get the tools and the knowledge to start the fire within ourselves that you've been taught to keep inside"
@@ -39,7 +46,7 @@
   "opportunity": {
     "text1": "Lorem Ipsum is simply dummy text",
     "text2": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
-    "text3": "Lorem Ipsum is simply dummy text",
+    "text3": "WHAT MAKES THE IDEA POD SO SPECIAL?",
     "text4": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
     "text5": "And today, you have the opportunity to have this life-changing experience in a city near you in the US and select city around the world with our elite level Coaches",
     "cardText": "COME EXPERIENCE THE LIFE-DEFINING,\nPERSONAL TRANSFORMATION",
@@ -51,7 +58,7 @@
   "testnomials": {
     "testnomialsText1": "This program actually blew my expectations. I mean the the way Owen covered so many topics. I wasn't expecting so much. Let alone so many of those things help me in so many ways.",
     "testnomialsText2": "You're also around so many positive people, you're talking to people make connections, that's the biggest thing and one of my biggest things I realize by being here.",
-    "testnomialsHeading": "What You'll Get At the <span>Higher Purpose Tour</span>",
+    "testnomialsHeading": "The Idea Pod 2-day <span>training program</span> INCLUDES",
     "card1Heading": "Our Break Free to Higher Purpose Method",
     "card1Text": "From showing you the true interpretation of what Society teaches you...\n\n... to bringing awareness to past experiences that may be leading your life unbeknownst to you\n\n... to empowering you with the tools and knowledge to break free and purpose your higher purpose with relentless motivation.",
     "card2Heading": "Growth-Minded Networking",

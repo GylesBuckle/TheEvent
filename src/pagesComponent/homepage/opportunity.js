@@ -38,7 +38,7 @@ export default function opportunity() {
     <Grid container direction="column" alignItems="center" className={classes.container}>
       {/* text 1 2*/}
       <Grid item style={{ width: '100%' }}>
-        <Typography
+        {/* <Typography
           variant="h5"
           align="center"
           style={{
@@ -50,8 +50,8 @@ export default function opportunity() {
           }}
         >
           {t('homepage.opportunity.text1')}
-        </Typography>
-        <Typography
+        </Typography> */}
+        {/* <Typography
           variant="h5"
           align="center"
           style={{
@@ -63,12 +63,15 @@ export default function opportunity() {
           }}
         >
           {t('homepage.opportunity.text2')}
-        </Typography>
+        </Typography> */}
       </Grid>
       {/* text 3 4 */}
       <Grid
         item
-        style={{ width: matchesSM ? '100%' : matchesMD ? '90%' : '70%', marginTop: '37px' }}
+        style={{
+          width: matchesSM ? '100%' : matchesMD ? '90%' : '67%',
+          //marginTop: '37px'
+        }}
       >
         <Typography
           variant="h2"
@@ -84,7 +87,7 @@ export default function opportunity() {
         >
           {t('homepage.opportunity.text3')}
         </Typography>
-        <Typography
+        {/* <Typography
           variant="h2"
           align="center"
           style={{
@@ -97,12 +100,12 @@ export default function opportunity() {
           }}
         >
           {t('homepage.opportunity.text4')}
-        </Typography>
+        </Typography> */}
       </Grid>
       {/* text5 */}
       <Grid
         item
-        style={{ width: matchesSM ? '100%' : matchesMD ? '80%' : '50%', marginTop: '37px' }}
+        style={{ width: matchesSM ? '100%' : matchesMD ? '80%' : '45%', marginTop: '7px' }}
       >
         <Typography
           variant="h5"
@@ -126,6 +129,7 @@ export default function opportunity() {
             borderRadius: '15px',
             boxShadow: '0px 4px 44px rgba(0, 0, 0, 0.15)',
             padding: '27px 35px',
+            paddingLeft: '60px',
             position: 'relative',
           }}
         >
@@ -137,18 +141,18 @@ export default function opportunity() {
               />
             </div>
           )} */}
-          <Grid container justifyContent="center" spacing={2}>
+          <Grid container spacing={2}>
             <Grid item sm={6} xs={12}>
-              <Grid container alignItems="center" direction="column">
+              <Grid container direction="column">
                 <Typography
                   variant="h5"
-                  align="center"
+                  //align="center"
                   style={{
                     color: '#000',
                     fontSize: '23px',
                     zIndex: 1,
                     lineHeight: '32px',
-                    fontWeight: 700,
+                    fontWeight: 900,
                     whiteSpace: 'pre-line',
                     //textShadow: '0px 0px 20px #fff, 0px 0px 20px #fff',
                   }}
