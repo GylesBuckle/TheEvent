@@ -3,7 +3,7 @@ import Link from 'next/link';
 import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
 import { Typography, Grid, useMediaQuery, Button } from '@material-ui/core';
-
+import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 
@@ -23,9 +23,10 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     ...theme.typography.button,
-    padding: '11px 20px',
+    padding: '10px 130px 10px 130px',
     borderRadius: 10,
     backgroundColor: '#FF5B21',
+    fontSize: '22px',
   },
 }));
 export default function about() {
@@ -160,7 +161,29 @@ export default function about() {
           </Grid>
           {/* text */}
           <Grid item style={{ flex: 1 }}>
-            <svg
+            <Grid container direction="column" alignItems="flex-start">
+              <Grid item style={{ alignSelf: 'center' }}>
+                <Typography
+                  variant="h5"
+                  align="center"
+                  style={{
+                    color: '#1B1C31',
+                    fontSize: '25px',
+                    lineHeight: '41px',
+                    letterSpacing: '-2%',
+                    paddingBottom: '3px',
+                    borderBottom: '6px solid #1B1C31',
+                  }}
+                >
+                  {t('homepage.about.text')}
+                </Typography>
+              </Grid>
+
+              <Grid
+                item
+                style={{ width: matchesSM ? '100%' : matchesMD ? '90%' : '78%', marginTop: '22px' }}
+              >
+                {/* <svg
               xmlns="http://www.w3.org/2000/svg"
               width="32"
               height="28"
@@ -172,72 +195,61 @@ export default function about() {
                 fill="#0D1358"
                 d="M31.815.884l-.783 5.623c-1.564-.132-2.835.131-3.813.79-.978.624-1.663 1.545-2.054 2.761-.358 1.184-.424 2.565-.195 4.143h6.845v13.417h-13.3V14.202c0-4.736 1.092-8.32 3.276-10.753C23.975.983 27.317.128 31.815.884zm-17.7 0l-.783 5.623c-1.564-.132-2.836.131-3.814.79-.978.624-1.662 1.545-2.053 2.761-.359 1.184-.424 2.565-.196 4.143h6.846v13.417H.815V14.202c0-4.736 1.092-8.32 3.276-10.753C6.275.983 9.616.128 14.115.884z"
               ></path>
-            </svg>
-            <Typography
-              variant="h5"
-              style={{
-                display: 'block',
-                color: '#1B1C31',
-                fontSize: '25px',
-                lineHeight: '41px',
-                letterSpacing: '-2%',
-                width: matchesSM ? '100%' : matchesMD ? '90%' : '70%',
-              }}
-            >
-              {t('homepage.about.text')}
-            </Typography>
-            <Typography
-              variant="h5"
-              style={{
-                display: 'block',
-                color: '#1B1C31',
-                fontSize: '25px',
-                lineHeight: '41px',
-                letterSpacing: '-2%',
-                width: matchesSM ? '100%' : matchesMD ? '90%' : '68%',
-              }}
-            >
-              {t('homepage.about.text1')}
-            </Typography>
-            <Typography
-              variant="h5"
-              style={{
-                display: 'block',
-                color: '#1B1C31',
-                fontSize: '25px',
-                lineHeight: '41px',
-                letterSpacing: '-2%',
-                width: matchesSM ? '100%' : matchesMD ? '90%' : '68%',
-              }}
-            >
-              {t('homepage.about.text2')}
-            </Typography>
-            <Typography
-              variant="h5"
-              style={{
-                display: 'block',
-                color: '#1B1C31',
-                fontSize: '25px',
-                lineHeight: '41px',
-                letterSpacing: '-2%',
-                width: matchesSM ? '100%' : matchesMD ? '90%' : '68%',
-              }}
-            >
-              {t('homepage.about.text3')}
-            </Typography>
-            <Typography
-              variant="h5"
-              style={{
-                display: 'block',
-                color: '#1B1C31',
-                fontSize: '25px',
-                lineHeight: '41px',
-                letterSpacing: '-2%',
-                width: matchesSM ? '100%' : matchesMD ? '90%' : '68%',
-              }}
-            >
-              {t('homepage.about.text4')}
-            </Typography>
+            </svg> */}
+                <Typography
+                  variant="h5"
+                  style={{
+                    display: 'block',
+                    color: '#1B1C31',
+                    fontSize: '25px',
+                    lineHeight: '41px',
+                    letterSpacing: '-2%',
+                  }}
+                >
+                  <FiberManualRecordIcon fontSize="small" style={{ marginRight: '10px' }} />
+                  {t('homepage.about.text1')}
+                </Typography>
+                <Typography
+                  variant="h5"
+                  style={{
+                    color: '#1B1C31',
+                    fontSize: '25px',
+                    lineHeight: '41px',
+                    letterSpacing: '-2%',
+                  }}
+                >
+                  <FiberManualRecordIcon fontSize="small" style={{ marginRight: '10px' }} />
+
+                  {t('homepage.about.text2')}
+                </Typography>
+                <Typography
+                  variant="h5"
+                  style={{
+                    color: '#1B1C31',
+                    fontSize: '25px',
+                    lineHeight: '41px',
+                    letterSpacing: '-2%',
+                  }}
+                >
+                  <FiberManualRecordIcon fontSize="small" style={{ marginRight: '10px' }} />
+
+                  {t('homepage.about.text3')}
+                </Typography>
+                <Typography
+                  variant="h5"
+                  style={{
+                    color: '#1B1C31',
+                    fontSize: '25px',
+                    lineHeight: '41px',
+                    letterSpacing: '-2%',
+                  }}
+                >
+                  <FiberManualRecordIcon fontSize="small" style={{ marginRight: '10px' }} />
+
+                  {t('homepage.about.text4')}
+                </Typography>
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
       </Grid>
@@ -246,6 +258,18 @@ export default function about() {
           <Button className={classes.button}>{t('homepage.about.button')}</Button>
         </Link>
       </Grid>
+      {/* <Grid item style={{ marginTop: matchesSM ? '6px' : '6px' }}>
+          <Typography
+            variant="h5"
+            style={{
+              color: '#FF5B21',
+              fontSize: '14px',
+              letterSpacing: '-2%',
+            }}
+          >
+            Next Event Date & Time: December 25, 2022 | 9PM UK Time
+          </Typography>
+        </Grid> */}
     </Grid>
   );
 }

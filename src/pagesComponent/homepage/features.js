@@ -72,7 +72,6 @@ export default function features() {
       >
         <Typography
           variant="h5"
-          align="center"
           style={{
             color: '#fff',
             fontWeight: '700',
@@ -80,7 +79,68 @@ export default function features() {
             lineHeight: '33px',
           }}
         >
-          {t('homepage.features.text2')}
+          {t('homepage.features.text2_1')}
+        </Typography>
+
+        <Typography
+          variant="h5"
+          style={{
+            color: '#fff',
+            fontWeight: '700',
+            zIndex: 1,
+            lineHeight: '33px',
+            marginTop: '30px',
+          }}
+        >
+          {t('homepage.features.text2_2')}
+        </Typography>
+        <Typography
+          variant="h5"
+          style={{
+            color: '#fff',
+            fontWeight: '700',
+            zIndex: 1,
+            lineHeight: '33px',
+            marginTop: '30px',
+          }}
+        >
+          {t('homepage.features.text2_3')}
+        </Typography>
+        <Typography
+          variant="h5"
+          style={{
+            color: '#fff',
+            fontWeight: '700',
+            zIndex: 1,
+            lineHeight: '33px',
+            marginTop: '30px',
+          }}
+        >
+          {t('homepage.features.text2_4')}
+        </Typography>
+        <Typography
+          variant="h5"
+          style={{
+            color: '#fff',
+            fontWeight: '700',
+            zIndex: 1,
+            lineHeight: '33px',
+            marginTop: '30px',
+          }}
+        >
+          {t('homepage.features.text2_5')}
+        </Typography>
+        <Typography
+          variant="h5"
+          style={{
+            color: '#fff',
+            fontWeight: '700',
+            zIndex: 1,
+            lineHeight: '33px',
+            marginTop: '30px',
+          }}
+        >
+          {t('homepage.features.text2_6')}
         </Typography>
       </Grid>
 
@@ -242,9 +302,93 @@ export default function features() {
         >
           {t('homepage.features.text6')}
         </Typography>
+        <Typography
+          variant="h4"
+          style={{
+            color: '#fff',
+            fontWeight: '600',
+            zIndex: 1,
+            lineHeight: '42px',
+            marginTop: '30px',
+          }}
+        >
+          {t('homepage.features.text7')}
+        </Typography>
+        <Typography
+          variant="h4"
+          style={{
+            color: '#fff',
+            fontWeight: '600',
+            zIndex: 1,
+            lineHeight: '42px',
+            marginTop: '30px',
+          }}
+        >
+          {t('homepage.features.text8')}
+        </Typography>
+        <Typography
+          variant="h4"
+          style={{
+            color: '#fff',
+            fontWeight: '600',
+            zIndex: 1,
+            lineHeight: '42px',
+            marginTop: '30px',
+          }}
+        >
+          {t('homepage.features.text9')}
+        </Typography>
+        <Typography
+          variant="h4"
+          style={{
+            color: '#fff',
+            fontWeight: '600',
+            zIndex: 1,
+            lineHeight: '42px',
+            marginTop: '30px',
+          }}
+        >
+          {t('homepage.features.text10')}
+        </Typography>
+        <Typography
+          variant="h4"
+          style={{
+            color: '#fff',
+            fontWeight: '600',
+            zIndex: 1,
+            lineHeight: '42px',
+            marginTop: '30px',
+          }}
+        >
+          {t('homepage.features.text11')}
+        </Typography>
+        <Typography
+          variant="h4"
+          style={{
+            color: '#fff',
+            fontWeight: '600',
+            zIndex: 1,
+            lineHeight: '42px',
+            marginTop: '30px',
+          }}
+        >
+          {t('homepage.features.text12')}
+        </Typography>
+        <Typography
+          variant="h4"
+          style={{
+            color: '#fff',
+            fontWeight: '600',
+            zIndex: 1,
+            lineHeight: '42px',
+            marginTop: '30px',
+          }}
+        >
+          {t('homepage.features.text13')}
+        </Typography>
       </Grid>
       {/* get My tickets */}
-      <Grid item style={{ width: '100%', marginTop: matchesSM ? '40px' : '50px' }}>
+      <Grid item style={{ width: '100%', marginTop: matchesSM ? '90px' : '90px' }}>
         <Paper
           elevation={0}
           style={{
@@ -339,74 +483,6 @@ export default function features() {
               >
                 {t('homepage.features.featuresImageHeadline')}
               </Typography>
-
-              <Typography
-                variant="h5"
-                align={matchesSM ? 'center' : 'left'}
-                style={{
-                  marginTop: '34px',
-                  fontFamily: 'Manrope',
-                  color: '#000',
-                  fontWeight: '800',
-                  zIndex: 1,
-                  lineHeight: '30px',
-                }}
-              >
-                {t('homepage.features.featuresImageText1')}
-              </Typography>
-              <Typography
-                variant="h5"
-                align={matchesSM ? 'center' : 'left'}
-                style={{
-                  fontFamily: 'Manrope',
-                  color: '#000',
-                  fontWeight: '800',
-                  zIndex: 1,
-                  lineHeight: '30px',
-                }}
-              >
-                {t('homepage.features.featuresImageText2')}
-              </Typography>
-              <Typography
-                variant="h5"
-                align={matchesSM ? 'center' : 'left'}
-                style={{
-                  fontFamily: 'Manrope',
-                  color: '#000',
-                  fontWeight: '800',
-                  zIndex: 1,
-                  lineHeight: '30px',
-                }}
-              >
-                {t('homepage.features.featuresImageText3')}
-              </Typography>
-              <Typography
-                variant="h5"
-                align={matchesSM ? 'center' : 'left'}
-                style={{
-                  fontFamily: 'Manrope',
-                  color: '#000',
-                  fontWeight: '800',
-                  zIndex: 1,
-                  lineHeight: '30px',
-                }}
-              >
-                {t('homepage.features.featuresImageText4')}
-              </Typography>
-              <Typography
-                variant="h5"
-                align={matchesSM ? 'center' : 'left'}
-                style={{
-                  fontFamily: 'Manrope',
-                  color: '#000',
-                  fontWeight: '800',
-                  zIndex: 1,
-                  lineHeight: '30px',
-                }}
-              >
-                {t('homepage.features.featuresImageText5')}
-              </Typography>
-              {/* featuresImageFeature1 */}
               <div
                 style={{
                   display: 'flex',
@@ -463,16 +539,43 @@ export default function features() {
                     //textShadow: '0px 0px 20px #fff, 0px 0px 20px #fff',
                   }}
                 >
-                  {t('homepage.features.featuresImageFeature1')}
+                  {t('homepage.features.featuresImageHeading1')}
                 </Typography>
               </div>
-              {/* featuresImageFeature2 */}
+              <Typography
+                variant="h5"
+                align={matchesSM ? 'center' : 'left'}
+                style={{
+                  marginTop: '14px',
+                  fontFamily: 'Manrope',
+                  color: '#000',
+                  fontWeight: '800',
+                  zIndex: 1,
+                  lineHeight: '30px',
+                }}
+              >
+                {t('homepage.features.featuresImageText1')}
+              </Typography>
+              <Typography
+                variant="h5"
+                align={matchesSM ? 'center' : 'left'}
+                style={{
+                  fontFamily: 'Manrope',
+                  color: '#000',
+                  fontWeight: '800',
+                  zIndex: 1,
+                  lineHeight: '30px',
+                }}
+              >
+                {t('homepage.features.featuresImageText2')}
+              </Typography>
+
               <div
                 style={{
                   display: 'flex',
                   justifyContent: matchesSM ? 'center' : 'flex-start',
                   gap: '7px',
-                  marginTop: '24px',
+                  marginTop: '28px',
                 }}
               >
                 <svg
@@ -519,19 +622,34 @@ export default function features() {
                     zIndex: 1,
                     lineHeight: '29px',
                     marginTop: '-3px',
+
                     //textShadow: '0px 0px 20px #fff, 0px 0px 20px #fff',
                   }}
                 >
-                  {t('homepage.features.featuresImageFeature2')}
+                  {t('homepage.features.featuresImageHeading2')}
                 </Typography>
               </div>
-              {/* featuresImageFeature3 */}
+              <Typography
+                variant="h5"
+                align={matchesSM ? 'center' : 'left'}
+                style={{
+                  marginTop: '14px',
+                  fontFamily: 'Manrope',
+                  color: '#000',
+                  fontWeight: '800',
+                  zIndex: 1,
+                  lineHeight: '30px',
+                }}
+              >
+                {t('homepage.features.featuresImageText3')}
+              </Typography>
+
               <div
                 style={{
                   display: 'flex',
                   justifyContent: matchesSM ? 'center' : 'flex-start',
                   gap: '7px',
-                  marginTop: '24px',
+                  marginTop: '28px',
                 }}
               >
                 <svg
@@ -578,12 +696,40 @@ export default function features() {
                     zIndex: 1,
                     lineHeight: '29px',
                     marginTop: '-3px',
+
                     //textShadow: '0px 0px 20px #fff, 0px 0px 20px #fff',
                   }}
                 >
-                  {t('homepage.features.featuresImageFeature3')}
+                  {t('homepage.features.featuresImageHeading3')}
                 </Typography>
               </div>
+              <Typography
+                variant="h5"
+                align={matchesSM ? 'center' : 'left'}
+                style={{
+                  marginTop: '14px',
+                  fontFamily: 'Manrope',
+                  color: '#000',
+                  fontWeight: '800',
+                  zIndex: 1,
+                  lineHeight: '30px',
+                }}
+              >
+                {t('homepage.features.featuresImageText4')}
+              </Typography>
+              <Typography
+                variant="h5"
+                align={matchesSM ? 'center' : 'left'}
+                style={{
+                  fontFamily: 'Manrope',
+                  color: '#000',
+                  fontWeight: '800',
+                  zIndex: 1,
+                  lineHeight: '30px',
+                }}
+              >
+                {t('homepage.features.featuresImageText5')}
+              </Typography>
             </Grid>
             {/* image */}
             <Grid item md={6} style={{ marginTop: matchesSM ? '25px' : 0 }}>
