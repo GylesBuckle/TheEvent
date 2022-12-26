@@ -10,7 +10,7 @@
     "buy": "Buy Your Ticket",
     "text": "Tickets are limited, get yours while still available!"
   },
-
+  "nextEvent": "Next Event Date & Time:",
   "externalLogin": {
     "google": "Continue with Google",
     "facebook": "Continue With Meta",

@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function features() {
+export default function features(props) {
   const { t } = useTranslation();
   const featuresArray = [
     t('homepage.features.feature1'),
@@ -399,10 +399,11 @@ export default function features() {
           }}
         >
           <Grid container spacing={2}>
-            <Grid item lg={4} md={5} sm={8} xs={12}>
-              <Grid container direction="column">
+            <Grid item lg={4} md={6} sm={12} xs={12}>
+              <Grid container alignItems={matchesSM ? 'center' : 'left'} direction="column">
                 <Typography
                   variant="h5"
+                  align={matchesSM ? 'center' : 'left'}
                   style={{
                     color: '#000',
                     fontSize: '23px',
@@ -437,10 +438,41 @@ export default function features() {
                     </Button>
                   </Link>
                 </Grid>
+                {props.latestEvent && (
+                  <Grid item style={{ marginTop: '6px' }}>
+                    <Typography
+                      variant="h5"
+                      style={{
+                        color: '#FF5B21',
+                        fontSize: '14px',
+                        letterSpacing: '-2%',
+                      }}
+                    >
+                      {t('common.nextEvent')} {props.latestEvent}
+                    </Typography>
+                  </Grid>
+                )}
+                {matchesMD && (
+                  <Typography
+                    variant="h5"
+                    align="center"
+                    style={{ whiteSpace: 'pre', marginTop: '1em' }}
+                  >
+                    {t('homepage.features.higherPurposeImageText')}
+                  </Typography>
+                )}
               </Grid>
             </Grid>
-            <Grid item lg={5} sm={4} xs={12}></Grid>
+            <Grid item lg={5} md={4} sm={12} xs={12}></Grid>
           </Grid>
+
+          {!matchesMD && (
+            <div style={{ position: 'absolute', bottom: '5px', right: '250px' }}>
+              <Typography variant="h5" align="center" style={{ whiteSpace: 'pre' }}>
+                {t('homepage.features.higherPurposeImageText')}
+              </Typography>
+            </div>
+          )}
           {!matchesSM && (
             <div style={{ position: 'absolute', bottom: '-4.5px', right: '-35px' }}>
               <img

@@ -483,8 +483,8 @@ export default function index(props) {
                         <Link href={`/event/${ev._id}`}>
                           <TableCell className={classes.tableCell}>
                             <Typography variant="subtitle1" style={{ fontWeight: 400 }}>
-                              {ev.location} ({moment(ev.startDate, ['HH mm']).format('hh:mm a')} -{' '}
-                              {moment(ev.endDate, ['HH mm']).format('hh:mm a')})
+                              {ev.location} ({moment(ev.startDate).format('DD MMM hh:mm a')} -{' '}
+                              {moment(ev.endDate).format('DD MMM hh:mm a')}) {' UK Time'}
                             </Typography>
                           </TableCell>
                         </Link>

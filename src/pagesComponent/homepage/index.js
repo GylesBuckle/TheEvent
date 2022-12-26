@@ -9,7 +9,7 @@ import Events from './events';
 import Features from './features';
 import Opportunity from './opportunity';
 import Testnomials from './testnomials';
-
+import * as moment from 'moment';
 const useStyles = makeStyles((theme) => ({
   paddingContainer: {
     padding: '30px 70px',
@@ -24,6 +24,13 @@ const useStyles = makeStyles((theme) => ({
 export default function Homepage(props) {
   const theme = useTheme();
   const classes = useStyles();
+
+  console.log(props.events);
+  const latestEvent =
+    props.events && props.events.length > 0
+      ? moment(props.events[0].startDate).format('MMMM DD, YYYY | hh A') + ' UK Time'
+      : undefined;
+
   return (
     <Grid
       container
@@ -39,19 +46,19 @@ export default function Homepage(props) {
         <Hero />
       </Grid>
       <Grid item style={{ width: '100%' }}>
-        <About />
+        <About latestEvent={latestEvent} />
       </Grid>
       <Grid item style={{ width: '100%' }}>
-        <Events events={props.events} />
+        <Events events={props.events} latestEvent={latestEvent} />
       </Grid>
       <Grid item style={{ width: '100%', backgroundColor: theme.palette.primary.main }}>
-        <Features />
+        <Features latestEvent={latestEvent} />
       </Grid>
       <Grid item style={{ width: '100%' }}>
-        <Opportunity />
+        <Opportunity latestEvent={latestEvent} />
       </Grid>
       <Grid item style={{ width: '100%' }}>
-        <Testnomials />
+        <Testnomials latestEvent={latestEvent} />
       </Grid>
     </Grid>
   );

@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 15,
   },
 }));
-export default function opportunity() {
+export default function opportunity(props) {
   const { t } = useTranslation();
 
   const theme = useTheme();
@@ -128,11 +128,19 @@ export default function opportunity() {
           style={{
             borderRadius: '15px',
             boxShadow: '0px 4px 44px rgba(0, 0, 0, 0.15)',
+
             padding: '27px 35px',
+            boxSizing: 'border-box',
             paddingLeft: '60px',
             position: 'relative',
           }}
         >
+          <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
+            <img
+              src={`${publicRuntimeConfig.REACT_APP_ASSET_PREFIX}dev/border.png`}
+              style={{ width: '100%', height: '100%', borderRadius: '15px' }}
+            />
+          </div>
           {/* {!matchesSM && (
             <div style={{ position: 'absolute', bottom: '-4.5px', left: '-35px', width: 'auto' }}>
               <img
@@ -142,11 +150,11 @@ export default function opportunity() {
             </div>
           )} */}
           <Grid container spacing={2}>
-            <Grid item sm={6} xs={12}>
-              <Grid container direction="column">
+            <Grid item lg={6} md={8} sm={12} xs={12}>
+              <Grid container alignItems={matchesSM ? 'center' : 'left'} direction="column">
                 <Typography
                   variant="h5"
-                  //align="center"
+                  align={matchesSM ? 'center' : 'left'}
                   style={{
                     color: '#000',
                     fontSize: '23px',
@@ -170,6 +178,20 @@ export default function opportunity() {
                     </Button>
                   </Link>
                 </Grid>
+                {props.latestEvent && (
+                  <Grid item style={{ marginTop: '6px', position: 'relative' }}>
+                    <Typography
+                      variant="h5"
+                      style={{
+                        color: '#FF5B21',
+                        fontSize: '14px',
+                        letterSpacing: '-2%',
+                      }}
+                    >
+                      {t('common.nextEvent')} {props.latestEvent}
+                    </Typography>
+                  </Grid>
+                )}
               </Grid>
             </Grid>
           </Grid>

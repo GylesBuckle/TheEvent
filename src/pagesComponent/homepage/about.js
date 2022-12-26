@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '22px',
   },
 }));
-export default function about() {
+export default function about(props) {
   const { t } = useTranslation();
   const theme = useTheme();
   const classes = useStyles();
@@ -258,7 +258,8 @@ export default function about() {
           <Button className={classes.button}>{t('homepage.about.button')}</Button>
         </Link>
       </Grid>
-      {/* <Grid item style={{ marginTop: matchesSM ? '6px' : '6px' }}>
+      {props.latestEvent && (
+        <Grid item style={{ marginTop: matchesSM ? '6px' : '6px' }}>
           <Typography
             variant="h5"
             style={{
@@ -267,9 +268,10 @@ export default function about() {
               letterSpacing: '-2%',
             }}
           >
-            Next Event Date & Time: December 25, 2022 | 9PM UK Time
+            {t('common.nextEvent')} {props.latestEvent}
           </Typography>
-        </Grid> */}
+        </Grid>
+      )}
     </Grid>
   );
 }
