@@ -262,7 +262,7 @@ export default function Testnomials() {
         }}
       >
         <Typography
-          variant="h1"
+          variant={matchesSM ? 'h2' : 'h1'}
           align="center"
           style={{
             color: '#fff',
@@ -353,7 +353,7 @@ export default function Testnomials() {
         }}
       >
         <Typography
-          variant="h1"
+          variant={matchesSM ? 'h2' : 'h1'}
           align="center"
           style={{
             color: '#fff',

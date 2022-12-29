@@ -27,6 +27,10 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 10,
     backgroundColor: '#FF5B21',
     fontSize: '22px',
+    [theme.breakpoints.down('sm')]: {
+      padding: '10px 20px 10px 20px',
+      width: '100%',
+    },
   },
 }));
 export default function about(props) {

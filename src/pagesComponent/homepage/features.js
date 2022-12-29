@@ -25,7 +25,11 @@ const useStyles = makeStyles((theme) => ({
   button: {
     ...theme.typography.button,
     padding: '11px 50px',
+
     borderRadius: 15,
+    [theme.breakpoints.down('sm')]: {
+      padding: '11px 10px',
+    },
   },
 }));
 
@@ -401,33 +405,35 @@ export default function features(props) {
           <Grid container spacing={2}>
             <Grid item lg={4} md={6} sm={12} xs={12}>
               <Grid container alignItems={matchesSM ? 'center' : 'left'} direction="column">
-                <Typography
-                  variant="h5"
-                  align={matchesSM ? 'center' : 'left'}
-                  style={{
-                    color: '#000',
-                    fontSize: '23px',
-                    zIndex: 1,
-                    lineHeight: '32px',
-                    fontWeight: 700,
-                    wordBreak: 'break-word',
-                    //textShadow: '0px 0px 20px #fff, 0px 0px 20px #fff',
-                  }}
-                >
-                  <Trans
-                    i18nKey="homepage.features.higherPurposeText"
-                    //values={{ email: websiteInfo.hightPurposeSupportEmail }}
-                    // components={{
-                    //   a: (
-                    //     <a
-                    //       href={`mailto:${websiteInfo.hightPurposeSupportEmail}`}
-                    //       style={{ color: '#FF5B21', textDecoration: 'none' }}
-                    //     ></a>
-                    //   ),
-                    // }}
-                  />
-                </Typography>
-                <Grid item>
+                <Grid item style={{ width: '100%' }}>
+                  <Typography
+                    variant="h5"
+                    align={matchesSM ? 'center' : 'left'}
+                    style={{
+                      color: '#000',
+                      fontSize: '23px',
+                      zIndex: 1,
+                      lineHeight: '32px',
+                      fontWeight: 700,
+                      wordBreak: 'break-word',
+                      //textShadow: '0px 0px 20px #fff, 0px 0px 20px #fff',
+                    }}
+                  >
+                    <Trans
+                      i18nKey="homepage.features.higherPurposeText"
+                      //values={{ email: websiteInfo.hightPurposeSupportEmail }}
+                      // components={{
+                      //   a: (
+                      //     <a
+                      //       href={`mailto:${websiteInfo.hightPurposeSupportEmail}`}
+                      //       style={{ color: '#FF5B21', textDecoration: 'none' }}
+                      //     ></a>
+                      //   ),
+                      // }}
+                    />
+                  </Typography>
+                </Grid>
+                <Grid item style={{ width: '100%' }}>
                   <Link href="/#events">
                     <Button
                       className={classes.button}
@@ -453,13 +459,15 @@ export default function features(props) {
                   </Grid>
                 )}
                 {matchesMD && (
-                  <Typography
-                    variant="h5"
-                    align="center"
-                    style={{ whiteSpace: 'pre', marginTop: '1em' }}
-                  >
-                    {t('homepage.features.higherPurposeImageText')}
-                  </Typography>
+                  <Grid item style={{ width: '100%' }}>
+                    <Typography
+                      variant="h5"
+                      align="center"
+                      style={{ whiteSpace: 'pre-line', marginTop: '1em' }}
+                    >
+                      {t('homepage.features.higherPurposeImageText')}
+                    </Typography>
+                  </Grid>
                 )}
               </Grid>
             </Grid>
