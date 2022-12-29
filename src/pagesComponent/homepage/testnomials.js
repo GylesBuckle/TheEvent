@@ -42,10 +42,10 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative',
     cursor: 'default',
     width: '100%',
-    boxShadow: '0 10px 30px -15px rgba(2,12,27,0.7)',
-    padding: '13px',
-    borderRadius: '4px',
-    backgroundColor: '#fff',
+    //boxShadow: '0 10px 30px -15px rgba(2,12,27,0.7)',
+    padding: '25px',
+    borderRadius: '12px',
+    backgroundColor: '#08294D',
     transition: 'all 0.25s cubic-bezier(0.645,0.045,0.355,1)',
     '&:hover': {
       transform: 'translateY(-7px)',
@@ -59,16 +59,6 @@ export default function Testnomials() {
       img: `${publicRuntimeConfig.REACT_APP_ASSET_PREFIX}dev/card1.png`,
       heading: t('homepage.testnomials.card1Heading'),
       text: t('homepage.testnomials.card1Text'),
-    },
-    {
-      img: `${publicRuntimeConfig.REACT_APP_ASSET_PREFIX}dev/card2.png`,
-      heading: t('homepage.testnomials.card2Heading'),
-      text: t('homepage.testnomials.card2Text'),
-    },
-    {
-      img: `${publicRuntimeConfig.REACT_APP_ASSET_PREFIX}dev/card3.png`,
-      heading: t('homepage.testnomials.card3Heading'),
-      text: t('homepage.testnomials.card3Text'),
     },
   ];
   const theme = useTheme();
@@ -230,35 +220,37 @@ export default function Testnomials() {
     </Grid>
   );
 
-  const testnomialsImages = ['1.png', '2.png', '3.png'];
+  const reviews = [
+    {
+      image: '1.png',
+      headline: 'Fantastic, personable experience from start to finish.',
+      text: 'Gyles took me through the whole process and held my hand throughout.\n\nThe quality and timing of work were exceptional. The price agreed was well worth it due to the quality of the work. Thank you and will be sure to use your services again in the future!',
+      name: 'Call Out Property Solutions',
+    },
+    {
+      image: '2.png',
+      headline: 'Amazing service highly recommend.',
+      text: 'Will definetly use them again for future projects',
+      name: 'Amadou Kassarate',
+    },
+    {
+      image: '3.png',
+      text: 'Working with BLP/ The Idea Pod has been effortless and highly satisfactory.\n\nThe team certainly have a modern perspective on all things creative and are up to date with the digital landscape. We relayed our vision and they picked up exactly what we required.\n\nWe continue to work with BLP and highly recommend their services. Thank you!',
+      name: 'Joshua Mcabban',
+    },
+  ];
+
   return (
     <Grid container direction="column" alignItems="center" className={classes.background}>
       <div
         style={{
-          backgroundColor: 'rgba(93,93,93,.7)',
+          backgroundColor: 'rgba(93,93,93,.5)',
           width: '100%',
           zIndex: 0,
           position: 'absolute',
           height: '100%',
         }}
       />
-      <Grid
-        item
-        className={classes.container}
-        style={{ width: '100%', zIndex: 2, marginTop: '90px' }}
-      >
-        <Grid container justifyContent="center" spacing={3}>
-          {testnomialsImages.map((img, i) => (
-            <Grid item key={i}>
-              <img
-                src={`${publicRuntimeConfig.REACT_APP_ASSET_PREFIX}dev/testnomials/${img}`}
-                style={{ width: '100%', height: '100%' }}
-              />
-            </Grid>
-          ))}
-        </Grid>
-      </Grid>
-
       {/* heading */}
       <Grid
         item
@@ -287,54 +279,163 @@ export default function Testnomials() {
           />
         </Typography>
       </Grid>
+      {/* reviews */}
+      <Grid
+        item
+        className={classes.container}
+        style={{ width: '100%', zIndex: 2, marginTop: '60px' }}
+      >
+        <Grid container spacing={3}>
+          {reviews.map((review, i) => (
+            <Grid item key={i} sm={4} xs={12} style={{ display: 'flex' }}>
+              <Grid container direction="column" alignItems="center" className={classes.card}>
+                <Grid item style={{ marginTop: '15px' }}>
+                  <img
+                    src={`${publicRuntimeConfig.REACT_APP_ASSET_PREFIX}dev/testnomials/${review.image}`}
+                    style={{ width: '94px', height: '94px' }}
+                  />
+                </Grid>
+                {review.headline && (
+                  <Grid item style={{ marginTop: '19px', width: matchesMD ? '100%' : '80%' }}>
+                    <Typography
+                      variant="h5"
+                      align="center"
+                      style={{ fontWeight: '600', color: '#fff', lineHeight: '33px' }}
+                    >
+                      {review.headline}
+                    </Typography>
+                  </Grid>
+                )}
+                <Grid item style={{ marginTop: '35px', width: matchesMD ? '100%' : '65%' }}>
+                  <Typography
+                    variant="h5"
+                    align="center"
+                    style={{
+                      fontSize: '18px',
+                      fontWeight: '600',
+                      color: '#fff',
+                      lineHeight: '27px',
+                      whiteSpace: 'pre-line',
+                    }}
+                  >
+                    {review.text}
+                  </Typography>
+                </Grid>
+
+                <Grid item style={{ marginTop: '35px', width: matchesMD ? '100%' : '65%' }}>
+                  <Typography
+                    variant="h5"
+                    align="center"
+                    style={{
+                      fontSize: '18px',
+                      fontWeight: '600',
+                      color: '#fff',
+                      lineHeight: '27px',
+                    }}
+                  >
+                    - {review.name}
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Grid>
+          ))}
+        </Grid>
+      </Grid>
+
+      {/* heading */}
+      <Grid
+        item
+        className={classes.container}
+        style={{
+          zIndex: 2,
+          width: matchesMD ? '100%' : '70%',
+          marginTop: matchesSM ? '40px' : '50px',
+        }}
+      >
+        <Typography
+          variant="h1"
+          align="center"
+          style={{
+            color: '#fff',
+            fontWeight: '800',
+            zIndex: 1,
+            //lineHeight: matches '41px',
+          }}
+        >
+          <Trans
+            i18nKey="homepage.testnomials.testnomialsHeading1"
+            components={{
+              span: <span style={{ color: '#FF5B21' }}></span>,
+            }}
+          />
+        </Typography>
+      </Grid>
       {/* cards */}
       <Grid
         item
         className={classes.container}
         style={{ marginTop: matchesSM ? '30px' : '50px', width: '100%' }}
       >
-        <Grid container spacing={3}>
+        <Grid container direction="column" spacing={3}>
           {cards.map((c, i) => (
-            <Grid item key={i} sm={4} xs={12} style={{ display: 'flex' }}>
-              <Grid container direction="column" className={classes.card}>
+            <Grid item key={i} xs={12} style={{ display: 'flex' }}>
+              <Grid
+                container
+                direction={matchesSM ? 'column' : 'row'}
+                wrap="nowrap"
+                style={{ borderRadius: '12px', padding: 0, background: '#fff' }}
+              >
                 {/* img */}
-                <Grid item style={{ width: '100%' }}>
+                <Grid item style={{ height: '100%' }}>
                   <CardMedia
                     component="img"
-                    style={{ borderRadius: '4px' }}
-                    height="240"
+                    style={{
+                      borderRadius: '12px',
+                      height: '100%',
+                      width: matchesSM ? '100%' : 'auto',
+                    }}
                     image={c.img}
                     alt="green iguana"
                   />
                 </Grid>
                 {/* heading */}
-                <Grid item style={{ width: '100%', marginTop: '10px' }}>
-                  <Typography
-                    variant="h5"
+                <Grid item style={{ height: '100%', marginTop: '10px' }}>
+                  <Grid
+                    container
+                    direction="column"
+                    justifyContent="center"
                     style={{
-                      color: '#000',
-                      fontWeight: '800',
-                      zIndex: 1,
-                      lineHeight: '29px',
+                      height: '100%',
+                      paddingLeft: matchesSM ? '20px' : '45px',
+                      paddingRight: matchesSM ? '20px' : 0,
+                      paddingBottom: matchesSM ? '20px' : 0,
                     }}
                   >
-                    {c.heading}
-                  </Typography>
-                </Grid>
-                {/* text */}
-                <Grid item style={{ width: '100%', marginTop: '10px' }}>
-                  <Typography
-                    variant="subtitle1"
-                    style={{
-                      color: '#000',
-                      fontWeight: '700',
-                      zIndex: 1,
-                      lineHeight: '29px',
-                      whiteSpace: 'pre-line',
-                    }}
-                  >
-                    {c.text}
-                  </Typography>
+                    <Typography
+                      variant="h4"
+                      style={{
+                        color: '#000',
+                        fontWeight: '900',
+                        zIndex: 1,
+                        lineHeight: '41px',
+                      }}
+                    >
+                      {c.heading}
+                    </Typography>
+                    <Typography
+                      variant="subtitle1"
+                      style={{
+                        marginTop: '16px',
+                        color: '#000',
+                        fontWeight: '700',
+                        zIndex: 1,
+                        lineHeight: '37px',
+                        whiteSpace: 'pre-line',
+                      }}
+                    >
+                      {c.text}
+                    </Typography>
+                  </Grid>
                 </Grid>
               </Grid>
             </Grid>
