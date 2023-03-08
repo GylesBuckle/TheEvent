@@ -1,6 +1,6 @@
-import React from 'react';
-import Homepage from '../src/pagesComponent/homepage';
-import axios from '../src/utils/axios';
+import React from "react";
+import Homepage from "../src/pagesComponent/homepage";
+import axios from "../src/utils/axios";
 
 export default function index(props) {
   return <Homepage events={props.events ? props.events : []} />;
@@ -26,7 +26,9 @@ export async function getServerSideProps() {
     console.log(err);
     return {
       props: {
-        error: err.response?.data?.message ? err.response?.data?.message : err.message,
+        error: err.response?.data?.message
+          ? err.response?.data?.message
+          : err.message,
       },
     };
   }
